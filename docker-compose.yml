@@ -1,0 +1,54 @@
+version: "3.3"
+
+services:
+    front-end:
+        container_name: front-end
+
+        build:
+            context: ./webapp
+
+        volumes:
+            - ./webapp:/app
+
+        stdin_open: true
+
+        environment:
+            - NODE_ENV=development
+
+        ports: 
+            - 3000:3000
+
+    back-end:
+        container_name: back-end
+
+        build:
+            context: ./Back-end
+
+        volumes:
+            - ./Back-end:/app
+
+        ports:
+            - 3001:3001
+
+        environment:
+            - NODE_ENV=development
+
+        stdin_open: true
+
+        networks:
+            - back-end-network
+
+    database:
+        build:
+            context: ./data-base
+
+        container_name: data-base
+
+        volumes:
+            - ./data-base/user_setup.js:/docker-entrypoint-initdb.d/user_setup.js:ro
+
+        networks:
+            - back-end-network
+
+networks:
+    back-end-network:
