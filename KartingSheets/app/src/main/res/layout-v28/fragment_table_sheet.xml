@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Sheets.TableSheetFragment"
+    android:id="@+id/table_view"
+    android:stretchColumns="1,2,3"
+    android:background="@color/cardview_dark_background"
+
+    >
+
+    <TableRow>
+        <TextView
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:padding="3dp"
+            android:layout_marginStart="2dp"
+            android:text="@string/index"/>
+        <TextView
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:padding="3dp"
+            android:text="@string/time"/>
+        <TextView
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:padding="3dp"
+            android:text="@string/dif_to_last_lap"/>
+        <TextView
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:padding="3dp"
+            android:text="@string/dif_to_best"/>
+    </TableRow>
+
+</TableLayout>

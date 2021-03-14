@@ -38,6 +38,9 @@ services:
         networks:
             - back-end-network
 
+        depends_on: 
+            - database
+
     database:
         build:
             context: ./data-base
