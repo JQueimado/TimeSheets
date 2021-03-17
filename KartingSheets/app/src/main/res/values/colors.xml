@@ -8,8 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="nav_color">#0088FF</color>
-    <color name="nav_button">#FFFFFF</color>
-    <color name="nav_button_color">#950000</color>
+    <color name="nav_color">#0A2949</color>
+    <color name="nav_button_text_color">#000000</color>
+    <color name="nav_button_color">#A69C9C</color>
 
 </resources>
