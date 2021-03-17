@@ -9,4 +9,7 @@
     <string name="time">Time</string>
     <string name="dif_to_last_lap">dif to last lap</string>
     <string name="dif_to_best">dif to best</string>
+
+    <string name="nav_share_button">Share</string>
+    <string name="nav_add_button">Add</string>
 </resources>
