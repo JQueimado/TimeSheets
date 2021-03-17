@@ -1,14 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/stats_fragment_body"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StatsFragment">
+    tools:context=".StatsFragment"
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    android:background="@color/stats_background_color"
+    android:stretchColumns="0,1">
+
+    <TableRow
+        android:id="@+id/stats_best_lap_body"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-</FrameLayout>
+                android:text="@string/stats_best_lap"
+                android:textColor="@color/white"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/stats_best_lap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="@string/stats_sample_lap"
+                android:textColor="@color/white"
+                android:gravity="center"/>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/stats_worst_lap_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/stats_worst_lap"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/stats_worst_lap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/stats_sample_lap"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+    </TableRow>
+
+</TableLayout>

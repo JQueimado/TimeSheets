@@ -10,6 +10,15 @@
     <string name="dif_to_last_lap">dif to last lap</string>
     <string name="dif_to_best">dif to best</string>
 
+    <!-- NavBar Text -->
+
     <string name="nav_share_button">Compare</string>
     <string name="nav_add_button">Add</string>
+
+    <!-- Stats Text -->
+
+    <string name="stats_best_lap">Best lap ever</string>
+    <string name="stats_worst_lap">Worst lap ever</string>
+    <string name="stats_sample_lap">0:00.000</string>
+
 </resources>
