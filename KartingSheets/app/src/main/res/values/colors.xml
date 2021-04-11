@@ -19,5 +19,6 @@
     <color name="nav_button">#FFFFFF</color>
 
     <color name="stats_background_color">#333333</color>
+    <color name="stats_outline_color">#616161</color>
 
 </resources>
