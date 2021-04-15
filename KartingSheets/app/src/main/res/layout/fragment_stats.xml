@@ -2,8 +2,8 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/stats_fragment_body"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     tools:context=".StatsFragment"
 
     android:background="@color/stats_background_color"
@@ -63,9 +63,9 @@
 
     </TableRow>
 
-    <!-- Worst Lap -->
+    <!-- Consistency -->
     <TableRow
-        android:id="@+id/stats_worst_lap_body"
+        android:id="@+id/stats_consistency_body"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -74,17 +74,74 @@
             android:layout_height="wrap_content"
             android:background="@drawable/stats_fragment_table_shape"
 
-            android:text="@string/stats_worst_lap"
+            android:text="@string/stats_consistency"
             android:textColor="@color/white"
-            android:gravity="center"/>
+            android:gravity="center"
+            />
 
         <TextView
-            android:id="@+id/stats_worst_lap"
+            android:id="@+id/stats_consistency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/stats_fragment_table_shape"
 
-            android:text="@string/stats_sample_lap"
+            android:text="@string/stats_sample_consistency"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+
+    </TableRow>
+
+    <!-- Favourite Kart -->
+    <TableRow
+        android:id="@+id/stats_favourite_kart_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/stats_fragment_table_shape"
+
+            android:text="@string/stats_favourite_kart"
+            android:textColor="@color/white"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/stats_favourite_kart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/stats_fragment_table_shape"
+
+            android:text="@string/stats_sample_kart"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+
+    </TableRow>
+
+    <!-- Favourite Kart -->
+    <TableRow
+        android:id="@+id/stats_favourite_track_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/stats_fragment_table_shape"
+
+            android:text="@string/stats_favourite_track"
+            android:textColor="@color/white"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/stats_favourite_track"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/stats_fragment_table_shape"
+
+            android:text="@string/stats_sample_track"
             android:textColor="@color/white"
             android:gravity="center"/>
 

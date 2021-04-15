@@ -18,8 +18,14 @@
     <!-- Stats Text -->
 
     <string name="stats_best_lap">Best lap</string>
-    <string name="stats_average_lap">Average lap</string>
-    <string name="stats_worst_lap">Worst lap</string>
+    <string name="stats_average_lap">Average lap time</string>
+    <string name="stats_consistency">Consistency</string>
+    <string name="stats_favourite_kart">Favourite Kart</string>
+    <string name="stats_favourite_track">Favourite Track</string>
+
     <string name="stats_sample_lap">0:00.000</string>
+    <string name="stats_sample_consistency">000/100%</string>
+    <string name="stats_sample_kart"> 000cc-n00 </string>
+    <string name="stats_sample_track"> Some Karting Center </string>
 
 </resources>
