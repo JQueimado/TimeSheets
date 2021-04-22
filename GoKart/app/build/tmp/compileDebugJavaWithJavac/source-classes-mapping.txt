@@ -1,0 +1,2 @@
+com/example/gokart/BuildConfig.java
+ com.example.gokart.BuildConfig
