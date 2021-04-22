@@ -1,0 +1,9 @@
+com/example/kartingsheets/Sheets/TableSheetFragment.java
+ com.example.kartingsheets.Sheets.TableSheetFragment
+ com.example.kartingsheets.Sheets.TableSheetFragment$TimeRow
+com/example/kartingsheets/AddActivity.java
+ com.example.kartingsheets.AddActivity
+com/example/kartingsheets/Sheets/TimeSheet.java
+ com.example.kartingsheets.Sheets.TimeSheet
+com/example/kartingsheets/BuildConfig.java
+ com.example.kartingsheets.BuildConfig
