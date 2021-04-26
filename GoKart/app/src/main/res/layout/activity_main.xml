@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- NavBar -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/nav_bar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+
+        android:background="@color/nav_color"
+        app:layout_constraintLeft_toLeftOf="parent"
+
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/nav_compare_button"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/nav_buttons_shape"
+            android:text="@string/nav_share_button"
+            android:textAllCaps="false"
+
+            android:textColor="@color/nav_button_text_color"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/nav_add_button"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+
+            android:layout_marginRight="20dp"
+            android:background="@drawable/nav_buttons_shape"
+            android:text="@string/nav_add_button"
+            android:textAllCaps="false"
+
+            android:textColor="@color/nav_button_text_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Content -->
+
+    <ScrollView
+        android:id="@+id/content_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nav_bar"
+        >
+
+        
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
