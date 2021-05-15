@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/stats_fragment_table_shape"
 
-            android:text="@string/stats_sample_lap"
+            android:text="@string/default_lap"
             android:textColor="@color/white"
             android:gravity="center"/>
     </TableRow>
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/stats_fragment_table_shape"
 
-            android:text="@string/stats_sample_lap"
+            android:text="@string/default_lap"
             android:textColor="@color/white"
             android:gravity="center"/>
 
@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/stats_fragment_table_shape"
 
-            android:text="@string/stats_sample_consistency"
+            android:text="@string/default_consistency"
             android:textColor="@color/white"
             android:gravity="center"/>
 
@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/stats_fragment_table_shape"
 
-            android:text="@string/stats_sample_kart"
+            android:text="@string/default_kart"
             android:textColor="@color/white"
             android:gravity="center"/>
 
@@ -141,7 +141,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/stats_fragment_table_shape"
 
-            android:text="@string/stats_sample_track"
+            android:text="@string/default_track"
             android:textColor="@color/white"
             android:gravity="center"/>
 

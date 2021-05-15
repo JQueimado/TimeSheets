@@ -23,9 +23,24 @@
     <string name="stats_favourite_kart">Favourite Kart</string>
     <string name="stats_favourite_track">Favourite Track</string>
 
-    <string name="stats_sample_lap">0:00.000</string>
-    <string name="stats_sample_consistency">000/100%</string>
-    <string name="stats_sample_kart"> 000cc-n00 </string>
-    <string name="stats_sample_track"> Some Karting Center </string>
+    <!-- Time Sheets -->
+    <string name="times_sheets_date">Date</string>
+    <string name="times_sheets_best_lap">Best lap</string>
+    <string name="times_sheets_average_lap">Average lap time</string>
+    <string name="times_sheets_consistency">Consistency</string>
+    <string name="time_sheets_lap">Lap</string>
+    <string name="time_sheets_time">Time</string>
+    <string name="time_sheets_last_delta">Last lap delta</string>
+    <string name="time_sheets_best_delta">Best lap delta</string>
+
+    <!-- Defaults -->
+
+    <string name="default_lap">0:00.000</string>
+    <string name="default_consistency">000/100%</string>
+    <string name="default_kart"> 000cc-n00 </string>
+    <string name="default_track"> Some Karting Center </string>
+    <string name="default_date"> TUS-21-Oct-2020 </string>
+    <string name="default_lap_number">-1</string>
+    <string name="default_delta">+0.000</string>
 
 </resources>

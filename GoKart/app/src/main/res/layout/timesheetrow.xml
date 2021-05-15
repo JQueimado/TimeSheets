@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+
+    <TextView
+        android:id="@+id/time_sheet_lap_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/table_fragment_table_shape"
+        android:textColor="@color/white"
+        android:padding="5dp"
+        android:text="@string/default_lap_number"/>
+
+    <TextView
+        android:id="@+id/time_sheet_lap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/table_fragment_table_shape"
+        android:textColor="@color/white"
+        android:padding="5dp"
+        android:text="@string/default_lap"/>
+
+    <TextView
+        android:id="@+id/time_sheet_bestlap_delta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/table_fragment_table_shape"
+        android:textColor="@color/white"
+        android:padding="5dp"
+        android:text="@string/default_delta"/>
+
+    <TextView
+        android:id="@+id/time_sheet_lastlap_delta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/table_fragment_table_shape"
+        android:textColor="@color/white"
+        android:padding="5dp"
+        android:text="@string/default_delta"/>
+
+</TableRow>

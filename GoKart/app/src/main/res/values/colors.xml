@@ -21,4 +21,7 @@
     <color name="stats_background_color">#333333</color>
     <color name="stats_outline_color">#616161</color>
 
+    <color name="table_background_color">#616161</color>
+    <color name="table_outline_color">#333333</color>
+
 </resources>
