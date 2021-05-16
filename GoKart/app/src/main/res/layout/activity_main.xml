@@ -63,31 +63,42 @@
         >
 
         <LinearLayout
-            android:id="@+id/times_sheet_list_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginVertical="10dp"
+            android:paddingBottom="100dp">
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/stats_fragment_container_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
 
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginVertical="10dp"
                 />
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/times_sheet_fragment_container_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginVertical="10dp"
-                />
+            <LinearLayout
+                android:id="@+id/times_sheet_list_container"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
     </ScrollView>
+
+    <!-- calendar -->
+
+    <CalendarView
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/table_fragment_table_shape"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,11 +14,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 add<StatsFragment>(R.id.stats_fragment_container_view)
-                add<TimeSheetFragment>(R.id.times_sheet_fragment_container_view)
+                //add<TimeSheetFragment>(R.id.times_sheet_fragment_container_view)
+                for (i in 1..10){
+                    add(R.id.times_sheet_list_container, TimeSheetFragment())
+                }
             }
         }
-
-        val timesheetlayout : LinearLayout = findViewById(R.id.times_sheet_list_container)
 
     }
 }
