@@ -13,10 +13,6 @@ class TimeSheetFragment : Fragment(R.layout.fragment_table) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        if(savedInstanceState == null){
-
-        }
     }
 
     override fun onCreateView(

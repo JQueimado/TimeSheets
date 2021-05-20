@@ -1,8 +1,11 @@
 package com.example.gokart
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.format.Time
+import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import androidx.fragment.app.*
 
@@ -19,6 +22,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     add(R.id.times_sheet_list_container, TimeSheetFragment())
                 }
             }
+
+            val add_button :Button = findViewById(R.id.nav_add_button)
+
+            add_button.setOnClickListener( View.OnClickListener {
+                val intent = Intent(this, AddActivity::class.java)
+                startActivity(intent)
+            } )
         }
 
     }
