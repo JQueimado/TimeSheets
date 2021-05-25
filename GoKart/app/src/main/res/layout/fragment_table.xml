@@ -46,6 +46,36 @@
                 android:padding="2dp" />
         </TableRow>
 
+        <!-- Kart -->
+        <TableRow
+            android:id="@+id/stats_kart_body"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/table_fragment_table_shape"
+
+                android:text="@string/time_sheets_kart"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:padding="2dp"
+                />
+
+            <TextView
+                android:id="@+id/stats_kart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/table_fragment_table_shape"
+
+                android:text="@string/default_kart"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:padding="2dp"/>
+
+        </TableRow>
+
         <!-- Best Lap -->
         <TableRow
             android:id="@+id/stats_best_lap_body"

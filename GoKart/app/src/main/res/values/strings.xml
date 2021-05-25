@@ -32,6 +32,11 @@
     <string name="time_sheets_time">Time</string>
     <string name="time_sheets_last_delta">Last lap delta</string>
     <string name="time_sheets_best_delta">Best lap delta</string>
+    <string name="time_sheets_kart">Kart</string>
+
+    <!-- Add Activity -->
+    <string name="add_activity_header">Add Time Sheet</string>
+    <string name="add_activity_Back">Back</string>
 
     <!-- Defaults -->
 

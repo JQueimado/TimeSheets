@@ -9,7 +9,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.gokart.databinding.ActivityAddBinding
 
-class AddActivity : AppCompatActivity() {
+class AddActivity : AppCompatActivity(R.layout.activity_add){
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityAddBinding
