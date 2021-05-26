@@ -37,6 +37,7 @@
     <!-- Add Activity -->
     <string name="add_activity_header">Add Time Sheet</string>
     <string name="add_activity_Back">Back</string>
+    <string name="add_pick_time_date">Date/Time</string>
 
     <!-- Defaults -->
 
