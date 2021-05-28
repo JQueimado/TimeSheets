@@ -39,6 +39,11 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
         findViewById<FragmentContainerView>(R.id.picker_fragment).visibility = View.GONE
     }
 
+    fun onPickKartConfirm(name : String){
+        findViewById<FragmentContainerView>(R.id.picker_fragment).visibility = View.GONE
+        findViewById<Button>(R.id.pick_kart_button).setText(name)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

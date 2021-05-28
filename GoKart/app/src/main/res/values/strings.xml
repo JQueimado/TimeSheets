@@ -51,6 +51,8 @@
     <string name="default_lap_number">-1</string>
     <string name="default_delta">+0.000</string>
     <string name="title_activity_add">AddActivity</string>
+    <string name="default_kart_unknown">Unknown</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
