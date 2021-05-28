@@ -33,6 +33,7 @@
     <string name="time_sheets_last_delta">Last lap delta</string>
     <string name="time_sheets_best_delta">Best lap delta</string>
     <string name="time_sheets_kart">Kart</string>
+    <string name="time_sheets_karting_center">Karting Center</string>
 
     <!-- Add Activity -->
     <string name="add_activity_header">Add Time Sheet</string>
@@ -40,6 +41,7 @@
     <string name="add_pick_time_date">Set date and time</string>
     <string name="add_pick_kart">Chose a Kart</string>
     <string name="add_confirm">Ok</string>
+    <string name="add_pick_kart_center">Chose a karting center</string>
 
     <!-- Defaults -->
 

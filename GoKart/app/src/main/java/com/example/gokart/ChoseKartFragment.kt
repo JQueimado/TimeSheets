@@ -75,7 +75,7 @@ class ChoseKartFragment(parent : AddActivity) : Fragment() {
         val list : LinearLayout = view.findViewById(R.id.choose_kart_karts_list)
 
         //Assemble list
-        for (i in 1..10) {
+        for (i in 1..20) {
 
             //Create view
             val temp : ChoseKartItem = ChoseKartItem(
