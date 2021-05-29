@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     tools:context=".StatsFragment"
-
+    android:padding="1dp"
     android:background="@color/stats_background_color"
     android:stretchColumns="0,1">
 
@@ -22,7 +22,8 @@
 
             android:text="@string/stats_best_lap"
             android:textColor="@color/white"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:padding="2dp"/>
 
         <TextView
             android:id="@+id/stats_best_lap"
@@ -32,7 +33,8 @@
 
             android:text="@string/default_lap"
             android:textColor="@color/white"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:padding="2dp"/>
     </TableRow>
 
     <!-- Average Lap -->
@@ -49,6 +51,7 @@
             android:text="@string/stats_average_lap"
             android:textColor="@color/white"
             android:gravity="center"
+            android:padding="2dp"
             />
 
         <TextView
@@ -59,7 +62,8 @@
 
             android:text="@string/default_lap"
             android:textColor="@color/white"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:padding="2dp"/>
 
     </TableRow>
 
@@ -77,6 +81,7 @@
             android:text="@string/stats_consistency"
             android:textColor="@color/white"
             android:gravity="center"
+            android:padding="2dp"
             />
 
         <TextView
@@ -87,7 +92,8 @@
 
             android:text="@string/default_consistency"
             android:textColor="@color/white"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:padding="2dp"/>
 
     </TableRow>
 
@@ -105,6 +111,7 @@
             android:text="@string/stats_favourite_kart"
             android:textColor="@color/white"
             android:gravity="center"
+            android:padding="2dp"
             />
 
         <TextView
@@ -115,7 +122,8 @@
 
             android:text="@string/default_kart"
             android:textColor="@color/white"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:padding="2dp"/>
 
     </TableRow>
 
@@ -133,6 +141,7 @@
             android:text="@string/stats_favourite_track"
             android:textColor="@color/white"
             android:gravity="center"
+            android:padding="2dp"
             />
 
         <TextView
@@ -143,7 +152,8 @@
 
             android:text="@string/default_track"
             android:textColor="@color/white"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:padding="2dp"/>
 
     </TableRow>
 

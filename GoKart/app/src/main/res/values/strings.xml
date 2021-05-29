@@ -26,7 +26,7 @@
     <!-- Time Sheets -->
     <string name="times_sheets_date">Date</string>
     <string name="times_sheets_best_lap">Best lap</string>
-    <string name="times_sheets_average_lap">Average lap time</string>
+    <string name="times_sheets_average_lap">Average lap</string>
     <string name="times_sheets_consistency">Consistency</string>
     <string name="time_sheets_lap">Lap</string>
     <string name="time_sheets_time">Time</string>
@@ -42,6 +42,9 @@
     <string name="add_pick_kart">Chose a Kart</string>
     <string name="add_confirm">Ok</string>
     <string name="add_pick_kart_center">Chose a karting center</string>
+    <string name="add_list_remove">Remove</string>
+    <string name="add_list_add">Add Lap +</string>
+    <string name="add_list_title">Laps:</string>
 
     <!-- Defaults -->
 

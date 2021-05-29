@@ -5,10 +5,11 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     tools:context=".StatsFragment"
-
+    android:background="@drawable/table_fragment_table_shape"
     android:orientation="vertical"
     android:layout_marginHorizontal="8dp"
     android:layout_marginVertical="10dp"
+    android:padding="1dp"
     >
 
     <TableLayout

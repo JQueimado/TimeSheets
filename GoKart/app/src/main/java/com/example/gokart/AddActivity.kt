@@ -1,13 +1,19 @@
 package com.example.gokart
 
+import android.content.Context
 import android.os.Bundle
 import android.text.format.DateFormat
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import com.google.android.material.textfield.TextInputEditText
 import java.util.*
 
 class AddActivity : AppCompatActivity(R.layout.activity_add){
@@ -20,6 +26,8 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
     private var year : Int = 0
     private var month : Int = 0
     private var day : Int = 0
+
+    private var lapCount : Int = 0
 
     fun onDatePick( year: Int, month : Int, day: Int){
         this.year = year
@@ -69,6 +77,24 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
         findViewById<Button>(R.id.pick_kart_button).setOnClickListener(View.OnClickListener {
             findViewById<FragmentContainerView>(R.id.picker_fragment).visibility = View.VISIBLE
         })
+
+        //Add List
+        val listLayout : LinearLayout = findViewById(R.id.add_laps_layout)
+
+        findViewById<ConstraintLayout>(R.id.add_lap_button).setOnClickListener {
+            lapCount += 1
+            listLayout.addView( AddLapView( applicationContext, layoutInflater, lapCount ) )
+        }
+
+    }
+
+    //Lap View
+    class AddLapView : ConstraintLayout{
+
+        constructor(context : Context, inflater : LayoutInflater, count : Int ) : super(context){
+            inflater.inflate( R.layout.add_lap_item, this, true )
+            this.findViewById<TextView>(R.id.lap_number).setText(count.toString())
+        }
 
     }
 }

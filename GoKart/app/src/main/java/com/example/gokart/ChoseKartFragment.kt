@@ -14,8 +14,9 @@ class ChoseKartFragment(parent : AddActivity) : Fragment() {
 
     val parent : AddActivity = parent
 
-    val list_check : ArrayList<ChoseKartItem> = ArrayList()
-    var picked : ChoseKartItem? = null
+    private val listCheck : ArrayList<ChoseKartItem> = ArrayList()
+    private var picked : ChoseKartItem? = null
+    private var lastCommited : ChoseKartItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +43,7 @@ class ChoseKartFragment(parent : AddActivity) : Fragment() {
     }
 
     private fun clearAllChoices(){
-        for ( l in list_check ){
+        for ( l in listCheck ){
             l.setUnchecked()
         }
     }
@@ -60,7 +61,10 @@ class ChoseKartFragment(parent : AddActivity) : Fragment() {
         //Back Button
         view.findViewById<Button>(R.id.choose_kart_back_button).setOnClickListener(
             View.OnClickListener {
-            parent.onPickKartBack()
+                parent.onPickKartBack()
+                picked?.setUnchecked()
+                lastCommited?.setChecked()
+                picked = lastCommited
         })
 
         //On Confirm click
@@ -70,6 +74,8 @@ class ChoseKartFragment(parent : AddActivity) : Fragment() {
                     parent.onPickKartConfirm( "" )
                 else
                     picked?.let { it1 -> parent.onPickKartConfirm( it1.getName() ) }
+
+                lastCommited = picked
         })
 
         val list : LinearLayout = view.findViewById(R.id.choose_kart_karts_list)
@@ -84,7 +90,7 @@ class ChoseKartFragment(parent : AddActivity) : Fragment() {
                 inflater,
                 this
             )
-            list_check.add(temp)
+            listCheck.add(temp)
             list.addView(temp)
         }
 
