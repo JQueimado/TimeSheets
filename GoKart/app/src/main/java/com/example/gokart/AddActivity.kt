@@ -1,17 +1,21 @@
 package com.example.gokart
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.text.format.DateFormat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentContainerView
-import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.google.android.material.textfield.TextInputEditText
 import java.util.*
@@ -52,6 +56,7 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
         findViewById<Button>(R.id.pick_kart_button).setText(name)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -83,6 +88,7 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
 
         findViewById<ConstraintLayout>(R.id.add_lap_button).setOnClickListener {
             lapCount += 1
+            findViewById<TextView>(R.id.add_laps_counter).text = resources.getText(R.string.add_list_title).toString() + lapCount.toString()
             listLayout.addView( AddLapView( applicationContext, layoutInflater, lapCount ) )
         }
 
@@ -93,7 +99,40 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
 
         constructor(context : Context, inflater : LayoutInflater, count : Int ) : super(context){
             inflater.inflate( R.layout.add_lap_item, this, true )
-            this.findViewById<TextView>(R.id.lap_number).setText(count.toString())
+
+            // Lap Tag
+            this.findViewById<TextView>(R.id.lap_number).text = "$count-0:00.000"
+
+            //Time input
+            val textView : TextView = findViewById(R.id.lap_number)
+            this.findViewById<TextInputEditText>(R.id.lap_input).addTextChangedListener(
+                object : TextWatcher{
+
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        var text = p0.toString()
+
+                        for (i in text.length..6 )
+                            text = "0$text"
+
+                        Log.d(text, "yez")
+
+                        text = text.substring(0, text.length-5) +
+                                ":" + text.substring(text.length-5, text.length-3) +
+                                "." + text.substring(text.length-3, text.length)
+
+                        text = "$count-$text"
+                        textView.text = text
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {
+
+                    }
+                })
+
         }
 
     }
