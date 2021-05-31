@@ -42,12 +42,6 @@ class ChoseKartFragment(parent : AddActivity) : Fragment() {
 
     }
 
-    private fun clearAllChoices(){
-        for ( l in listCheck ){
-            l.setUnchecked()
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -77,6 +71,11 @@ class ChoseKartFragment(parent : AddActivity) : Fragment() {
 
                 lastCommited = picked
         })
+
+        //Add Kart
+        view.findViewById<TextView>(R.id.add_add_kart_button).setOnClickListener {
+            parent.onAddKartPress()
+        }
 
         val list : LinearLayout = view.findViewById(R.id.choose_kart_karts_list)
 

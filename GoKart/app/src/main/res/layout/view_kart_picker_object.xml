@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/popup_item_background"
-    android:layout_margin="3dp"
     >
 
     <TextView

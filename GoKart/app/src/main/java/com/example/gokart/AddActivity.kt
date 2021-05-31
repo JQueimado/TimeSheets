@@ -56,6 +56,13 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
         findViewById<Button>(R.id.pick_kart_button).setText(name)
     }
 
+    fun onAddKartPress(){
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(R.id.picker_fragment, AddKartFragment())
+        }
+    }
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,7 +95,8 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
 
         findViewById<ConstraintLayout>(R.id.add_lap_button).setOnClickListener {
             lapCount += 1
-            findViewById<TextView>(R.id.add_laps_counter).text = resources.getText(R.string.add_list_title).toString() + lapCount.toString()
+            findViewById<TextView>(R.id.add_laps_counter).text =
+                resources.getText(R.string.add_list_title).toString() + lapCount.toString()
             listLayout.addView( AddLapView( applicationContext, layoutInflater, lapCount ) )
         }
 

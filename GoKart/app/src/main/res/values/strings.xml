@@ -45,9 +45,12 @@
     <string name="add_list_remove">Remove</string>
     <string name="add_list_add">Add Lap +</string>
     <string name="add_list_title">Laps:</string>
+    <string name="add_chose_fragment_add_kart">Add Kart +</string>
+    <string name="add_add_kart_number">Kart Number</string>
+    <string name="add_add_kart_displacement">Kart Displacement (cc)</string>
+    <string name="add_add_kart_name">Kart Name (optional)</string>
 
     <!-- Defaults -->
-
     <string name="default_lap">0:00.000</string>
     <string name="default_consistency">000/100%</string>
     <string name="default_kart"> 000cc-n00 </string>

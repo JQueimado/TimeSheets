@@ -13,7 +13,7 @@
             android:name=".AddActivity"
             android:label="@string/title_activity_add"
             android:theme="@style/Theme.GoKart.NoActionBar"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
