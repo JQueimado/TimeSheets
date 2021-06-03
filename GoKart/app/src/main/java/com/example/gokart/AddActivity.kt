@@ -57,9 +57,17 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
     }
 
     fun onAddKartPress(){
+        val addKartFragment = AddKartFragment(this)
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(R.id.picker_fragment, AddKartFragment())
+            replace(R.id.picker_fragment, addKartFragment)
+        }
+    }
+
+    fun onAddKartBackPress(){
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(R.id.picker_fragment, kartPicker)
         }
     }
 
