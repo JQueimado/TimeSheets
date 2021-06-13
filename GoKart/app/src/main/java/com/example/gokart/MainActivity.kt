@@ -14,13 +14,31 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
+            /*
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 add<StatsFragment>(R.id.stats_fragment_container_view)
                 //add<TimeSheetFragment>(R.id.times_sheet_fragment_container_view)
+                /*
                 for (i in 1..10){
                     add(R.id.times_sheet_list_container, TimeSheetFragment())
                 }
+                */
+            }
+            */
+
+            val list_view : LinearLayout = findViewById(R.id.main_activity_scroll_content)
+
+            //Stats Demo
+            val statsView = StatsView( applicationContext, layoutInflater )
+            list_view.addView( statsView )
+            statsView.inflate()
+
+            //Times Demo
+            for ( i in 1..10){
+                val view = TimeSheetView( applicationContext, layoutInflater )
+                list_view.addView(view)
+                view.inflate()
             }
 
             val add_button :Button = findViewById(R.id.nav_add_button)

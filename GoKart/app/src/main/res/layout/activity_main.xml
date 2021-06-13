@@ -63,27 +63,13 @@
         >
 
         <LinearLayout
+            android:id="@+id/main_activity_scroll_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginHorizontal="8dp"
             android:layout_marginVertical="10dp"
             android:paddingBottom="100dp">
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/stats_fragment_container_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginVertical="10dp"
-                />
-
-            <LinearLayout
-                android:id="@+id/times_sheet_list_container"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 

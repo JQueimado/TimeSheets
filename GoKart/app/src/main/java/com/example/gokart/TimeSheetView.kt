@@ -1,28 +1,21 @@
 package com.example.gokart
 
 import android.annotation.SuppressLint
-import android.os.Bundle
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TableLayout
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 
-class TimeSheetFragment : Fragment(R.layout.fragment_table) {
+class TimeSheetView( context : Context, inflater : LayoutInflater ) : LinearLayout( context ), MainActivityContentView {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private val inflater : LayoutInflater = inflater
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = super.onCreateView(inflater, container, savedInstanceState)
+    override fun inflate(){
+        inflater.inflate( R.layout.fragment_table, this )
 
-        var timeSheet : TableLayout = view!!.findViewById(R.id.times_sheet)
+        var timeSheet : TableLayout = this!!.findViewById(R.id.times_sheet)
 
         var temp : View = addRow(1, "1.1.1111", "+1.111", "+1")
         timeSheet.addView(temp)
@@ -30,12 +23,11 @@ class TimeSheetFragment : Fragment(R.layout.fragment_table) {
         temp = addRow(2, "1.1.1111", "+1.111", "+1")
         timeSheet.addView(temp)
 
-        return view
     }
 
     @SuppressLint("ResourceAsColor")
     private fun addRow (lap : Int, time : String, bestlap_delta : String, last_delta : String ) : View{
-        val row : View = layoutInflater.inflate(R.layout.timesheetrow, null)
+        val row : View = inflater.inflate(R.layout.timesheetrow, null)
 
         row.findViewById<TextView>(R.id.time_sheet_lap_number).setText(lap.toString())
         row.findViewById<TextView>(R.id.time_sheet_lap).setText(time)
@@ -44,5 +36,4 @@ class TimeSheetFragment : Fragment(R.layout.fragment_table) {
 
         return row
     }
-
 }
