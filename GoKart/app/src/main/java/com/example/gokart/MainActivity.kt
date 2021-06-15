@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             val contentList : MutableList<TimeSheet> = ArrayList()
 
             //Times Demo
-            for ( i in 1..10){
+            for ( i in 1..1000){
                 val timeSheet = TimeSheet()
                 timeSheet.addDefRow()
                 contentList.add(timeSheet)
