@@ -34,6 +34,8 @@
     <string name="time_sheets_best_delta">Best lap delta</string>
     <string name="time_sheets_kart">Kart</string>
     <string name="time_sheets_karting_center">Karting Center</string>
+    <string name="time_sheets_delete_button">Delete</string>
+    <string name="time_sheet_edit_button">Edit</string>
 
     <!-- Add Activity -->
     <string name="add_activity_header">Add Time Sheet</string>

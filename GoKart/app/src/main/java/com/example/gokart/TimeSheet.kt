@@ -4,21 +4,25 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TableLayout
-import android.widget.TextView
+import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
+import kotlin.random.Random
 
 class TimeSheet() {
 
     val viewList : MutableList<View> = ArrayList()
     val contentList : MutableList<SheetValues> = ArrayList()
+    private var laps : Int = 0
 
     fun addDefRow( ){
-        addRow(1, "1.1.1111", "+1.111", "+1")
-        addRow(2, "1.1.1111", "+1.111", "+1")
+        val ii = Random.nextInt(1,15)
+        for ( i in 0..ii )
+            addRow( "1.1.1111", "+1.111", "+1")
     }
 
-    fun addRow( lap : Int, time : String, bestlap_delta : String, last_delta : String) {
-        contentList.add( SheetValues(lap, time, bestlap_delta, last_delta) )
+    fun addRow( time : String, bestlap_delta : String, last_delta : String) {
+        laps += 1
+        contentList.add( SheetValues(laps, time, bestlap_delta, last_delta) )
     }
 
     //View
@@ -26,12 +30,34 @@ class TimeSheet() {
         //Inflate
         fun inflate( parent : ViewGroup, inflater : LayoutInflater, timeSheet: TimeSheet ): View {
             //set view
-            val view = inflater.inflate( R.layout.fragment_table, parent, false )
+            val view = inflater.inflate( R.layout.view_time_sheet, parent, false )
+
+            view.findViewById<ConstraintLayout>(R.id.time_sheet_button_popup).visibility = View.GONE
+
+            //Buttons
+            view.isClickable = true
+            view.setOnClickListener {
+                view.findViewById<ConstraintLayout>(R.id.time_sheet_button_popup).visibility =
+                    View.GONE
+            }
+            view.setOnLongClickListener {
+                view.findViewById<ConstraintLayout>(R.id.time_sheet_button_popup).visibility = View.VISIBLE
+                return@setOnLongClickListener true
+            }
+
+            //On delete click
+            view.findViewById<Button>(R.id.time_sheet_delete_button).setOnClickListener {
+                //TODO
+            }
+
+            view.findViewById<Button>(R.id.time_sheet_edit_button).setOnClickListener {
+                //TODO
+            }
 
             //set sheet view
             val sheetLayout = view.findViewById<TableLayout>(R.id.times_sheet)
             for ( e in timeSheet.contentList ){
-                val row = inflater.inflate( R.layout.timesheetrow, sheetLayout, false)
+                val row = inflater.inflate( R.layout.view_time_sheet_row, sheetLayout, false)
                 sheetLayout.addView(row)
                 timeSheet.viewList.add(row)
             }

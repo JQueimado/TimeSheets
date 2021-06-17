@@ -12,7 +12,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentContainerView
@@ -114,7 +113,7 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
     class AddLapView : ConstraintLayout{
 
         constructor(context : Context, inflater : LayoutInflater, count : Int ) : super(context){
-            inflater.inflate( R.layout.add_lap_item, this, true )
+            inflater.inflate( R.layout.view_add_lap_row, this, true )
 
             // Lap Tag
             this.findViewById<TextView>(R.id.lap_number).text = "$count-0:00.000"
