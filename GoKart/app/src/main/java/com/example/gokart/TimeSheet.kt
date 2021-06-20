@@ -48,6 +48,7 @@ class TimeSheet() {
             //On delete click
             view.findViewById<Button>(R.id.time_sheet_delete_button).setOnClickListener {
                 //TODO
+
             }
 
             view.findViewById<Button>(R.id.time_sheet_edit_button).setOnClickListener {
