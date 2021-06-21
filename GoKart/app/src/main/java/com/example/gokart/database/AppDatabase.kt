@@ -11,13 +11,13 @@ import com.example.gokart.database.entity.KartingCenterEntity
 import com.example.gokart.database.entity.LapEntity
 import com.example.gokart.database.entity.TimeSheetEntity
 
-@Database( entities = arrayOf(
+@Database( entities = [
     LapEntity::class,
     TimeSheetEntity::class,
     KartEntity::class,
-    KartingCenterEntity::class
-), version = 1 )
-abstract class AppDataBase : RoomDatabase() {
+    KartingCenterEntity::class],
+    version = 1 )
+abstract class AppDatabase : RoomDatabase() {
     abstract fun lapDao() : LapDAO
     abstract fun timeSheetDao() : TimeSheetDAO
     abstract fun kartDao() : KartDAO

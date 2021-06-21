@@ -17,5 +17,5 @@ data class TimeSheetEntity (
         @ColumnInfo( name = "time_sheet_worst_lap" ) val worstLap : Int,
         @ColumnInfo( name = "time_sheet_average_lap" ) val averageLap : Int,
         @ColumnInfo( name = "time_sheet_consistency" ) val consistency : Int,
-        @ColumnInfo( name = "time_sheet_date" ) val date : Date
+        @ColumnInfo( name = "time_sheet_date" ) val date : Long
         )
