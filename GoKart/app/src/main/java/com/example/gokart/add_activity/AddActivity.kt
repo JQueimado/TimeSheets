@@ -1,4 +1,4 @@
-package com.example.gokart
+package com.example.gokart.add_activity
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
+import com.example.gokart.*
 import com.google.android.material.textfield.TextInputEditText
 import java.util.*
 
@@ -79,7 +80,7 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
         //Fragment manager
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            add( R.id.picker_fragment, kartPicker)
+            add(R.id.picker_fragment, kartPicker)
         }
 
         //Back button
@@ -113,7 +114,7 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
     class AddLapView : ConstraintLayout{
 
         constructor(context : Context, inflater : LayoutInflater, count : Int ) : super(context){
-            inflater.inflate( R.layout.view_add_lap_row, this, true )
+            inflater.inflate(R.layout.view_add_lap_row, this, true )
 
             // Lap Tag
             this.findViewById<TextView>(R.id.lap_number).text = "$count-0:00.000"

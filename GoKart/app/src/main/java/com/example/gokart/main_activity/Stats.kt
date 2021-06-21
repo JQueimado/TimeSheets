@@ -1,8 +1,9 @@
-package com.example.gokart
+package com.example.gokart.main_activity
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.gokart.R
 
 class Stats() {
 

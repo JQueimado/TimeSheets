@@ -1,11 +1,9 @@
-package com.example.gokart
+package com.example.gokart.add_activity
 
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.widget.DatePicker
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.DecorContentParent
 import androidx.fragment.app.DialogFragment
 import java.util.*
 

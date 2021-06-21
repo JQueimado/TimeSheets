@@ -1,4 +1,4 @@
-package com.example.gokart
+package com.example.gokart.add_activity
 
 import android.content.Context
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.gokart.R
 import kotlin.random.Random
 
 class ChoseKartFragment(parent : AddActivity) : Fragment() {
@@ -99,7 +100,7 @@ class ChoseKartFragment(parent : AddActivity) : Fragment() {
     //Item Picker
     class ChoseKartItem : ConstraintLayout{
 
-        constructor( name : String, context : Context, inflater: LayoutInflater, parent: ChoseKartFragment ): super(context){
+        constructor( name : String, context : Context, inflater: LayoutInflater, parent: ChoseKartFragment): super(context){
 
             inflater.inflate(R.layout.view_kart_picker_object, this, true)
 

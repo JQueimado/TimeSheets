@@ -1,4 +1,4 @@
-package com.example.gokart
+package com.example.gokart.main_activity
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -25,7 +25,7 @@ class MyRVAdapter( context: Context, items : MutableList<TimeSheet> ) : Recycler
         if ( position == STATS_POSITION )
             Stats.setValues()
         else
-            TimeSheet.setValues( itemList[position-1] )
+            TimeSheet.setValues(itemList[position - 1])
     }
 
     override fun getItemViewType(position: Int): Int {

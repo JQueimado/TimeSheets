@@ -10,11 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GoKart">
         <activity
-            android:name=".AddActivity"
+            android:name=".add_activity.AddActivity"
             android:label="@string/title_activity_add"
             android:theme="@style/Theme.GoKart.NoActionBar"
-            android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".MainActivity">
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".main_activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

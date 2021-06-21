@@ -1,4 +1,4 @@
-package com.example.gokart
+package com.example.gokart.add_activity
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,8 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.example.gokart.R
 
-class AddKartFragment( parent : AddActivity ) : Fragment() {
+class AddKartFragment( parent : AddActivity) : Fragment() {
 
     val parent : AddActivity = parent
 

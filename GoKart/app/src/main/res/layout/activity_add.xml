@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddActivity">
+    tools:context=".add_activity.AddActivity">
 
     <!-- NavBar -->
 
@@ -201,7 +201,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/table_fragment_table_shape"
-                tools:context=".AddActivity"
+                tools:context=".add_activity.AddActivity"
                 android:layout_marginHorizontal="10dp">
 
                 <TextView

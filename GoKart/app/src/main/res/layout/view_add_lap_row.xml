@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/table_fragment_table_shape"
-    tools:context=".AddActivity">
+    tools:context=".add_activity.AddActivity">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/lap_remove_button"
