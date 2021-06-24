@@ -10,6 +10,7 @@ import com.example.gokart.database.dao.KartDAO
 import com.example.gokart.database.dao.KartingCenterDAO
 import com.example.gokart.database.entity.KartEntity
 import com.example.gokart.database.entity.KartingCenterEntity
+import com.example.gokart.database.entity.KartingCenterWithKarts
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Before
@@ -28,6 +29,12 @@ class DatabaseKartingCenterTest {
         KartingCenterEntity("1234", "321", 0),
         KartingCenterEntity("4321", "321", 0),
         KartingCenterEntity("5432", "321", 0)
+    )
+
+    private val testKarts = arrayListOf(
+        KartEntity(0,23, 50, ""),
+        KartEntity(0, 30, 50, ""),
+        KartEntity(0, 50, 125, "")
     )
 
     @Before
@@ -111,6 +118,7 @@ class DatabaseKartingCenterTest {
         assertThat( kartingCenter2, equalTo(kartingCenter1) ) //Clean result
     }
 
+    //Test multiple values
     @Test
     fun readWriteMultipleKartingCenter(){
         for (kartingCenter in testKartingCenters){
@@ -125,6 +133,7 @@ class DatabaseKartingCenterTest {
 
     }
 
+    //test relation extraction
     @Test
     fun readwriteComplex(){
         kartingCenterDAO.addKartingCenter(testKartingCenters[0])
@@ -132,32 +141,18 @@ class DatabaseKartingCenterTest {
         val result = kartingCenterDAO.getAllSimple()
         val kartingCenter1 = result[0]
 
-        kartDAO.addKart( KartEntity(
-            kartingCenter1.kartingCenterId,
-            23,
-            50,
-            "" ) )
+        for (kart in testKarts){
+            kart.kartingCenter = kartingCenter1.kartingCenterId
+            kartDAO.addKart(kart)
+        }
 
-        kartDAO.addKart( KartEntity(
-            kartingCenter1.kartingCenterId,
-            30,
-            50,
-            "" ) )
-
-        kartDAO.addKart( KartEntity(
-            kartingCenter1.kartingCenterId,
-            50,
-            125,
-            "" ) )
+        val compare = KartingCenterWithKarts( kartingCenter1, testKarts )
 
         val result2 = kartingCenterDAO.getAllComplex()[0]
-        assertThat(result2.kartingCenterEntity , equalTo(kartingCenter1))
-
-        val result3 = kartDAO.getAllSimple()
-        assertThat( result2.karts, equalTo(result3) )
-
+        assertThat( result2, equalTo(compare) )
     }
 
+    //test relation extraction
     @Test
     fun readOneComplex(){
         //insert
@@ -166,24 +161,10 @@ class DatabaseKartingCenterTest {
         val result = kartingCenterDAO.getAllSimple()
         val kartingCenter1 = result[0]
 
-        kartDAO.addKart( KartEntity(
-            kartingCenter1.kartingCenterId,
-            23,
-            50,
-            "" ) )
-
-        kartDAO.addKart( KartEntity(
-            kartingCenter1.kartingCenterId,
-            30,
-            50,
-            "" ) )
-
-        kartDAO.addKart( KartEntity(
-            kartingCenter1.kartingCenterId,
-            50,
-            125,
-            "" ) )
-
+        for (kart in testKarts){
+            kart.kartingCenter = kartingCenter1.kartingCenterId
+            kartDAO.addKart(kart)
+        }
 
         val result2 = kartingCenterDAO.getAllSimple()[0]
         val result3 = kartingCenterDAO.getOneComplex(result2.kartingCenterId)[0]
