@@ -157,4 +157,39 @@ class DatabaseKartingCenterTest {
         assertThat( result2.karts, equalTo(result3) )
 
     }
+
+    @Test
+    fun readOneComplex(){
+        //insert
+        kartingCenterDAO.addKartingCenter(testKartingCenters[0])
+
+        val result = kartingCenterDAO.getAllSimple()
+        val kartingCenter1 = result[0]
+
+        kartDAO.addKart( KartEntity(
+            kartingCenter1.kartingCenterId,
+            23,
+            50,
+            "" ) )
+
+        kartDAO.addKart( KartEntity(
+            kartingCenter1.kartingCenterId,
+            30,
+            50,
+            "" ) )
+
+        kartDAO.addKart( KartEntity(
+            kartingCenter1.kartingCenterId,
+            50,
+            125,
+            "" ) )
+
+
+        val result2 = kartingCenterDAO.getAllSimple()[0]
+        val result3 = kartingCenterDAO.getOneComplex(result2.kartingCenterId)[0]
+        val kartList = kartDAO.getAllSimple()
+
+        assertThat( result3.karts, equalTo(kartList) )
+
+    }
 }
