@@ -78,7 +78,7 @@ class DatabaseKartTest {
     fun readOneKart(){
         kartDAO.addKart( testKarts[0] ) //write
         val result1 = kartDAO.getAllSimple()[0] //read all
-        val result2 = kartDAO.getOneSimple(result1.kartId)[0] //read one
+        val result2 = kartDAO.getOneSimple(result1.kartId) //read one
         assertThat( result1, equalTo(result2) ) //compare
     }
 
@@ -133,7 +133,7 @@ class DatabaseKartTest {
         }
 
         val compare = KartWithTimeSheets( result1, testTimeSheets)
-        val result2 = kartDAO.getOneComplex(result1.kartId)[0]
+        val result2 = kartDAO.getOneComplex(result1.kartId)
         assertThat( result2, equalTo(compare) )
     }
 }

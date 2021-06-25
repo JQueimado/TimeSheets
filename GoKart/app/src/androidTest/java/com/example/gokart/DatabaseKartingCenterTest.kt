@@ -112,7 +112,7 @@ class DatabaseKartingCenterTest {
 
         //read Value
         kartingCenter1 = kartingCenterDAO.getAllSimple()[0]
-        val kartingCenter2 = kartingCenterDAO.getOneSimple(kartingCenter1.kartingCenterId)[0]
+        val kartingCenter2 = kartingCenterDAO.getOneSimple(kartingCenter1.kartingCenterId)
 
         //Test
         assertThat( kartingCenter2, equalTo(kartingCenter1) ) //Clean result
@@ -167,7 +167,7 @@ class DatabaseKartingCenterTest {
         }
 
         val result2 = kartingCenterDAO.getAllSimple()[0]
-        val result3 = kartingCenterDAO.getOneComplex(result2.kartingCenterId)[0]
+        val result3 = kartingCenterDAO.getOneComplex(result2.kartingCenterId)
         val kartList = kartDAO.getAllSimple()
 
         assertThat( result3.karts, equalTo(kartList) )

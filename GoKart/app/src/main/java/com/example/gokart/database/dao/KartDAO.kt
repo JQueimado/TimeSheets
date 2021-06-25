@@ -20,7 +20,7 @@ interface KartDAO {
     fun getAllSimple() : List<KartEntity>
 
     @Query("SELECT * FROM kart WHERE kart_id = (:kartId)")
-    fun getOneSimple( kartId : Long ) : List<KartEntity>
+    fun getOneSimple( kartId : Long ) : KartEntity
 
     @Transaction
     @Query("SELECT * FROM kart")
@@ -28,5 +28,5 @@ interface KartDAO {
 
     @Transaction
     @Query("SELECT * FROM kart WHERE kart_id = (:kartId)")
-    fun getOneComplex( kartId : Long ) : List<KartWithTimeSheets>
+    fun getOneComplex( kartId : Long ) : KartWithTimeSheets
 }

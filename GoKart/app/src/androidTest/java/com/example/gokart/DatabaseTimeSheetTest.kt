@@ -72,6 +72,14 @@ class DatabaseTimeSheetTest {
         }
     }
 
+    @Test
+    fun readOneTimeSheet(){
+        timeSheetDAO.addTimeSheet( testTimeSheets[0] ) //Write
+        val result1 = timeSheetDAO.getAllSimple()[0]
+        val result2 = timeSheetDAO.getOneSimple( result1.timeSheetId )
+        assertThat( result2, equalTo(result1) )
+    }
+
     //Test Delete
     @Test
     fun deleteTimeSheet(){
@@ -91,7 +99,7 @@ class DatabaseTimeSheetTest {
         values.timeSheetId = result1.timeSheetId
         timeSheetDAO.updateTimeSheet( values ) //Update test0 to test1
 
-        val result2 = timeSheetDAO.getOneSimple( result1.timeSheetId )[0] //get updated value
+        val result2 = timeSheetDAO.getOneSimple( result1.timeSheetId ) //get updated value
         assertThat( result2, equalTo(testTimeSheets[1]) ) //verify update
     }
 
@@ -121,7 +129,7 @@ class DatabaseTimeSheetTest {
         }
 
         val testCompare = TimeSheetWithLaps( result1, testLaps )
-        val result = timeSheetDAO.getOneComplex( result1.timeSheetId )[0]
+        val result = timeSheetDAO.getOneComplex( result1.timeSheetId )
         assertThat( result, equalTo(testCompare) )
     }
 }

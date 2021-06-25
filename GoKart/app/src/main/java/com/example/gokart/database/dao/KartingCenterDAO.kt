@@ -26,10 +26,10 @@ interface KartingCenterDAO {
 
     //Get One
     @Query(value = "SELECT * FROM karting_center WHERE karting_center_id = (:id)")
-    fun getOneSimple( vararg id : Long) : List<KartingCenterEntity>
+    fun getOneSimple( vararg id : Long) : KartingCenterEntity
 
     @Transaction
     @Query(value = "SELECT * FROM karting_center WHERE karting_center_id = (:id)")
-    fun getOneComplex( vararg id : Long) : List<KartingCenterWithKarts>
+    fun getOneComplex( vararg id : Long) : KartingCenterWithKarts
 
 }

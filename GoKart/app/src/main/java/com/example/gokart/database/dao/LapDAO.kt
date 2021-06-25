@@ -18,5 +18,5 @@ interface LapDAO {
     fun getAll() : List<LapEntity>
 
     @Query("SELECT * FROM lap WHERE lap_id == (:id)")
-    fun getOne( vararg id : Long ) : List<LapEntity>
+    fun getOne( vararg id : Long ) : LapEntity
 }

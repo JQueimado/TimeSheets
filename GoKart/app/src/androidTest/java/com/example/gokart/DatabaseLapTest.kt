@@ -52,7 +52,7 @@ class DatabaseLapTest {
     fun writeReadOneLap(){
         lapDAO.addLap( testLaps[0] )
         val result1 = lapDAO.getAll()[0]
-        val result2 = lapDAO.getOne( result1.lapId )[0]
+        val result2 = lapDAO.getOne( result1.lapId )
         assertThat( result2, equalTo(testLaps[0]) )
     }
 
@@ -74,7 +74,7 @@ class DatabaseLapTest {
         values.lapId = result1.lapId
         lapDAO.updateLap(values)
 
-        val result2 = lapDAO.getOne(result1.lapId)[0]
+        val result2 = lapDAO.getOne(result1.lapId)
 
         assertThat( result2, equalTo(testLaps[1]) )
     }
