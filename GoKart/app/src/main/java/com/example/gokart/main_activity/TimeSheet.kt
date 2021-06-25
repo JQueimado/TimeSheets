@@ -7,24 +7,15 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.gokart.R
+import com.example.gokart.database.entity.LapEntity
+import com.example.gokart.database.entity.TimeSheetEntity
+import com.example.gokart.database.entity.TimeSheetWithLaps
 import kotlin.random.Random
 
-class TimeSheet() {
+class TimeSheet( values: TimeSheetWithLaps ) {
 
+    private var values : TimeSheetWithLaps = values
     val viewList : MutableList<View> = ArrayList()
-    val contentList : MutableList<SheetValues> = ArrayList()
-    private var laps : Int = 0
-
-    fun addDefRow( ){
-        val ii = Random.nextInt(1,15)
-        for ( i in 0..ii )
-            addRow( "1.1.1111", "+1.111", "+1")
-    }
-
-    fun addRow( time : String, bestlap_delta : String, last_delta : String) {
-        laps += 1
-        contentList.add( SheetValues(laps, time, bestlap_delta, last_delta) )
-    }
 
     //View
     companion object{
@@ -58,14 +49,11 @@ class TimeSheet() {
 
             //set sheet view
             val sheetLayout = view.findViewById<TableLayout>(R.id.times_sheet)
-            for ( e in timeSheet.contentList ){
+            for ( e in timeSheet.values.laps ){
                 val row = inflater.inflate(R.layout.view_time_sheet_row, sheetLayout, false)
                 sheetLayout.addView(row)
                 timeSheet.viewList.add(row)
             }
-
-            Log.d("TimeSheet", "viewlistSize:"+timeSheet.viewList.size)
-            Log.d("TimeSheet", "contentlistSize:"+timeSheet.contentList.size)
 
             return view
         }
@@ -76,22 +64,15 @@ class TimeSheet() {
             //TODO
             //sheet values
             for( i in 0 until timeSheet.viewList.size){
-                setLapValue( timeSheet.viewList[i], timeSheet.contentList[i] )
+                setLapValue( timeSheet.viewList[i], timeSheet.values.laps[i] )
             }
         }
 
-        private fun setLapValue( view : View, sheetValues: SheetValues){
-            view.findViewById<TextView>(R.id.time_sheet_lap_number).text = sheetValues.lap.toString()
+        private fun setLapValue( view : View, sheetValues: LapEntity){
+            view.findViewById<TextView>(R.id.time_sheet_lap_number).text = sheetValues.number.toString()
             view.findViewById<TextView>(R.id.time_sheet_lap).text = sheetValues.time
-            view.findViewById<TextView>(R.id.time_sheet_bestlap_delta).text = sheetValues.bestLapDelta
+            view.findViewById<TextView>(R.id.time_sheet_bestlap_delta).text = sheetValues.bestDelta
             view.findViewById<TextView>(R.id.time_sheet_lastlap_delta).text = sheetValues.lastDelta
         }
     }
-
-    //Data Holder
-    data class SheetValues(
-        val lap : Int,
-        val time : String,
-        val bestLapDelta: String,
-        val lastDelta: String)
 }

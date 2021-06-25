@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gokart.database.entity.TimeSheetWithLaps
 
 class MyRVAdapter( context: Context, items : MutableList<TimeSheet> ) : RecyclerView.Adapter<MyRVAdapter.MyVHolder>() {
 
