@@ -3,14 +3,14 @@ package com.example.gokart.database.entity
 import androidx.room.*
 
 @Entity( tableName = "lap" )
-class LapEntity (
+data class LapEntity (
+    @ColumnInfo( name = "lap_time_sheet" ) var timeSheetId : Long,
+    @ColumnInfo( name = "lap_number") var number : Int,
+    @ColumnInfo( name = "lap_time" ) var time : String,
+    @ColumnInfo( name = "lap_best_delta" ) var bestDelta : String,
+    @ColumnInfo( name = "lap_last_delta" ) var lastDelta : String
+    ){
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "lap_id")
-    val lapId : Int,
-
-    @ColumnInfo( name = "lap_time_sheet" ) val timeSheetId : Int,
-    @ColumnInfo( name = "lap_number") val number : Int,
-    @ColumnInfo( name = "lap_time" ) val time : String,
-    @ColumnInfo( name = "lap_best_delta" ) val bestDelta : String,
-    @ColumnInfo( name = "lap_last_delta" ) val lastDelta : String
-    )
+    var lapId : Long = 0
+}

@@ -6,8 +6,11 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.gokart.database.AppDatabase
+import com.example.gokart.database.dao.LapDAO
 import com.example.gokart.database.dao.TimeSheetDAO
+import com.example.gokart.database.entity.LapEntity
 import com.example.gokart.database.entity.TimeSheetEntity
+import com.example.gokart.database.entity.TimeSheetWithLaps
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Before
@@ -19,18 +22,27 @@ class DatabaseTimeSheetTest {
 
     private lateinit var db : AppDatabase
     private lateinit var timeSheetDAO : TimeSheetDAO
+    private lateinit var lapDAO : LapDAO
 
     @Before
     fun createDb(){
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder( context, AppDatabase::class.java).build()
         timeSheetDAO = db.timeSheetDao()
+        lapDAO = db.lapDao()
     }
 
     private val testTimeSheets = arrayListOf(
         TimeSheetEntity( 0, 0, 100, 1000, 100,60, 10000),
         TimeSheetEntity( 0, 0, 50, 100, 100,60, 10000),
         TimeSheetEntity( 0, 0, 200, 1000, 100,60, 10000)
+    )
+
+    private val testLaps = arrayListOf(
+        LapEntity(0,1,"1.30:300", "+122","-0.001"),
+        LapEntity(0,2,"1.31:300", "+123","-0.002"),
+        LapEntity(0,3,"1.34:300", "+124","-0.003"),
+        LapEntity(0,4,"1.36:300", "+125","-0.004")
     )
 
     @After
@@ -81,5 +93,35 @@ class DatabaseTimeSheetTest {
 
         val result2 = timeSheetDAO.getOneSimple( result1.timeSheetId )[0] //get updated value
         assertThat( result2, equalTo(testTimeSheets[1]) ) //verify update
+    }
+
+    @Test
+    fun getAllComplexTimeSheet(){
+        timeSheetDAO.addTimeSheet(testTimeSheets[0])
+        val result1 = timeSheetDAO.getAllSimple()[0]
+
+        for (lap in testLaps){
+            lap.timeSheetId = result1.timeSheetId
+            lapDAO.addLap(lap)
+        }
+
+        val testCompare = TimeSheetWithLaps( result1, testLaps )
+        val result = timeSheetDAO.getAllComplex()[0]
+        assertThat( result, equalTo(testCompare) )
+    }
+
+    @Test
+    fun getOneComplexTimeSheet(){
+        timeSheetDAO.addTimeSheet(testTimeSheets[0])
+        val result1 = timeSheetDAO.getAllSimple()[0]
+
+        for (lap in testLaps){
+            lap.timeSheetId = result1.timeSheetId
+            lapDAO.addLap(lap)
+        }
+
+        val testCompare = TimeSheetWithLaps( result1, testLaps )
+        val result = timeSheetDAO.getOneComplex( result1.timeSheetId )[0]
+        assertThat( result, equalTo(testCompare) )
     }
 }
