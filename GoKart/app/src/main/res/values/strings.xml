@@ -1,14 +1,6 @@
 <resources>
     <string name="app_name">KartingSheets</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="Index_Udef">udef</string>
-    <string name="Time_Def">some time set</string>
-    <string name="Dif_Def">some dif</string>
-    <string name="index">Index</string>
-    <string name="time">Time</string>
-    <string name="dif_to_last_lap">dif to last lap</string>
-    <string name="dif_to_best">dif to best</string>
 
     <!-- NavBar Text -->
 
@@ -25,9 +17,7 @@
 
     <!-- Time Sheets -->
     <string name="times_sheets_date">Date</string>
-    <string name="times_sheets_best_lap">Best lap</string>
     <string name="times_sheets_average_lap">Average lap</string>
-    <string name="times_sheets_consistency">Consistency</string>
     <string name="time_sheets_lap">Lap</string>
     <string name="time_sheets_time">Time</string>
     <string name="time_sheets_last_delta">Last lap delta</string>
@@ -61,15 +51,9 @@
     <string name="default_lap_number">-1</string>
     <string name="default_delta">+0.000</string>
     <string name="title_activity_add">AddActivity</string>
-    <string name="default_kart_unknown">Unknown</string>
 
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!-- SetUp Activity -->
 
 </resources>

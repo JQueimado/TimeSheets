@@ -1,4 +1,4 @@
-package com.example.gokart.Converters
+package com.example.gokart.data_converters
 
 class LapConverter {
     companion object{
@@ -15,7 +15,11 @@ class LapConverter {
         }
 
         fun toText( number : Int ) : String{
-            return "" //TODO
+            val temp = number / 1000
+            val mls = number % 1000
+            val sec = temp % 60
+            val min = temp / 60
+            return "%d:%02d.%03d".format( min,sec,mls )
         }
     }
 }

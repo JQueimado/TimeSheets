@@ -1,6 +1,6 @@
 package com.example.gokart
 
-import com.example.gokart.Converters.LapConverter
+import com.example.gokart.data_converters.LapConverter
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
@@ -53,6 +53,15 @@ class LapConverterTest {
         for ( i in 0 until text.size ){
             temp = LapConverter.toInt( text[i] )
             assertThat( LapConverter.toText( temp ), equalTo( text[i] ) )
+        }
+    }
+
+    @Test
+    fun reverseBackAndForwardTest(){
+        var temp: String
+        for ( i in 0 until number.size ){
+            temp = LapConverter.toText( number[i] )
+            assertThat( LapConverter.toInt( temp ), equalTo( number[i] ) )
         }
     }
 }
