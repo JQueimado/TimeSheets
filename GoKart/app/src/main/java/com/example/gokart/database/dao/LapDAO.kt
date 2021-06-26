@@ -1,5 +1,6 @@
 package com.example.gokart.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.gokart.database.entity.LapEntity
 
@@ -15,8 +16,8 @@ interface LapDAO {
     fun deleteLap( lap: LapEntity)
 
     @Query("SELECT * FROM lap")
-    fun getAll() : List<LapEntity>
+    fun getAll() : LiveData<List<LapEntity>>
 
     @Query("SELECT * FROM lap WHERE lap_id == (:id)")
-    fun getOne( vararg id : Long ) : LapEntity
+    fun getOne( vararg id : Long ) : LiveData<LapEntity>
 }

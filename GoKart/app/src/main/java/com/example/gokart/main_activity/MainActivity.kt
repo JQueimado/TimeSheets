@@ -49,12 +49,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }else if(DEMO_MODE == 1){
 
                 db = Room.inMemoryDatabaseBuilder( applicationContext, AppDatabase::class.java ).build()
-                val allComplexTimeSheets = db.timeSheetDao().getAllComplex()
+                db.timeSheetDao().getAllComplex().observe(this, androidx.lifecycle.Observer<List<TimeSheetWithLaps>> {
 
-                //Formatting for display
-                for( timeSheetWithLaps in allComplexTimeSheets ){
-                    contentList.add( TimeSheet( timeSheetWithLaps ))
-                }
+                })
 
             }else{
 

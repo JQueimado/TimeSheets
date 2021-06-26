@@ -1,5 +1,6 @@
 package com.example.gokart.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.gokart.database.entity.KartEntity
 import com.example.gokart.database.entity.KartWithTimeSheets
@@ -17,16 +18,16 @@ interface KartDAO {
     fun deleteKart( vararg kartEntity: KartEntity )
 
     @Query("SELECT * FROM kart")
-    fun getAllSimple() : List<KartEntity>
+    fun getAllSimple() : LiveData<List<KartEntity>>
 
     @Query("SELECT * FROM kart WHERE kart_id = (:kartId)")
-    fun getOneSimple( kartId : Long ) : KartEntity
+    fun getOneSimple( kartId : Long ) : LiveData<KartEntity>
 
     @Transaction
     @Query("SELECT * FROM kart")
-    fun getAllComplex() : List<KartWithTimeSheets>
+    fun getAllComplex() : LiveData<List<KartWithTimeSheets>>
 
     @Transaction
     @Query("SELECT * FROM kart WHERE kart_id = (:kartId)")
-    fun getOneComplex( kartId : Long ) : KartWithTimeSheets
+    fun getOneComplex( kartId : Long ) : LiveData<KartWithTimeSheets>
 }
