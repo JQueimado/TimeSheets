@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentContainerView
@@ -42,7 +43,7 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
     }
 
     fun onTimePick( hour : Int, minute : Int ){
-        date = Date( year, month, day, hour, minute )
+        date = Date( year - 1900, month, day, hour, minute )
         val dateText : String = DateFormat.format("dd/MM/yyyy hh:mm", date).toString()
         findViewById<Button>(R.id.date_picker_button).setText(dateText)
     }

@@ -1,5 +1,6 @@
 package com.example.gokart.database
 
+import android.app.Application
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
@@ -21,19 +22,20 @@ import java.util.*
     KartingCenterEntity::class],
     version = 1 )
 abstract class AppDatabase : RoomDatabase() {
+    companion object{ //Static
+        private var instance : AppDatabase? = null //instance
+        private val sLock = Object() //Sync lock
 
-    private var INSTANCE : AppDatabase? = null
-    private val sLock = Object()
-
-    fun getMemoryInstance( context : Context) : AppDatabase{
-        synchronized(sLock){
-            if( INSTANCE == null )
-                INSTANCE = Room.inMemoryDatabaseBuilder(
-                    context.applicationContext,
-                    AppDatabase::class.java
-                ).build()
+        fun getMemoryInstance( application : Application) : AppDatabase{
+            synchronized(sLock){
+                if( instance == null )
+                    instance = Room.inMemoryDatabaseBuilder(
+                        application.applicationContext,
+                        AppDatabase::class.java
+                    ).build()
+            }
+            return instance!!
         }
-        return INSTANCE!!
     }
 
     abstract fun lapDao() : LapDAO

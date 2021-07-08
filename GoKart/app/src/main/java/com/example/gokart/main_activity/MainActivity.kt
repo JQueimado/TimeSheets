@@ -5,6 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
@@ -23,48 +28,85 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     // Demo mode 1 -> In memory Database (test)
     private val DEMO_MODE = 1
 
+    private val completeTimeSheetViewModel : CompleteTimeSheetViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
 
-            val contentList : MutableList<TimeSheet> = ArrayList()
-            val db : AppDatabase
-
             if (DEMO_MODE == 0) {
+
+                val contentList : MutableList<TimeSheet> = ArrayList() //Demo1
+
                 //Times Demo
                 for (i in 1..1000) {
                     val timeSheetWithLaps = TimeSheetWithLaps(
-                        TimeSheetEntity( 0, 0,78348, 79659, 79659, 60, Date().time),
+                        TimeSheetEntity(
+                            0,
+                            0,
+                            78348,
+                            79659,
+                            79659,
+                            60,
+                            Date().time),
                         arrayListOf(
-                            LapEntity(0, 0, "1.18.348", "+1.111", "-1.111"),
-                            LapEntity(0, 0, "1.18.348", "+1.111", "-1.111"),
-                            LapEntity(0, 0, "1.18.348", "+1.111", "-1.111")
+                            LapEntity(
+                                0,
+                                0,
+                                "1.18.348",
+                                "+1.111",
+                                "-1.111"),
+                            LapEntity(
+                                0,
+                                0,
+                                "1.18.348",
+                                "+1.111",
+                                "-1.111"),
+                            LapEntity(
+                                0,
+                                0,
+                                "1.18.348",
+                                "+1.111",
+                                "-1.111")
                         )
                     )
 
                     val timeSheet = TimeSheet(timeSheetWithLaps)
                     contentList.add(timeSheet)
+
+                    val myRVAdapter = MyRVAdapter(this, contentList)
+                    val recyclerView : RecyclerView = findViewById(R.id.main_activity_scroll_content)
+                    val layoutManager = LinearLayoutManager( this )
+
+                    layoutManager.orientation = LinearLayoutManager.VERTICAL
+                    recyclerView.layoutManager = layoutManager
+                    recyclerView.adapter = myRVAdapter
+
                 }
             }else if(DEMO_MODE == 1){
 
-                db = Room.inMemoryDatabaseBuilder( applicationContext, AppDatabase::class.java ).build()
-                db.timeSheetDao().getAllComplex().observe(this, androidx.lifecycle.Observer<List<TimeSheetWithLaps>> {
+                val contentList : MutableList<TimeSheet> = ArrayList() //Demo1
+                val myRVAdapter = MyRVAdapter(this, contentList)
 
-                })
+                completeTimeSheetViewModel.get().observe( this, {
+                    //Adapt
+                    val temp : MutableList<TimeSheet> = ArrayList()
+                    for( timeSheet in it )
+                        temp.add( TimeSheet(timeSheet) )
 
-            }else{
+                    //Update
+                    myRVAdapter.setTimeSheets( temp )
+                } )
+
+                val recyclerView : RecyclerView = findViewById(R.id.main_activity_scroll_content)
+                val layoutManager = LinearLayoutManager( this )
+
+                layoutManager.orientation = LinearLayoutManager.VERTICAL
+                recyclerView.layoutManager = layoutManager
+                recyclerView.adapter = myRVAdapter
 
             }
-
-            //Add to view
-            val recyclerView : RecyclerView = findViewById(R.id.main_activity_scroll_content)
-            val myRVAdapter = MyRVAdapter(this, contentList)
-            val layoutManager = LinearLayoutManager( this )
-
-            layoutManager.orientation = LinearLayoutManager.VERTICAL
-            recyclerView.layoutManager = layoutManager
-            recyclerView.adapter = myRVAdapter
 
             val addButton :Button = findViewById(R.id.nav_add_button)
 

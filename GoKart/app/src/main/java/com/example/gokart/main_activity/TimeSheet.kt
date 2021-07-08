@@ -14,7 +14,7 @@ import kotlin.random.Random
 
 class TimeSheet( values: TimeSheetWithLaps ) {
 
-    private var values : TimeSheetWithLaps = values
+    private val values : TimeSheetWithLaps = values
     val viewList : MutableList<View> = ArrayList()
 
     //View
