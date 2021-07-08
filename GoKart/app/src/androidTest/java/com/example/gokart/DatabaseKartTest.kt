@@ -1,6 +1,7 @@
 package com.example.gokart
 
 import android.content.Context
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
@@ -14,12 +15,16 @@ import com.example.gokart.database.entity.KartWithTimeSheets
 import com.example.gokart.database.entity.TimeSheetEntity
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class DatabaseKartTest {
+
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var db : AppDatabase
     private lateinit var kartDAO: KartDAO
@@ -57,7 +62,7 @@ class DatabaseKartTest {
     fun writeReadKart() {
         kartDAO.addKart(testKarts[0])
 
-        val result = kartDAO.getAllSimple()[0]
+        val result = kartDAO.getAllSimple().waitAndGet()[0]
         assertThat( result, equalTo(testKarts[0]) )
     }
 
@@ -67,7 +72,7 @@ class DatabaseKartTest {
         for (kart in testKarts )
             kartDAO.addKart(kart)
 
-        val result = kartDAO.getAllSimple()
+        val result = kartDAO.getAllSimple().waitAndGet()
         for (kart_n in 0 until testKarts.size) {
             val kartOut = result[kart_n]
             assertThat(kartOut, equalTo(testKarts[kart_n]))
@@ -77,8 +82,8 @@ class DatabaseKartTest {
     @Test
     fun readOneKart(){
         kartDAO.addKart( testKarts[0] ) //write
-        val result1 = kartDAO.getAllSimple()[0] //read all
-        val result2 = kartDAO.getOneSimple(result1.kartId) //read one
+        val result1 = kartDAO.getAllSimple().waitAndGet()[0] //read all
+        val result2 = kartDAO.getOneSimple(result1.kartId).waitAndGet() //read one
         assertThat( result1, equalTo(result2) ) //compare
     }
 
@@ -86,16 +91,16 @@ class DatabaseKartTest {
     @Test
     fun deleteKart() {
         kartDAO.addKart(testKarts[0])
-        val kart = kartDAO.getAllSimple()[0]
+        val kart = kartDAO.getAllSimple().waitAndGet()[0]
         kartDAO.deleteKart(kart)
-        assertThat( kartDAO.getAllSimple().size, equalTo(0) )
+        assertThat( kartDAO.getAllSimple().waitAndGet().size, equalTo(0) )
     }
 
     //Update
     @Test
     fun updateKart() {
         kartDAO.addKart(testKarts[0])
-        val kart = kartDAO.getAllSimple()[0]
+        val kart = kartDAO.getAllSimple().waitAndGet()[0]
         val kartValues = testKarts[3]
         kart.name = kartValues.name
         kart.displacement = kartValues.displacement
@@ -103,14 +108,14 @@ class DatabaseKartTest {
         kart.kartingCenter = kartValues.kartingCenter
 
         kartDAO.update(kart)
-        assertThat( kartDAO.getAllSimple()[0], equalTo(testKarts[3]) )
+        assertThat( kartDAO.getAllSimple().waitAndGet()[0], equalTo(testKarts[3]) )
     }
 
     //ComplexTest
     @Test
     fun readAllComplex(){
         kartDAO.addKart(testKarts[0])
-        val result1 = kartDAO.getAllSimple()[0]
+        val result1 = kartDAO.getAllSimple().waitAndGet()[0]
 
         for( ts in testTimeSheets ){
             ts.kartId = result1.kartId
@@ -118,14 +123,14 @@ class DatabaseKartTest {
         }
 
         val compare = KartWithTimeSheets( result1, testTimeSheets)
-        val result2 = kartDAO.getAllComplex()[0]
+        val result2 = kartDAO.getAllComplex().waitAndGet()[0]
         assertThat( result2, equalTo(compare) )
     }
 
     @Test
     fun readOneComplex(){
         kartDAO.addKart(testKarts[0])
-        val result1 = kartDAO.getAllSimple()[0]
+        val result1 = kartDAO.getAllSimple().waitAndGet()[0]
 
         for( ts in testTimeSheets ){
             ts.kartId = result1.kartId
@@ -133,7 +138,7 @@ class DatabaseKartTest {
         }
 
         val compare = KartWithTimeSheets( result1, testTimeSheets)
-        val result2 = kartDAO.getOneComplex(result1.kartId)
+        val result2 = kartDAO.getOneComplex(result1.kartId).waitAndGet()
         assertThat( result2, equalTo(compare) )
     }
 }

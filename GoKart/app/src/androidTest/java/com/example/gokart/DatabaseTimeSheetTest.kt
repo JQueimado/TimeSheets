@@ -1,6 +1,7 @@
 package com.example.gokart
 
 import android.content.Context
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
@@ -14,11 +15,15 @@ import com.example.gokart.database.entity.TimeSheetWithLaps
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class DatabaseTimeSheetTest {
+
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var db : AppDatabase
     private lateinit var timeSheetDAO : TimeSheetDAO
@@ -54,7 +59,7 @@ class DatabaseTimeSheetTest {
     @Test
     fun readWriteTimeSheetTest(){
         timeSheetDAO.addTimeSheet( testTimeSheets[0] ) //Write
-        val result = timeSheetDAO.getAllSimple()[0]
+        val result = timeSheetDAO.getAllSimple().waitAndGet()[0]
         assertThat( result, equalTo(testTimeSheets[0]) )
     }
 
@@ -65,7 +70,7 @@ class DatabaseTimeSheetTest {
             timeSheetDAO.addTimeSheet(ts)
         }
 
-        val result = timeSheetDAO.getAllSimple()
+        val result = timeSheetDAO.getAllSimple().waitAndGet()
 
         for (i in 0 until testTimeSheets.size){
             assertThat( result[i], equalTo(testTimeSheets[i]) )
@@ -75,8 +80,8 @@ class DatabaseTimeSheetTest {
     @Test
     fun readOneTimeSheet(){
         timeSheetDAO.addTimeSheet( testTimeSheets[0] ) //Write
-        val result1 = timeSheetDAO.getAllSimple()[0]
-        val result2 = timeSheetDAO.getOneSimple( result1.timeSheetId )
+        val result1 = timeSheetDAO.getAllSimple().waitAndGet()[0]
+        val result2 = timeSheetDAO.getOneSimple( result1.timeSheetId ).waitAndGet()
         assertThat( result2, equalTo(result1) )
     }
 
@@ -84,29 +89,29 @@ class DatabaseTimeSheetTest {
     @Test
     fun deleteTimeSheet(){
         timeSheetDAO.addTimeSheet(testTimeSheets[0])
-        val result1 = timeSheetDAO.getAllSimple()[0]
+        val result1 = timeSheetDAO.getAllSimple().waitAndGet()[0]
         timeSheetDAO.deleteTimeSheet(result1)
-        val result2 = timeSheetDAO.getAllSimple()
+        val result2 = timeSheetDAO.getAllSimple().waitAndGet()
         assertThat( result2.size, equalTo(0) ) //check if it was deleted
     }
 
     @Test
     fun updateTimeSheet(){
         timeSheetDAO.addTimeSheet(testTimeSheets[0])
-        val result1 = timeSheetDAO.getAllSimple()[0]
+        val result1 = timeSheetDAO.getAllSimple().waitAndGet()[0]
 
         val values = testTimeSheets[1]
         values.timeSheetId = result1.timeSheetId
         timeSheetDAO.updateTimeSheet( values ) //Update test0 to test1
 
-        val result2 = timeSheetDAO.getOneSimple( result1.timeSheetId ) //get updated value
+        val result2 = timeSheetDAO.getOneSimple( result1.timeSheetId ).waitAndGet() //get updated value
         assertThat( result2, equalTo(testTimeSheets[1]) ) //verify update
     }
 
     @Test
     fun getAllComplexTimeSheet(){
         timeSheetDAO.addTimeSheet(testTimeSheets[0])
-        val result1 = timeSheetDAO.getAllSimple()[0]
+        val result1 = timeSheetDAO.getAllSimple().waitAndGet()[0]
 
         for (lap in testLaps){
             lap.timeSheetId = result1.timeSheetId
@@ -114,14 +119,14 @@ class DatabaseTimeSheetTest {
         }
 
         val testCompare = TimeSheetWithLaps( result1, testLaps )
-        val result = timeSheetDAO.getAllComplex()[0]
+        val result = timeSheetDAO.getAllComplex().waitAndGet()[0]
         assertThat( result, equalTo(testCompare) )
     }
 
     @Test
     fun getOneComplexTimeSheet(){
         timeSheetDAO.addTimeSheet(testTimeSheets[0])
-        val result1 = timeSheetDAO.getAllSimple()[0]
+        val result1 = timeSheetDAO.getAllSimple().waitAndGet()[0]
 
         for (lap in testLaps){
             lap.timeSheetId = result1.timeSheetId
@@ -129,7 +134,7 @@ class DatabaseTimeSheetTest {
         }
 
         val testCompare = TimeSheetWithLaps( result1, testLaps )
-        val result = timeSheetDAO.getOneComplex( result1.timeSheetId )
+        val result = timeSheetDAO.getOneComplex( result1.timeSheetId ).waitAndGet()
         assertThat( result, equalTo(testCompare) )
     }
 }

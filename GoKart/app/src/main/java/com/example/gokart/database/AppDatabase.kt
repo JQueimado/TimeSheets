@@ -25,30 +25,15 @@ abstract class AppDatabase : RoomDatabase() {
     private var INSTANCE : AppDatabase? = null
     private val sLock = Object()
 
-    fun getInstance( context : Context, mode : Int) : AppDatabase{
+    fun getMemoryInstance( context : Context) : AppDatabase{
         synchronized(sLock){
-
-            if ( INSTANCE == null ){
-                if (mode == AppDatabase.MODE_TEST)
-                    INSTANCE = Room.inMemoryDatabaseBuilder(
-                            context.applicationContext,
-                            AppDatabase::class.java)
-                        .allowMainThreadQueries()
-                        .build()
-                else if( mode == MODE_PROD )
-                    INSTANCE = Room.databaseBuilder(
-                        context.applicationContext,
-                        AppDatabase::class.java, "GoKart.db")
-                        .allowMainThreadQueries()
-                        .build()
-            }
+            if( INSTANCE == null )
+                INSTANCE = Room.inMemoryDatabaseBuilder(
+                    context.applicationContext,
+                    AppDatabase::class.java
+                ).build()
         }
         return INSTANCE!!
-    }
-
-    companion object {
-        private val MODE_TEST = 0
-        private val MODE_PROD = 1
     }
 
     abstract fun lapDao() : LapDAO

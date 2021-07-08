@@ -1,6 +1,7 @@
 package com.example.gokart
 
 import android.content.Context
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
@@ -14,12 +15,16 @@ import com.example.gokart.database.entity.KartingCenterWithKarts
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class DatabaseKartingCenterTest {
+
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var db : AppDatabase
     private lateinit var kartingCenterDAO: KartingCenterDAO
@@ -58,7 +63,7 @@ class DatabaseKartingCenterTest {
         val kartingCenter1 = testKartingCenters[0]
         kartingCenterDAO.addKartingCenter(kartingCenter1)
 
-        val kartingCenter2 : KartingCenterEntity = kartingCenterDAO.getAllSimple()[0]
+        val kartingCenter2 : KartingCenterEntity = kartingCenterDAO.getAllSimple().waitAndGet()[0]
         assertThat( kartingCenter2, equalTo(kartingCenter1) ) //Compare inserted value with extracted value
     }
 
@@ -70,7 +75,7 @@ class DatabaseKartingCenterTest {
         kartingCenterDAO.addKartingCenter(kartingCenter1)
 
         //read Value
-        kartingCenter1 = kartingCenterDAO.getAllSimple()[0]
+        kartingCenter1 = kartingCenterDAO.getAllSimple().waitAndGet()[0]
 
         val kartinCenterValues = testKartingCenters[1]
 
@@ -81,8 +86,8 @@ class DatabaseKartingCenterTest {
 
         //check update
         val result = kartingCenterDAO.getAllSimple()
-        assertThat( result[0].kartingCenterId, equalTo(kartingCenter1.kartingCenterId) )
-        assertThat( result[0], equalTo(testKartingCenters[1]) ) //Compare values
+        assertThat( result.waitAndGet()[0].kartingCenterId, equalTo(kartingCenter1.kartingCenterId) )
+        assertThat( result.waitAndGet()[0], equalTo(testKartingCenters[1]) ) //Compare values
     }
 
     //Delete Test
@@ -93,11 +98,11 @@ class DatabaseKartingCenterTest {
         kartingCenterDAO.addKartingCenter(kartingCenter1)
 
         //read Value
-        kartingCenter1 = kartingCenterDAO.getAllSimple()[0]
+        kartingCenter1 = kartingCenterDAO.getAllSimple().waitAndGet()[0]
 
         //delete
         kartingCenterDAO.delete(kartingCenter1)
-        val result = kartingCenterDAO.getAllSimple()
+        val result = kartingCenterDAO.getAllSimple().waitAndGet()
 
         //Test
         assertThat( result.size, equalTo(0) ) //Clean result
@@ -111,8 +116,10 @@ class DatabaseKartingCenterTest {
         kartingCenterDAO.addKartingCenter(kartingCenter1)
 
         //read Value
-        kartingCenter1 = kartingCenterDAO.getAllSimple()[0]
-        val kartingCenter2 = kartingCenterDAO.getOneSimple(kartingCenter1.kartingCenterId)
+        kartingCenter1 = kartingCenterDAO.getAllSimple().waitAndGet()[0]
+        val kartingCenter2 = kartingCenterDAO
+            .getOneSimple(kartingCenter1.kartingCenterId)
+            .waitAndGet()
 
         //Test
         assertThat( kartingCenter2, equalTo(kartingCenter1) ) //Clean result
@@ -125,7 +132,7 @@ class DatabaseKartingCenterTest {
             kartingCenterDAO.addKartingCenter(kartingCenter)
         }
 
-        val list = kartingCenterDAO.getAllSimple()
+        val list = kartingCenterDAO.getAllSimple().waitAndGet()
         assertThat( list.size, equalTo(testKartingCenters.size) ) //Compare sizes
 
         for ( kartingCenter_n in 0 until testKartingCenters.size )
@@ -138,7 +145,7 @@ class DatabaseKartingCenterTest {
     fun readwriteComplex(){
         kartingCenterDAO.addKartingCenter(testKartingCenters[0])
 
-        val result = kartingCenterDAO.getAllSimple()
+        val result = kartingCenterDAO.getAllSimple().waitAndGet()
         val kartingCenter1 = result[0]
 
         for (kart in testKarts){
@@ -148,7 +155,7 @@ class DatabaseKartingCenterTest {
 
         val compare = KartingCenterWithKarts( kartingCenter1, testKarts )
 
-        val result2 = kartingCenterDAO.getAllComplex()[0]
+        val result2 = kartingCenterDAO.getAllComplex().waitAndGet()[0]
         assertThat( result2, equalTo(compare) )
     }
 
@@ -158,7 +165,7 @@ class DatabaseKartingCenterTest {
         //insert
         kartingCenterDAO.addKartingCenter(testKartingCenters[0])
 
-        val result = kartingCenterDAO.getAllSimple()
+        val result = kartingCenterDAO.getAllSimple().waitAndGet()
         val kartingCenter1 = result[0]
 
         for (kart in testKarts){
@@ -166,9 +173,9 @@ class DatabaseKartingCenterTest {
             kartDAO.addKart(kart)
         }
 
-        val result2 = kartingCenterDAO.getAllSimple()[0]
-        val result3 = kartingCenterDAO.getOneComplex(result2.kartingCenterId)
-        val kartList = kartDAO.getAllSimple()
+        val result2 = kartingCenterDAO.getAllSimple().waitAndGet()[0]
+        val result3 = kartingCenterDAO.getOneComplex(result2.kartingCenterId).waitAndGet()
+        val kartList = kartDAO.getAllSimple().waitAndGet()
 
         assertThat( result3.karts, equalTo(kartList) )
 

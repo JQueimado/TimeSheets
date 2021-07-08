@@ -1,6 +1,7 @@
 package com.example.gokart
 
-import com.example.gokart.data_converters.LapConverter
+import com.example.gokart.data_converters.toIntTimeStamp
+import com.example.gokart.data_converters.toTextTimeStamp
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
@@ -36,14 +37,14 @@ class LapConverterTest {
     @Test
     fun toNumberTest(){
         for ( i in 0 until text.size ){
-            assertThat( LapConverter.toInt( text[i] ), equalTo( number[i] ) )
+            assertThat( text[i].toIntTimeStamp(), equalTo( number[i] ) )
         }
     }
 
     @Test
     fun toTextTest(){
         for ( i in 0 until number.size ){
-            assertThat( LapConverter.toText( number[i] ), equalTo( text[i] ) )
+            assertThat( number[i].toTextTimeStamp(), equalTo( text[i] ) )
         }
     }
 
@@ -51,8 +52,8 @@ class LapConverterTest {
     fun backAndForwardTest(){
         var temp: Int
         for ( i in 0 until text.size ){
-            temp = LapConverter.toInt( text[i] )
-            assertThat( LapConverter.toText( temp ), equalTo( text[i] ) )
+            temp = text[i].toIntTimeStamp()
+            assertThat(temp.toTextTimeStamp(), equalTo( text[i] ) )
         }
     }
 
@@ -60,8 +61,8 @@ class LapConverterTest {
     fun reverseBackAndForwardTest(){
         var temp: String
         for ( i in 0 until number.size ){
-            temp = LapConverter.toText( number[i] )
-            assertThat( LapConverter.toInt( temp ), equalTo( number[i] ) )
+            temp = number[i].toTextTimeStamp()
+            assertThat( temp.toIntTimeStamp(), equalTo( number[i] ) )
         }
     }
 }
