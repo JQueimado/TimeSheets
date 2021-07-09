@@ -11,13 +11,14 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.gokart.R
 import kotlin.random.Random
 
-class ChoseKartFragment(parent : AddActivity) : Fragment() {
-
-    val parent : AddActivity = parent
+class ChoseKartingCenterAndKartFragment(
+    private val parent : AddActivity,
+    private val mode : Short)
+    : Fragment() {
 
     private val listCheck : ArrayList<ChoseKartItem> = ArrayList()
     private var picked : ChoseKartItem? = null
-    private var lastCommited : ChoseKartItem? = null
+    private var lastCommitted : ChoseKartItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,8 +59,8 @@ class ChoseKartFragment(parent : AddActivity) : Fragment() {
             View.OnClickListener {
                 parent.onPickKartBack()
                 picked?.setUnchecked()
-                lastCommited?.setChecked()
-                picked = lastCommited
+                lastCommitted?.setChecked()
+                picked = lastCommitted
         })
 
         //On Confirm click
@@ -70,7 +71,7 @@ class ChoseKartFragment(parent : AddActivity) : Fragment() {
                 else
                     picked?.let { it1 -> parent.onPickKartConfirm( it1.getName() ) }
 
-                lastCommited = picked
+                lastCommitted = picked
         })
 
         //Add Kart
@@ -100,7 +101,7 @@ class ChoseKartFragment(parent : AddActivity) : Fragment() {
     //Item Picker
     class ChoseKartItem : ConstraintLayout{
 
-        constructor( name : String, context : Context, inflater: LayoutInflater, parent: ChoseKartFragment): super(context){
+        constructor( name : String, context : Context, inflater: LayoutInflater, parent: ChoseKartingCenterAndKartFragment): super(context){
 
             inflater.inflate(R.layout.view_kart_picker_object, this, true)
 
@@ -125,6 +126,11 @@ class ChoseKartFragment(parent : AddActivity) : Fragment() {
             this.findViewById<CheckBox>(R.id.chose_kart_checkbox).isChecked = false
         }
 
+    }
+
+    companion object{
+        val KART_MODE : Short = 0
+        val KARTING_CENTER_MODE : Short = 1
     }
 
 }

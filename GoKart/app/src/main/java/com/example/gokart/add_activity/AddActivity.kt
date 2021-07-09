@@ -12,7 +12,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentContainerView
@@ -25,7 +24,10 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
 
     private val datePicker : DatePickerFragment = DatePickerFragment(this);
     private val timePicker : TimePickerFragment = TimePickerFragment(this)
-    private val kartPicker : ChoseKartFragment = ChoseKartFragment(this)
+    private val kartingCenterAndKartPicker = ChoseKartingCenterAndKartFragment(
+        this,
+        ChoseKartingCenterAndKartFragment.KART_MODE
+    )
 
     private var date : Date = Date()
     private var year : Int = 0
@@ -58,7 +60,9 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
     }
 
     fun onAddKartPress(){
-        val addKartFragment = AddKartFragment(this)
+        val addKartFragment = AddKartingCenterAndKartFragment(
+            this,
+            AddKartingCenterAndKartFragment.KART_MODE)
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             replace(R.id.picker_fragment, addKartFragment)
@@ -68,7 +72,7 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
     fun onAddKartBackPress(){
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(R.id.picker_fragment, kartPicker)
+            replace(R.id.picker_fragment, kartingCenterAndKartPicker)
         }
     }
 
@@ -81,7 +85,7 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
         //Fragment manager
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            add(R.id.picker_fragment, kartPicker)
+            add(R.id.picker_fragment, kartingCenterAndKartPicker)
         }
 
         //Back button
