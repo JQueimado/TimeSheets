@@ -6,7 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class MyRVAdapter( context: Context, items : MutableList<TimeSheet> ) : RecyclerView.Adapter<MyRVAdapter.MyVHolder>() {
+class TimeSheetsRVAdapter(context: Context, items : MutableList<TimeSheet> )
+    : RecyclerView.Adapter<TimeSheetsRVAdapter.TimeSheetsVHolder>() {
 
     private val statsPosition :Int = 0
 
@@ -14,14 +15,14 @@ class MyRVAdapter( context: Context, items : MutableList<TimeSheet> ) : Recycler
     private var itemList = items
     private val itemCount = items.size+1
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyVHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimeSheetsVHolder {
         return if (viewType == statsPosition )
-            MyVHolder( Stats.inflate(parent, inflater) )
+            TimeSheetsVHolder( Stats.inflate(parent, inflater) )
         else
-            MyVHolder( TimeSheet.inflate(parent, inflater, itemList[viewType-1]) )
+            TimeSheetsVHolder( TimeSheet.inflate(parent, inflater, itemList[viewType-1]) )
     }
 
-    override fun onBindViewHolder(holder: MyVHolder, position: Int) {
+    override fun onBindViewHolder(holder: TimeSheetsVHolder, position: Int) {
         if ( position == statsPosition )
             Stats.setValues()
         else
@@ -42,5 +43,5 @@ class MyRVAdapter( context: Context, items : MutableList<TimeSheet> ) : Recycler
     }
 
     //ViewHolder
-    class MyVHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class TimeSheetsVHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }

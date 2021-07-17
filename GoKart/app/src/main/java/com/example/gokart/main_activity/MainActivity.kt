@@ -5,17 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
 import com.example.gokart.add_activity.AddActivity
 import com.example.gokart.R
-import com.example.gokart.database.AppDatabase
 import com.example.gokart.database.entity.LapEntity
 import com.example.gokart.database.entity.TimeSheetEntity
 import com.example.gokart.database.entity.TimeSheetWithLaps
@@ -75,7 +69,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     val timeSheet = TimeSheet(timeSheetWithLaps)
                     contentList.add(timeSheet)
 
-                    val myRVAdapter = MyRVAdapter(this, contentList)
+                    val myRVAdapter = TimeSheetsRVAdapter(this, contentList)
                     val recyclerView : RecyclerView = findViewById(R.id.main_activity_scroll_content)
                     val layoutManager = LinearLayoutManager( this )
 
@@ -87,7 +81,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }else if(DEMO_MODE == 1){
 
                 val contentList : MutableList<TimeSheet> = ArrayList() //Demo1
-                val myRVAdapter = MyRVAdapter(this, contentList)
+                val myRVAdapter = TimeSheetsRVAdapter(this, contentList)
 
                 completeTimeSheetViewModel.get().observe( this, {
                     //Adapt

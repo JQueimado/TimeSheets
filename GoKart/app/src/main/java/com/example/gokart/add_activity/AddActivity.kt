@@ -24,9 +24,8 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
 
     private val datePicker : DatePickerFragment = DatePickerFragment(this);
     private val timePicker : TimePickerFragment = TimePickerFragment(this)
-    private val kartingCenterAndKartPicker = ChoseKartingCenterAndKartFragment(
-        this,
-        ChoseKartingCenterAndKartFragment.KART_MODE
+    private val kartingCenterAndKartPicker = ItemPickerView(
+        this
     )
 
     private var date : Date = Date()
@@ -60,9 +59,7 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
     }
 
     fun onAddKartPress(){
-        val addKartFragment = AddKartingCenterAndKartFragment(
-            this,
-            AddKartingCenterAndKartFragment.KART_MODE)
+        val addKartFragment = PickerAddFragment(this)
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             replace(R.id.picker_fragment, addKartFragment)

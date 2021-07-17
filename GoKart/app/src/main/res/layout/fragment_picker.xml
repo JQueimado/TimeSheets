@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".add_activity.ChoseKartingCenterAndKartFragment"
+    tools:context=".add_activity.ItemPickerView"
     android:layout_gravity="center"
     android:clickable="true">
 
@@ -16,33 +16,13 @@
         android:background="@drawable/popup_background">
 
         <!-- Picker -->
-        <ScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/picker_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="417dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="3dp">
-
-            <LinearLayout
-                android:id="@+id/choose_kart_karts_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginHorizontal="3dp">
-
-                <TextView
-                    android:id="@+id/add_add_kart_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_chose_fragment_add_kart"
-                    android:layout_gravity="center"
-                    android:textAlignment="center"
-                    android:background="@drawable/popup_item_background"
-                    android:paddingVertical="10dp"/>
-
-            </LinearLayout>
-
-        </ScrollView>
+            android:layout_marginTop="3dp"/>
 
         <!-- Nav Bar -->
         <androidx.constraintlayout.widget.ConstraintLayout

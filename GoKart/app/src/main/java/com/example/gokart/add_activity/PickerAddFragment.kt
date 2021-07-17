@@ -8,10 +8,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.example.gokart.R
 
-class AddKartingCenterAndKartFragment(parent : AddActivity, mode:Short) : Fragment() {
-
-    val parent : AddActivity = parent
-    val mode = mode
+class PickerAddFragment(val parent: AddActivity) : Fragment() {
+    private var mode : Short = KART_MODE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,17 +23,9 @@ class AddKartingCenterAndKartFragment(parent : AddActivity, mode:Short) : Fragme
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add_kart, container, false)
 
-        if( mode == KART_MODE ) { //Kart Mode
-
-            //OK
-            view.findViewById<Button>(R.id.add_kart_confirm_button).setOnClickListener {
-                parent.onAddKartBackPress()
-            }
-
-        }else{ //Karting Center mode
-
-
-
+        //OK
+        view.findViewById<Button>(R.id.add_kart_confirm_button).setOnClickListener {
+            parent.onAddKartBackPress()
         }
 
         //Back
@@ -44,6 +34,16 @@ class AddKartingCenterAndKartFragment(parent : AddActivity, mode:Short) : Fragme
         }
 
         return view
+    }
+
+    fun set_Mode( mode: Short ){
+
+        if( this.mode == mode )
+            return;
+
+
+
+        this.mode = mode
     }
 
     companion object{
