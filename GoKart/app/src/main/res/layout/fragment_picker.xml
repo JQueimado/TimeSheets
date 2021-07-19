@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".add_activity.ItemPickerView"
+    tools:context=".add_activity.PickerFragment"
     android:layout_gravity="center"
     android:clickable="true">
 
@@ -22,7 +22,8 @@
             android:layout_height="417dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="3dp"/>
+            android:layout_marginTop="3dp"
+            android:paddingHorizontal="3dp"/>
 
         <!-- Nav Bar -->
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,32 +35,17 @@
             >
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/choose_kart_back_button"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/nav_buttons_shape"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/choose_kart_confirm_button"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="@string/add_activity_Back"
-                android:textAllCaps="false"
-                />
-
-            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/choose_kart_confirm_button"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/nav_buttons_shape"
+                android:text="@string/add_confirm"
+                android:textAllCaps="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/choose_kart_back_button"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="@string/add_confirm"
-                android:textAllCaps="false"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
