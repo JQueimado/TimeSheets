@@ -38,6 +38,7 @@
     <string name="add_list_add">Add Lap +</string>
     <string name="add_list_title">Laps:</string>
     <string name="add_chose_fragment_add_kart">Add Kart +</string>
+    <string name="add_chose_fragment_add_karting_center">Add Karting Center +</string>
     <string name="add_add_kart_number">Kart Number</string>
     <string name="add_add_kart_displacement">Kart Displacement (cc)</string>
     <string name="add_add_kart_name">Kart Name (optional)</string>

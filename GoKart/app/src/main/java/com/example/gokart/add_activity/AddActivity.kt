@@ -19,7 +19,6 @@ import androidx.fragment.app.commit
 import com.example.gokart.*
 import com.google.android.material.textfield.TextInputEditText
 import java.util.*
-import java.util.Collections.swap
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 
@@ -64,17 +63,23 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
     fun onPickKartConfirm(name : String){
         findViewById<FragmentContainerView>(R.id.picker_fragment).visibility = View.GONE
         findViewById<Button>(R.id.pick_kart_button).text = name
+        supportFragmentManager.commit {
+            hide(kartPicker)
+        }
     }
 
     //Result for Picking a Karting Center
     fun onPickKartingCenterConfirm(name : String){
         findViewById<FragmentContainerView>(R.id.picker_fragment).visibility = View.GONE
         findViewById<Button>(R.id.pick_kart_center_button).text = name
+        supportFragmentManager.commit {
+            hide(kartingCenterPicker)
+        }
     }
 
     //Kart Control
     fun onAddKartPress(){
-        val addKartFragment = PickerAddFragment(this)
+        val addKartFragment = AddKartFragment(this)
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             replace(R.id.picker_fragment, addKartFragment)

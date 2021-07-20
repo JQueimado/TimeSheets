@@ -23,7 +23,7 @@ class PickerFragment(
     }
 
     //On Ok click
-    private val onOKClickKartMode = View.OnClickListener{
+    private val onOKClick = View.OnClickListener{
         //Confirmation for karts
         if ( mode == KART_MODE) {
             val index =
@@ -51,6 +51,12 @@ class PickerFragment(
         }
     }
 
+    //On Add Click
+    private val onAddClickListener = View.OnClickListener{
+        if( mode == KART_MODE )
+            parent.onAddKartPress()
+    }
+
     //RV
     private lateinit var rvAdapter : PickerRVAdapter
     private lateinit var layoutManager : LinearLayoutManager
@@ -62,7 +68,7 @@ class PickerFragment(
         super.onCreate(savedInstanceState)
 
         //Recycler View
-        rvAdapter = PickerRVAdapter(parent.application ,items)
+        rvAdapter = PickerRVAdapter(parent ,items, mode)
         rvAdapter.setItems(items)
         layoutManager = LinearLayoutManager(parent.applicationContext)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -72,7 +78,7 @@ class PickerFragment(
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         val view : View = inflater.inflate(
             R.layout.fragment_picker,
@@ -86,8 +92,8 @@ class PickerFragment(
         recyclerView.adapter = rvAdapter
 
         //On "OK" click
-        okButton = view.findViewById<Button>(R.id.choose_kart_confirm_button)
-        okButton.setOnClickListener( onOKClickKartMode )
+        okButton = view.findViewById(R.id.choose_kart_confirm_button)
+        okButton.setOnClickListener( onOKClick )
 
         return view
     }
