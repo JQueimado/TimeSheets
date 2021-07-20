@@ -29,10 +29,11 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
     private lateinit var kartingCenterList : MutableList<String>
 
     //Fragments
-    private val datePicker : DatePickerFragment = DatePickerFragment(this);
+    private val datePicker : DatePickerFragment = DatePickerFragment(this)
     private val timePicker : TimePickerFragment = TimePickerFragment(this)
     private lateinit var kartPicker : PickerFragment
     private lateinit var kartingCenterPicker : PickerFragment
+    private lateinit var addKartFragment : AddKartFragment
 
     //Date Values
     private var date : Date = Date()
@@ -54,9 +55,9 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
 
     //PopsUp after date selection
     fun onTimePick( hour : Int, minute : Int ){
-        date = Date( year - 1900, month, day, hour, minute )
+        Date( year - 1900, month, day, hour, minute ).also { date = it }
         val dateText : String = DateFormat.format("dd/MM/yyyy hh:mm", date).toString()
-        findViewById<Button>(R.id.date_picker_button).setText(dateText)
+        findViewById<Button>(R.id.date_picker_button).text = dateText
     }
 
     //Result for Picking a kart
@@ -79,17 +80,18 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
 
     //Kart Control
     fun onAddKartPress(){
-        val addKartFragment = AddKartFragment(this)
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(R.id.picker_fragment, addKartFragment)
+            hide(kartPicker)
+            show(addKartFragment)
         }
     }
 
     fun onAddKartBackPress(){
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(R.id.picker_fragment, kartPicker)
+            hide(addKartFragment)
+            show(kartPicker)
         }
     }
 
@@ -113,6 +115,7 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
         //Create Fragments
         kartPicker = PickerFragment(this, kartList, PickerFragment.KART_MODE)
         kartingCenterPicker = PickerFragment( this,kartingCenterList, PickerFragment.KARTING_CENTER_MODE )
+        addKartFragment = AddKartFragment(this)
 
         findViewById<FragmentContainerView>(R.id.picker_fragment).visibility = View.GONE
 
@@ -121,17 +124,22 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
             setReorderingAllowed(true)
             add(R.id.picker_fragment, kartPicker)
             add(R.id.picker_fragment, kartingCenterPicker)
+            add(R.id.picker_fragment, addKartFragment)
+
+            hide(kartPicker)
+            hide(kartingCenterPicker)
+            hide(addKartFragment)
         }
 
         //Back button
-        findViewById<Button>(R.id.nav_back_button).setOnClickListener( View.OnClickListener {
+        findViewById<Button>(R.id.nav_back_button).setOnClickListener {
             finish()
-        })
+        }
 
         //Date picker
-        findViewById<Button>(R.id.date_picker_button).setOnClickListener( View.OnClickListener {
+        findViewById<Button>(R.id.date_picker_button).setOnClickListener {
             datePicker.show(supportFragmentManager, "date_picker")
-        })
+        }
 
         //Pick karting center
         findViewById<Button>(R.id.pick_kart_center_button).setOnClickListener {
@@ -143,14 +151,14 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
         }
 
         //Pick kart
-        findViewById<Button>(R.id.pick_kart_button).setOnClickListener(View.OnClickListener {
+        findViewById<Button>(R.id.pick_kart_button).setOnClickListener {
             kartPicker.setData(kartList)
             supportFragmentManager.commit {
-                hide( kartingCenterPicker )
-                show( kartPicker )
+                hide(kartingCenterPicker)
+                show(kartPicker)
             }
             findViewById<FragmentContainerView>(R.id.picker_fragment).visibility = View.VISIBLE
-        })
+        }
 
         //Add List
         val listLayout : LinearLayout = findViewById(R.id.add_laps_layout)
@@ -165,15 +173,19 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
     }
 
     //Lap View
-    class AddLapView : ConstraintLayout{
+    @SuppressLint("ViewConstructor", "SetTextI18n")
+    class AddLapView// Lap Tag
 
-        constructor(context : Context, inflater : LayoutInflater, count : Int ) : super(context){
+    //Time input
+    constructor(
+        context: Context,
+        inflater: LayoutInflater,
+        count: Int
+    ) : ConstraintLayout(context) {
+
+        init {
             inflater.inflate(R.layout.view_add_lap_row, this, true )
-
-            // Lap Tag
             this.findViewById<TextView>(R.id.lap_number).text = "$count-0:00.000"
-
-            //Time input
             val textView : TextView = findViewById(R.id.lap_number)
             this.findViewById<TextInputEditText>(R.id.lap_input).addTextChangedListener(
                 object : TextWatcher{
@@ -202,7 +214,6 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
 
                     }
                 })
-
         }
 
     }

@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     // Demo mode 0 -> Ui demo
     // Demo mode 1 -> In memory Database (test)
-    private val DEMO_MODE = 1
+    private val DEMO_MODE = 0
 
     private val completeTimeSheetViewModel : CompleteTimeSheetViewModel by viewModels()
 

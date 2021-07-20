@@ -43,7 +43,7 @@ class PickerFragment(
                 rvAdapter.selectedID //cals adapter because is the one that manages selection
             if (index == -1)
                 parent.onPickKartingCenterConfirm(
-                    resources.getString(R.string.add_pick_kart)
+                    resources.getString(R.string.add_pick_kart_center)
                 ) //Don't do nothing
             else
                 parent.onPickKartingCenterConfirm(this.items[index])
