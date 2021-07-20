@@ -1,0 +1,208 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "f8c1efa033d045b226a97b65de2dfcca",
+    "entities": [
+      {
+        "tableName": "lap",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lap_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `lap_time_sheet` INTEGER NOT NULL, `lap_number` INTEGER NOT NULL, `lap_time` TEXT NOT NULL, `lap_best_delta` TEXT NOT NULL, `lap_last_delta` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "lapId",
+            "columnName": "lap_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timeSheetId",
+            "columnName": "lap_time_sheet",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "number",
+            "columnName": "lap_number",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "time",
+            "columnName": "lap_time",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bestDelta",
+            "columnName": "lap_best_delta",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastDelta",
+            "columnName": "lap_last_delta",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "lap_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "time_sheet",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`time_sheet_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `time_sheet_kart` INTEGER NOT NULL, `time_sheet_karting_center` INTEGER NOT NULL, `time_sheet_best_lap` INTEGER NOT NULL, `time_sheet_worst_lap` INTEGER NOT NULL, `time_sheet_average_lap` INTEGER NOT NULL, `time_sheet_consistency` INTEGER NOT NULL, `time_sheet_date` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "timeSheetId",
+            "columnName": "time_sheet_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kartId",
+            "columnName": "time_sheet_kart",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kartingCenterId",
+            "columnName": "time_sheet_karting_center",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bestLap",
+            "columnName": "time_sheet_best_lap",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "worstLap",
+            "columnName": "time_sheet_worst_lap",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "averageLap",
+            "columnName": "time_sheet_average_lap",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "consistency",
+            "columnName": "time_sheet_consistency",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "time_sheet_date",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "time_sheet_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "kart",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`kart_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `kart_karting_center` INTEGER NOT NULL, `kart_number` INTEGER NOT NULL, `kart_displacement` INTEGER NOT NULL, `kart_name` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "kartId",
+            "columnName": "kart_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kartingCenter",
+            "columnName": "kart_karting_center",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "number",
+            "columnName": "kart_number",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "displacement",
+            "columnName": "kart_displacement",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "kart_name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "kart_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "karting_center",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`karting_center_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `karting_center_name` TEXT NOT NULL, `karting_center_location` TEXT NOT NULL, `karting_center_visits` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "kartingCenterId",
+            "columnName": "karting_center_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "karting_center_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "location",
+            "columnName": "karting_center_location",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "visits",
+            "columnName": "karting_center_visits",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "karting_center_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f8c1efa033d045b226a97b65de2dfcca')"
+    ]
+  }
+}

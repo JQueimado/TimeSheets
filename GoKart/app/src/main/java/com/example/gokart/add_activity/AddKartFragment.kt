@@ -59,7 +59,6 @@ class AddKartFragment(val parent: AddActivity) : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add_kart, container, false)
 
-
         //Set Ui values
         nameTextInput = view.findViewById(R.id.add_kart_name)
         numberTextInput = view.findViewById(R.id.add_kart_number)
