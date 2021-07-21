@@ -15,7 +15,7 @@
         android:layout_gravity="center"
         android:background="@drawable/popup_background">
 
-        <!-- Picker -->
+        <!-- Body -->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,7 +25,6 @@
             android:paddingBottom="80dp">
 
             <LinearLayout
-                android:id="@+id/choose_kart_karts_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -41,7 +40,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:text="@string/add_add_kart_title"
+                        android:text="@string/add_add_karting_center_title"
                         android:textColor="@color/white"
                         android:textSize="20sp"
 
@@ -54,10 +53,10 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <!-- Add Number -->
+                <!-- Name -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="55dp"
                     android:background="@drawable/popup_item_background">
 
                     <TextView
@@ -65,7 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:text="@string/add_add_kart_number"
+                        android:text="@string/add_add_karting_center_name"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/add_karting_center_name_input"
 
@@ -85,15 +84,15 @@
                         app:layout_constraintStart_toEndOf="@+id/add_karting_center_name_label"
                         app:layout_constraintTop_toTopOf="parent"
 
-                        android:inputType="number"
+                        android:inputType="text"
                         />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <!-- Add Displacement -->
+                <!-- Layout -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="55dp"
                     android:background="@drawable/popup_item_background">
 
                     <TextView
@@ -101,7 +100,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:text="@string/add_add_kart_displacement"
+                        android:text="@string/add_add_karting_center_layout"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/add_karting_center_layout_input"
 
@@ -126,10 +125,10 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <!-- Add Name -->
+                <!-- Location: -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="55dp"
                     android:background="@drawable/popup_item_background">
 
                     <TextView
@@ -137,7 +136,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:text="@string/add_add_kart_name"
+                        android:text="@string/add_add_karting_center_location"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/add_karting_center_location_button"
 
@@ -146,10 +145,12 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/add_karting_center_location_button"
-                        android:layout_width="100dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+
+                        android:text="@string/add_add_karting_center_location_button"
 
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

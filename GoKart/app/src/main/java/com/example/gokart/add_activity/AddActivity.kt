@@ -29,11 +29,13 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
     private lateinit var kartingCenterList : MutableList<String>
 
     //Fragments
+    private var placerID = R.id.picker_fragment
     private val datePicker : DatePickerFragment = DatePickerFragment(this)
     private val timePicker : TimePickerFragment = TimePickerFragment(this)
     private lateinit var kartPicker : PickerFragment
     private lateinit var kartingCenterPicker : PickerFragment
     private lateinit var addKartFragment : AddKartFragment
+    private lateinit var addKartingCenterFragment: AddKartingCenterFragment
 
     //Date Values
     private var date : Date = Date()
@@ -62,37 +64,40 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
 
     //Result for Picking a kart
     fun onPickKartConfirm(name : String){
-        findViewById<FragmentContainerView>(R.id.picker_fragment).visibility = View.GONE
+        supportFragmentManager.popBackStack()
         findViewById<Button>(R.id.pick_kart_button).text = name
-        supportFragmentManager.commit {
-            hide(kartPicker)
-        }
     }
 
     //Result for Picking a Karting Center
     fun onPickKartingCenterConfirm(name : String){
-        findViewById<FragmentContainerView>(R.id.picker_fragment).visibility = View.GONE
+        supportFragmentManager.popBackStack()
         findViewById<Button>(R.id.pick_kart_center_button).text = name
+    }
+
+    //Kart Add Control
+    fun onOpenAddKart(){
         supportFragmentManager.commit {
-            hide(kartingCenterPicker)
+            replace(placerID, addKartFragment)
+            setReorderingAllowed(true)
+            addToBackStack(null)
         }
     }
 
-    //Kart Control
-    fun onAddKartPress(){
+    fun onCloseAddKart(){
+        supportFragmentManager.popBackStack()
+    }
+
+    //Karting Center Add Control
+    fun onOpenAddKartingCenter(){
         supportFragmentManager.commit {
+            replace( placerID, addKartingCenterFragment)
             setReorderingAllowed(true)
-            hide(kartPicker)
-            show(addKartFragment)
+            addToBackStack(null)
         }
     }
 
-    fun onAddKartBackPress(){
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            hide(addKartFragment)
-            show(kartPicker)
-        }
+    fun onCloseAddKartingCenter(){
+        supportFragmentManager.popBackStack()
     }
 
     @SuppressLint("SetTextI18n")
@@ -116,20 +121,9 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
         kartPicker = PickerFragment(this, kartList, PickerFragment.KART_MODE)
         kartingCenterPicker = PickerFragment( this,kartingCenterList, PickerFragment.KARTING_CENTER_MODE )
         addKartFragment = AddKartFragment(this)
+        addKartingCenterFragment = AddKartingCenterFragment(this)
 
-        findViewById<FragmentContainerView>(R.id.picker_fragment).visibility = View.GONE
-
-        //Fragment manager
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            add(R.id.picker_fragment, kartPicker)
-            add(R.id.picker_fragment, kartingCenterPicker)
-            add(R.id.picker_fragment, addKartFragment)
-
-            hide(kartPicker)
-            hide(kartingCenterPicker)
-            hide(addKartFragment)
-        }
+        findViewById<View>(R.id.picker_fragment).visibility = View.VISIBLE
 
         //Back button
         findViewById<Button>(R.id.nav_back_button).setOnClickListener {
@@ -144,20 +138,19 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
         //Pick karting center
         findViewById<Button>(R.id.pick_kart_center_button).setOnClickListener {
             supportFragmentManager.commit {
-                hide( kartPicker )
-                show( kartingCenterPicker )
+                replace(placerID, kartingCenterPicker )
+                setReorderingAllowed(true)
+                addToBackStack(null)
             }
-            findViewById<FragmentContainerView>(R.id.picker_fragment).visibility = View.VISIBLE
         }
 
         //Pick kart
         findViewById<Button>(R.id.pick_kart_button).setOnClickListener {
-            kartPicker.setData(kartList)
             supportFragmentManager.commit {
-                hide(kartingCenterPicker)
-                show(kartPicker)
+                replace(placerID, kartPicker)
+                setReorderingAllowed(true)
+                addToBackStack(null)
             }
-            findViewById<FragmentContainerView>(R.id.picker_fragment).visibility = View.VISIBLE
         }
 
         //Add List

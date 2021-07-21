@@ -32,16 +32,25 @@
     <string name="add_activity_Back">Back</string>
     <string name="add_pick_time_date">Set date and time</string>
     <string name="add_pick_kart">Chose a Kart</string>
-    <string name="add_confirm">Ok</string>
+    <string name="add_confirm">OK</string>
     <string name="add_pick_kart_center">Chose a karting center</string>
     <string name="add_list_remove">Remove</string>
     <string name="add_list_add">Add Lap +</string>
     <string name="add_list_title">Laps:</string>
+    <!-- Add Buttons -->
     <string name="add_chose_fragment_add_kart">Add Kart +</string>
     <string name="add_chose_fragment_add_karting_center">Add Karting Center +</string>
-    <string name="add_add_kart_number">Kart Number</string>
-    <string name="add_add_kart_displacement">Kart Displacement (cc)</string>
-    <string name="add_add_kart_name">Kart Name (optional)</string>
+    <!-- Add Kart  -->
+    <string name="add_add_kart_title"> Add Kart</string>
+    <string name="add_add_kart_number">Number</string>
+    <string name="add_add_kart_displacement">Displacement (cc)</string>
+    <string name="add_add_kart_name">Name (optional)</string>
+    <!-- Add Karting Center -->
+    <string name="add_add_karting_center_title">Add karting Center:</string>
+    <string name="add_add_karting_center_name">Name:</string>
+    <string name="add_add_karting_center_layout">Layout:</string>
+    <string name="add_add_karting_center_location">Location:</string>
+    <string name="add_add_karting_center_location_button">Map</string>
 
     <!-- Defaults -->
     <string name="default_lap">0:00.000</string>

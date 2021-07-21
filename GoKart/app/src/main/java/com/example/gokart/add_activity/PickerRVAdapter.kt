@@ -1,7 +1,6 @@
 package com.example.gokart.add_activity
 
 import android.annotation.SuppressLint
-import android.app.Application
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +8,11 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 import com.example.gokart.R
 import com.example.gokart.add_activity.PickerFragment.Companion.KART_MODE
 
 class PickerRVAdapter(
-        private val activity: AddActivity,
+        private val parent: PickerFragment,
         private var items : MutableList<String>,
         private val mode : Short
     )
@@ -22,10 +20,9 @@ class PickerRVAdapter(
 
     //Values
     private val addPosition = 0
-    private val inflater = LayoutInflater.from(activity.application.applicationContext)
-
-    private var lastPicked : ConstraintLayout? = null
-    var selectedID = -1
+    private val inflater = LayoutInflater.from(parent.activity.application.applicationContext)
+    private val activity = parent.activity
+    var lastPicked : ConstraintLayout? = null
 
     //Create Views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PickerVHolder {
@@ -55,7 +52,7 @@ class PickerRVAdapter(
                     it.findViewById<CheckBox>(R.id.picker_item_check_box).isChecked = !state
 
                     //Set current selected item (-1 if unselected )
-                    selectedID = if( !state )
+                    parent.selectedID = if( !state )
                         position
                     else
                         -1
@@ -63,28 +60,36 @@ class PickerRVAdapter(
                 }else{ //On select other item
                     lastPicked!!.findViewById<CheckBox>(R.id.picker_item_check_box).isChecked = false
                     it.findViewById<CheckBox>(R.id.picker_item_check_box).isChecked = true
-                    selectedID = position //Set current selected item (redundant for error masking)
+                    parent.selectedID = position //Set current selected item (redundant for error masking)
                 }
                 lastPicked = it as ConstraintLayout? //Set previous selected item
             }
 
             //Set onclick for each item
             holder.itemView.setOnClickListener( onViewClick )
+
+            if(parent.selectedID == position){
+                holder.itemView.findViewById<CheckBox>(R.id.picker_item_check_box).isChecked = true
+                lastPicked = holder.itemView as ConstraintLayout
+            }
+
         }else{
             //Assign text based on selected mode
             if( mode == KART_MODE ) {
                 //Text
                 val addButton = holder.itemView.findViewById<TextView>(R.id.add_add_kart_button)
-                addButton.text =
-                    activity.application.resources.getString(R.string.add_chose_fragment_add_kart)
-
+                addButton.text = activity.application.resources
+                    .getString(R.string.add_chose_fragment_add_kart)
                 //Action
-                addButton.setOnClickListener { activity.onAddKartPress() }
+                addButton.setOnClickListener { activity.onOpenAddKart() }
 
             } else {
-                holder.itemView.findViewById<TextView>(R.id.add_add_kart_button)
-                    .text = activity.application.resources
+                //Text
+                val addButton = holder.itemView.findViewById<TextView>(R.id.add_add_kart_button)
+                addButton.text = activity.application.resources
                     .getString(R.string.add_chose_fragment_add_karting_center)
+                //Action
+                addButton.setOnClickListener{ activity.onOpenAddKartingCenter() }
             }
         }
     }
@@ -108,7 +113,7 @@ class PickerRVAdapter(
             lastPicked!!.findViewById<CheckBox>(R.id.picker_item_check_box).isChecked = false
 
         lastPicked = null
-        selectedID = -1
+        parent.selectedID = -1
     }
 
     //Holder

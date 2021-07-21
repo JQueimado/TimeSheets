@@ -48,7 +48,7 @@ class AddKartFragment(val parent: AddActivity) : Fragment() {
 
         //TODO( Kart entity and insert into DB )
 
-        parent.onAddKartBackPress()
+        parent.onCloseAddKart()
     }
 
     override fun onCreateView(
@@ -60,16 +60,16 @@ class AddKartFragment(val parent: AddActivity) : Fragment() {
         val view = inflater.inflate(R.layout.fragment_add_kart, container, false)
 
         //Set Ui values
-        nameTextInput = view.findViewById(R.id.add_kart_name)
-        numberTextInput = view.findViewById(R.id.add_kart_number)
-        displacementTextInput = view.findViewById(R.id.add_kart_displacement)
+        nameTextInput = view.findViewById(R.id.add_karting_center_location_button)
+        numberTextInput = view.findViewById(R.id.add_karting_center_name_input)
+        displacementTextInput = view.findViewById(R.id.add_karting_center_layout_input)
 
         //OK
-        view.findViewById<Button>(R.id.add_kart_confirm_button).setOnClickListener( onConfirmClick )
+        view.findViewById<Button>(R.id.add_karting_center_confirm_button).setOnClickListener( onConfirmClick )
 
         //Back
-        view.findViewById<Button>(R.id.add_kart_back_button).setOnClickListener {
-            parent.onAddKartBackPress()
+        view.findViewById<Button>(R.id.add_karting_center_back_button).setOnClickListener {
+            parent.onCloseAddKart()
         }
 
         return view

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "f8c1efa033d045b226a97b65de2dfcca",
+    "identityHash": "55619de29ad0a3f05576d996aa4a9732",
     "entities": [
       {
         "tableName": "lap",
@@ -162,7 +162,7 @@
       },
       {
         "tableName": "karting_center",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`karting_center_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `karting_center_name` TEXT NOT NULL, `karting_center_location` TEXT NOT NULL, `karting_center_visits` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`karting_center_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `karting_center_name` TEXT NOT NULL, `karting_center_visits` INTEGER NOT NULL, `karting_center_layout` INTEGER NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL)",
         "fields": [
           {
             "fieldPath": "kartingCenterId",
@@ -177,15 +177,27 @@
             "notNull": true
           },
           {
-            "fieldPath": "location",
-            "columnName": "karting_center_location",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
             "fieldPath": "visits",
             "columnName": "karting_center_visits",
             "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "layout",
+            "columnName": "karting_center_layout",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "location.latitude",
+            "columnName": "latitude",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "location.longitude",
+            "columnName": "longitude",
+            "affinity": "REAL",
             "notNull": true
           }
         ],
@@ -202,7 +214,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f8c1efa033d045b226a97b65de2dfcca')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '55619de29ad0a3f05576d996aa4a9732')"
     ]
   }
 }
