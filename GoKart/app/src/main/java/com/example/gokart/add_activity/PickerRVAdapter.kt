@@ -117,5 +117,5 @@ class PickerRVAdapter(
     }
 
     //Holder
-    class PickerVHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    open class PickerVHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }

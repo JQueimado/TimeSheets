@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gokart.R
@@ -31,7 +30,6 @@ class PickerFragment(
 
     //RV
     private lateinit var rvAdapter : PickerRVAdapter
-    private lateinit var layoutManager : LinearLayoutManager
 
     //UI
     private lateinit var okButton : Button
@@ -44,8 +42,6 @@ class PickerFragment(
             //Recycler View
             rvAdapter = PickerRVAdapter(this, items, mode)
             rvAdapter.setItems(items)
-            layoutManager = LinearLayoutManager(activity.applicationContext)
-            layoutManager.orientation = LinearLayoutManager.VERTICAL
 
             //listeners
             onOKClick = View.OnClickListener{
@@ -84,19 +80,27 @@ class PickerFragment(
     ): View {
 
         // Inflate the layout for this fragment
-        val view : View = inflater.inflate(
+        val view: View = inflater.inflate(
             R.layout.fragment_picker,
             container,
-            false)
+            false
+        )
 
-        //Recycler View
-        val recyclerView : RecyclerView = view.findViewById(R.id.picker_recycler_view)
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = rvAdapter
+        if(savedInstanceState == null) {
+            //Recycler View
+            val recyclerView: RecyclerView = view.findViewById(R.id.picker_recycler_view)
 
-        //On "OK" click
-        okButton = view.findViewById(R.id.choose_kart_confirm_button)
-        okButton.setOnClickListener( onOKClick )
+            val layoutManager = LinearLayoutManager(activity.applicationContext)
+            layoutManager.orientation = LinearLayoutManager.VERTICAL
+
+            recyclerView.layoutManager = layoutManager
+            recyclerView.adapter = rvAdapter
+
+            //On "OK" click
+            okButton = view.findViewById(R.id.choose_kart_confirm_button)
+            okButton.setOnClickListener(onOKClick)
+
+        }
 
         return view
     }
