@@ -9,13 +9,13 @@ import com.example.gokart.database.entity.KartingCenterWithKarts
 interface KartingCenterDAO {
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun addKartingCenter( vararg kartingCenterEntity: KartingCenterEntity)
+    suspend fun addKartingCenter( vararg kartingCenterEntity: KartingCenterEntity)
 
     @Update
-    fun update( vararg kartingCenterEntity: KartingCenterEntity)
+    suspend fun update( vararg kartingCenterEntity: KartingCenterEntity)
 
     @Delete
-    fun delete( vararg kartingCenterEntity: KartingCenterEntity)
+    suspend fun delete( vararg kartingCenterEntity: KartingCenterEntity)
 
     //Get All
     @Query(value = "SELECT * FROM karting_center")
@@ -33,4 +33,11 @@ interface KartingCenterDAO {
     @Query(value = "SELECT * FROM karting_center WHERE karting_center_id = (:id)")
     fun getOneComplex( vararg id : Long) : LiveData<KartingCenterWithKarts>
 
+    //Helper Queries
+    @Query(value = "SELECT karting_center_name FROM karting_center")
+    fun getAllNames() : LiveData<MutableList<String>>
+
+    @Transaction
+    @Query(value = "SELECT * FROM karting_center WHERE karting_center_name = (:name)")
+    fun getOneComplexByName( vararg name: String ) : LiveData<KartingCenterWithKarts>
 }

@@ -12,11 +12,13 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
 import com.example.gokart.*
+import com.example.gokart.database.entity.KartingCenterEntity
+import com.example.gokart.database.entity.KartingCenterWithKarts
 import com.google.android.material.textfield.TextInputEditText
 import java.util.*
 import kotlin.collections.ArrayList
@@ -24,8 +26,11 @@ import kotlin.random.Random
 
 class AddActivity : AppCompatActivity(R.layout.activity_add){
 
+    //ViewModels
+    private val addActivityKartingCenterViewModel : AddActivityKartingCenterViewModel by viewModels()
+    private val addActivityKartViewModel : AddActivityKartViewModel by viewModels()
+
     //Testing vars
-    private lateinit var kartList : MutableList<String>
     private lateinit var kartingCenterList : MutableList<String>
 
     //Fragments
@@ -43,8 +48,16 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
     private var month : Int = 0
     private var day : Int = 0
 
+    //UI
+    private lateinit var choseKartButton: Button
+    private lateinit var choseKartingCenterButton: Button
+
     //Lap values
     private var lapCount : Int = 0
+
+    //Selections
+    private var kartingCenter: KartingCenterWithKarts? = null
+    private var kartList : MutableList<String>? = null
 
     //On Set Date and Time Click
     fun onDatePick( year: Int, month : Int, day: Int){
@@ -71,7 +84,19 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
     //Result for Picking a Karting Center
     fun onPickKartingCenterConfirm(name : String){
         supportFragmentManager.popBackStack()
-        findViewById<Button>(R.id.pick_kart_center_button).text = name
+        if(name.isEmpty()) {
+            choseKartButton.isEnabled = false
+            choseKartingCenterButton.text =  resources.getString(R.string.add_pick_kart_center)
+            kartingCenter = null
+        }else{
+            choseKartButton.isEnabled = true //Enables kart search
+            choseKartingCenterButton.text = name
+
+            addActivityKartingCenterViewModel.getOneByName(name).observe(this, {
+                kartingCenter = it
+            })
+
+        }
     }
 
     //Kart Add Control
@@ -96,6 +121,12 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
         }
     }
 
+    fun onAddKartingCenterConclude( kartingCenterEntity: KartingCenterEntity ){
+        addActivityKartingCenterViewModel.insert(kartingCenterEntity)
+        //Close Fragment
+        onCloseAddKartingCenter()
+    }
+
     fun onCloseAddKartingCenter(){
         supportFragmentManager.popBackStack()
     }
@@ -104,26 +135,22 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //////////Test///////////
-        kartList = ArrayList()
-        for (i in 1..20) {
-            kartList.add( Random.nextInt(0,100).toString() + "-50cc" )
-        }
-
         kartingCenterList = ArrayList()
-        kartingCenterList.add("Some Karting Center 1")
-        kartingCenterList.add("Some Karting Center 2")
-        kartingCenterList.add("Some Karting Center 3")
-        kartingCenterList.add("Some Karting Center 4")
-        ////////////////////////
+        kartingCenterList = ArrayList()
+        kartList = ArrayList()
 
         //Create Fragments
-        kartPicker = PickerFragment(this, kartList, PickerFragment.KART_MODE)
+        kartPicker = PickerFragment(this, kartList!!, PickerFragment.KART_MODE)
         kartingCenterPicker = PickerFragment( this,kartingCenterList, PickerFragment.KARTING_CENTER_MODE )
         addKartFragment = AddKartFragment(this)
         addKartingCenterFragment = AddKartingCenterFragment(this)
 
         findViewById<View>(R.id.picker_fragment).visibility = View.VISIBLE
+
+        //Data observers
+        addActivityKartingCenterViewModel.getAllNames().observe(this, {
+            kartingCenterPicker.setData(it)
+        })
 
         //Back button
         findViewById<Button>(R.id.nav_back_button).setOnClickListener {
@@ -136,7 +163,8 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
         }
 
         //Pick karting center
-        findViewById<Button>(R.id.pick_kart_center_button).setOnClickListener {
+        choseKartingCenterButton = findViewById(R.id.pick_kart_center_button)
+        choseKartingCenterButton.setOnClickListener {
             supportFragmentManager.commit {
                 replace(placerID, kartingCenterPicker )
                 setReorderingAllowed(true)
@@ -145,7 +173,22 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
         }
 
         //Pick kart
-        findViewById<Button>(R.id.pick_kart_button).setOnClickListener {
+        choseKartButton = findViewById(R.id.pick_kart_button)
+        choseKartButton.isEnabled = false
+        choseKartButton.setOnClickListener {
+
+            kartList = ArrayList()
+
+            if( kartingCenter != null ) //ust in case
+                for( kartEntity in kartingCenter!!.karts ){
+                    kartList!!.add(
+                        if(kartEntity.name.isEmpty())
+                            "${kartEntity.number}-${kartEntity.displacement}cc"
+                        else
+                            kartEntity.name
+                    )
+                }
+
             supportFragmentManager.commit {
                 replace(placerID, kartPicker)
                 setReorderingAllowed(true)

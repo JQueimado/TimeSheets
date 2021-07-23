@@ -12,7 +12,7 @@ import com.example.gokart.R
 
 class PickerFragment(
     val activity : AddActivity,
-    private val items : MutableList<String>,
+    private var items : MutableList<String>,
     private val mode: Short
     ) : Fragment() {
 
@@ -29,7 +29,7 @@ class PickerFragment(
     private lateinit var onOKClick : View.OnClickListener
 
     //RV
-    private lateinit var rvAdapter : PickerRVAdapter
+    private val rvAdapter = PickerRVAdapter(this, items, mode)
 
     //UI
     private lateinit var okButton : Button
@@ -39,10 +39,6 @@ class PickerFragment(
         super.onCreate(savedInstanceState)
 
         if( savedInstanceState == null ) {
-            //Recycler View
-            rvAdapter = PickerRVAdapter(this, items, mode)
-            rvAdapter.setItems(items)
-
             //listeners
             onOKClick = View.OnClickListener{
                 //Confirmation for karts
@@ -62,9 +58,7 @@ class PickerFragment(
                 if (mode == KARTING_CENTER_MODE){
                     val index = selectedID
                     if (index == -1)
-                        activity.onPickKartingCenterConfirm(
-                            resources.getString(R.string.add_pick_kart_center)
-                        ) //Don't do nothing
+                        activity.onPickKartingCenterConfirm("")
                     else
                         activity.onPickKartingCenterConfirm(this.items[index])
                     return@OnClickListener
@@ -109,6 +103,11 @@ class PickerFragment(
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("selected", selectedID)
+    }
+
+    fun setData( items: MutableList<String> ){
+        this.items = items
+        rvAdapter.setItems( items )
     }
 
 }

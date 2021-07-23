@@ -38,11 +38,13 @@ class PickerRVAdapter(
     }
 
     //Assign Values
-    @SuppressLint("CutPasteId")
+    @SuppressLint("CutPasteId", "SetTextI18n")
     override fun onBindViewHolder(holder: PickerVHolder, position: Int) {
         if (position != addPosition) {
+            val listPosition = position -1
             //Set Text
-            holder.itemView.findViewById<TextView>(R.id.picker_item_label).text = items[position]
+            val text = items[listPosition]
+            holder.itemView.findViewById<TextView>(R.id.picker_item_label).text = text
 
             //Create on click listener for item selection
             val onViewClick = View.OnClickListener {
@@ -53,14 +55,14 @@ class PickerRVAdapter(
 
                     //Set current selected item (-1 if unselected )
                     parent.selectedID = if( !state )
-                        position
+                        listPosition
                     else
                         -1
 
                 }else{ //On select other item
                     lastPicked!!.findViewById<CheckBox>(R.id.picker_item_check_box).isChecked = false
                     it.findViewById<CheckBox>(R.id.picker_item_check_box).isChecked = true
-                    parent.selectedID = position //Set current selected item (redundant for error masking)
+                    parent.selectedID = listPosition //Set current selected item (redundant for error masking)
                 }
                 lastPicked = it as ConstraintLayout? //Set previous selected item
             }
@@ -68,7 +70,7 @@ class PickerRVAdapter(
             //Set onclick for each item
             holder.itemView.setOnClickListener( onViewClick )
 
-            if(parent.selectedID == position){
+            if(parent.selectedID == listPosition){
                 holder.itemView.findViewById<CheckBox>(R.id.picker_item_check_box).isChecked = true
                 lastPicked = holder.itemView as ConstraintLayout
             }
@@ -96,7 +98,7 @@ class PickerRVAdapter(
 
     //Companion Functions
     override fun getItemCount(): Int {
-        return items.size
+        return items.size + 1
     }
 
     override fun getItemViewType(position: Int): Int {

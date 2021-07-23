@@ -1,4 +1,4 @@
-package com.example.gokart.add_activity
+package com.example.gokart.view_models
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

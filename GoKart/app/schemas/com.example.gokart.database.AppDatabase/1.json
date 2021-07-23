@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "55619de29ad0a3f05576d996aa4a9732",
+    "identityHash": "61d924c3021d5ea36f59ad505763fe35",
     "entities": [
       {
         "tableName": "lap",
@@ -162,7 +162,7 @@
       },
       {
         "tableName": "karting_center",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`karting_center_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `karting_center_name` TEXT NOT NULL, `karting_center_visits` INTEGER NOT NULL, `karting_center_layout` INTEGER NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`karting_center_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `karting_center_name` TEXT NOT NULL, `karting_center_visits` INTEGER NOT NULL, `karting_center_layout` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "kartingCenterId",
@@ -187,18 +187,6 @@
             "columnName": "karting_center_layout",
             "affinity": "INTEGER",
             "notNull": true
-          },
-          {
-            "fieldPath": "location.latitude",
-            "columnName": "latitude",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "location.longitude",
-            "columnName": "longitude",
-            "affinity": "REAL",
-            "notNull": true
           }
         ],
         "primaryKey": {
@@ -214,7 +202,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '55619de29ad0a3f05576d996aa4a9732')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '61d924c3021d5ea36f59ad505763fe35')"
     ]
   }
 }

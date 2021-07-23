@@ -31,9 +31,9 @@ class DatabaseKartingCenterTest {
     private lateinit var kartDAO: KartDAO
 
     private val testKartingCenters = arrayListOf(
-        KartingCenterEntity("1234", "321", 0),
-        KartingCenterEntity("4321", "321", 0),
-        KartingCenterEntity("5432", "321", 0)
+        KartingCenterEntity("1234",  0, 0),
+        KartingCenterEntity("4321", 0, 1),
+        KartingCenterEntity("5432",  0,4)
     )
 
     private val testKarts = arrayListOf(
@@ -77,11 +77,11 @@ class DatabaseKartingCenterTest {
         //read Value
         kartingCenter1 = kartingCenterDAO.getAllSimple().waitAndGet()[0]
 
-        val kartinCenterValues = testKartingCenters[1]
+        val kartingCenterValues = testKartingCenters[1]
 
         //update
-        kartingCenter1.name = kartinCenterValues.name
-        kartingCenter1.location = kartinCenterValues.location
+        kartingCenter1.name = kartingCenterValues.name
+        kartingCenter1.layout = kartingCenterValues.layout
         kartingCenterDAO.update(kartingCenter1)
 
         //check update

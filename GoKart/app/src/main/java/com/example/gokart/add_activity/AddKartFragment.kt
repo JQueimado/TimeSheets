@@ -9,6 +9,7 @@ import android.widget.Button
 import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.viewModels
 import com.example.gokart.R
+import com.example.gokart.view_models.KartsViewModel
 import com.google.android.material.textfield.TextInputEditText
 
 class AddKartFragment(val parent: AddActivity) : Fragment() {

@@ -30,4 +30,5 @@ interface KartDAO {
     @Transaction
     @Query("SELECT * FROM kart WHERE kart_id = (:kartId)")
     fun getOneComplex( kartId : Long ) : LiveData<KartWithTimeSheets>
+
 }
