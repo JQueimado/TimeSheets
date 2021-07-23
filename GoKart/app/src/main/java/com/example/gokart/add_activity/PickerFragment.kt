@@ -43,14 +43,12 @@ class PickerFragment(
             onOKClick = View.OnClickListener{
                 //Confirmation for karts
                 if ( mode == KART_MODE) {
-                    val index =
-                        selectedID //cals adapter because is the one that manages selection
-                    if (index == -1)
-                        activity.onPickKartConfirm(
-                            resources.getString(R.string.add_pick_kart)
-                        ) //Don't do nothing
-                    else
-                        activity.onPickKartConfirm(this.items[index])
+                    activity.onPickKartConfirm(
+                        if( selectedID == -1 )
+                            -1 //no selection
+                        else
+                            selectedID //list index
+                    )
                     return@OnClickListener
                 }
 

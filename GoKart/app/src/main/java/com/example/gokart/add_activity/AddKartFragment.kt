@@ -6,11 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.viewModels
 import com.example.gokart.R
+import com.example.gokart.database.entity.KartEntity
 import com.example.gokart.view_models.KartsViewModel
 import com.google.android.material.textfield.TextInputEditText
+import java.lang.Exception
 
 class AddKartFragment(val parent: AddActivity) : Fragment() {
 
@@ -32,24 +35,36 @@ class AddKartFragment(val parent: AddActivity) : Fragment() {
         //Extract raw input
         name = nameTextInput.text.toString()
         number = numberTextInput.text.toString()
-        displacement = numberTextInput.toString()
+        displacement = displacementTextInput.text.toString()
 
-        //Check values
-        if (
-            number.isBlank() ||
-            number.isEmpty() ||
-            !number.isDigitsOnly()
-        ) return@OnClickListener
+        try {
 
-        if (
-            displacement.isBlank() ||
-            displacement.isEmpty() ||
-            !displacement.isDigitsOnly()
-        ) return@OnClickListener
+            //Check values
+            if (
+                number.isBlank() ||
+                number.isEmpty() ||
+                !number.isDigitsOnly()
+            ) throw Exception("Invalid Number")
 
-        //TODO( Kart entity and insert into DB )
+            if (
+                displacement.isBlank() ||
+                displacement.isEmpty() ||
+                !displacement.isDigitsOnly()
+            ) throw Exception("Invalid Displacement")
 
-        parent.onCloseAddKart()
+            val kartEntity = KartEntity(
+                parent.getKartingCenterID(),
+                number.toInt(),
+                displacement.toInt(),
+                if( name.isNullOrBlank() )
+                    ""
+                else
+                    name
+            )
+            parent.onAddKartConclude(kartEntity)
+        }catch ( e: Exception ){
+            Toast.makeText(parent, e.message, Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onCreateView(

@@ -9,13 +9,13 @@ import com.example.gokart.database.entity.KartWithTimeSheets
 interface KartDAO {
 
     @Insert
-    fun addKart( vararg kartEntity: KartEntity )
+    suspend fun addKart( vararg kartEntity: KartEntity )
 
     @Update
-    fun update(vararg  kartEntity: KartEntity )
+    suspend fun update(vararg  kartEntity: KartEntity )
 
     @Delete
-    fun deleteKart( vararg kartEntity: KartEntity )
+    suspend fun deleteKart( vararg kartEntity: KartEntity )
 
     @Query("SELECT * FROM kart")
     fun getAllSimple() : LiveData<List<KartEntity>>

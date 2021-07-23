@@ -108,6 +108,7 @@ class PickerRVAdapter(
     fun setItems( items : MutableList<String> ){
         this.items = items
         notifyDataSetChanged()
+        clean()
     }
 
     fun clean(){
