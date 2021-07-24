@@ -18,7 +18,8 @@ class LapConverterTest {
         "1:19.116",
         "1:19.306",
         "1:19.479",
-        "1:19.659"
+        "1:19.659",
+        "0:56.157"
     )
 
     private val number = arrayListOf(
@@ -31,7 +32,8 @@ class LapConverterTest {
         79116,
         79306,
         79479,
-        79659
+        79659,
+        56157
     )
 
     @Test
