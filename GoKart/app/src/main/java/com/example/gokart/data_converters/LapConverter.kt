@@ -1,8 +1,8 @@
 package com.example.gokart.data_converters
 
-/// laps format M:SS.ssss
+/// laps format M:SS.sss
 
-fun String.toIntTimeStamp() : Int{
+fun String.toIntTimeSheet() : Int{
     //Extract values
     val split1 = this.split(":")
     val min = split1[0].toInt()

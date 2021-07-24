@@ -1,6 +1,6 @@
 package com.example.gokart
 
-import com.example.gokart.data_converters.toIntTimeStamp
+import com.example.gokart.data_converters.toIntTimeSheet
 import com.example.gokart.data_converters.toTextTimeStamp
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -39,7 +39,7 @@ class LapConverterTest {
     @Test
     fun toNumberTest(){
         for ( i in 0 until text.size ){
-            assertThat( text[i].toIntTimeStamp(), equalTo( number[i] ) )
+            assertThat( text[i].toIntTimeSheet(), equalTo( number[i] ) )
         }
     }
 
@@ -54,7 +54,7 @@ class LapConverterTest {
     fun backAndForwardTest(){
         var temp: Int
         for ( i in 0 until text.size ){
-            temp = text[i].toIntTimeStamp()
+            temp = text[i].toIntTimeSheet()
             assertThat(temp.toTextTimeStamp(), equalTo( text[i] ) )
         }
     }
@@ -64,7 +64,7 @@ class LapConverterTest {
         var temp: String
         for ( i in 0 until number.size ){
             temp = number[i].toTextTimeStamp()
-            assertThat( temp.toIntTimeStamp(), equalTo( number[i] ) )
+            assertThat( temp.toIntTimeSheet(), equalTo( number[i] ) )
         }
     }
 }
