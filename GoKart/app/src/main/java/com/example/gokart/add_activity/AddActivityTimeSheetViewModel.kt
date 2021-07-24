@@ -3,6 +3,7 @@ package com.example.gokart.add_activity
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.gokart.data_converters.toStringDelta
 import com.example.gokart.database.AppDatabase
 import com.example.gokart.database.entity.KartEntity
 import com.example.gokart.database.entity.KartingCenterEntity
@@ -16,6 +17,7 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
 
     private val database = AppDatabase.getMemoryInstance(application)
     private val timeSheetDao = database.timeSheetDao()
+    private val lapsDao = database.lapDao()
 
     fun insert(
         kartingCenterEntity: KartingCenterEntity,
@@ -27,15 +29,16 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
         viewModelScope.launch { //Start a coroutine
             val laps : MutableList<LapEntity> = ArrayList()
             var bestLap = -1
-            var worstLap = -1
-            var averageLap = -1
-            var consistency = -1
+            var worstLap = 0
+            val averageLap: Int
+            val consistency = 0 //TODO
 
-            var currentLapValue = 0
-            var currentLapText = ""
+            var currentLapValue : Int
+            var currentLapText : String
             var sum = 0L
-            var bestDelta = 0
+            var bestDelta: Int
             var lastDelta = 0
+
             //Process Laps
             for( i in lapsValue.indices){
                 //Value extraction
@@ -43,7 +46,7 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
                 currentLapText = lapsText[i]
 
                 //BestLap
-                if( bestLap > currentLapValue )
+                if( bestLap > currentLapValue || bestLap == -1 )
                     bestLap = currentLapValue
 
                 //Worst Lap
@@ -64,14 +67,18 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
                     lastDelta = currentLapValue - lapsValue[i-1]
 
                 //Create Entity
-                /*val lapEntity = LapEntity(
+                val lapEntity = LapEntity(
                     0,
                     i,
-                    currentLapValue,
-                    bestDelta,
-                    lastDelta
-                )*/
+                    currentLapText,
+                    bestDelta.toStringDelta(),
+                    lastDelta.toStringDelta()
+                )
+                laps.add(lapEntity)
             }
+
+            //Final calculations
+            averageLap = (sum/lapsText.size).toInt()
 
             //Create Time Sheet Entity
             val timeSheetEntity = TimeSheetEntity(
@@ -84,9 +91,13 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
                 date.time
             )
 
-
             //Insert
-            timeSheetDao
+            val id = timeSheetDao.addTimeSheet(timeSheetEntity)
+
+            for (lap in laps){
+                lap.timeSheetId = id
+                lapsDao.addLap(lap)
+            }
         }
     }
 

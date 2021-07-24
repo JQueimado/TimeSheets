@@ -18,8 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.commit
 import com.example.gokart.R
-import com.example.gokart.data_converters.toIntTimeStamp
-import com.example.gokart.database.dao.LapDAO
+import com.example.gokart.data_converters.toIntTimeSheet
 import com.example.gokart.database.entity.*
 import com.google.android.material.textfield.TextInputEditText
 import java.util.*
@@ -30,6 +29,7 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
     //ViewModels
     private val addActivityKartingCenterViewModel: AddActivityKartingCenterViewModel by viewModels()
     private val addActivityKartViewModel: AddActivityKartViewModel by viewModels()
+    private val addActivityTimeSheetViewModel : AddActivityTimeSheetViewModel by viewModels()
 
     //Fragments
     private var placerID = R.id.picker_fragment
@@ -238,11 +238,12 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
         }
 
         //Done Button
-        doneButton.findViewById<Button>(R.id.add_conclude_button)
+        doneButton = findViewById(R.id.add_conclude_button)
         doneButton.setOnClickListener{
 
             //values and variables
-            val lapsRaw = arrayListOf<Int>()
+            val lapsValue = arrayListOf<Int>()
+            val lapsText = arrayListOf<String>()
 
             //Verification and lap conversion
             try{
@@ -255,8 +256,16 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
                     throw Exception( "Invalid Kart" )
 
                 //laps
+                if( lapViews.size == 0 )
+                    throw Exception("Laps required")
+
                 for ( lap in lapViews ){
-                    lapsRaw.add( lap.text.toIntTimeStamp() )
+
+                    if(lap.text.isBlank() )
+                        throw Exception("Lap with no value")
+
+                    lapsValue.add( lap.text.toIntTimeSheet() )
+                    lapsText.add( lap.text )
                 }
 
             }catch (e: Exception ){
@@ -264,10 +273,17 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
                 return@setOnClickListener
             }
 
-            //Assemble data structures  //TODO( set as coroutine )
-            val laps = ArrayList<LapEntity>()
+            //Assemble data structures and insert into database
+            addActivityTimeSheetViewModel.insert(
+                kartingCenterEntity = kartingCenter!!.kartingCenterEntity,
+                kartEntity = kart!!,
+                date = date,
+                lapsValue = lapsValue,
+                lapsText = lapsText
+            )
 
-
+            //End activity
+            finish()
         }
     }
 
@@ -320,7 +336,7 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
                     }
 
                     override fun afterTextChanged(p0: Editable?) {
-                        this@AddLapView.text = text
+                        this@AddLapView.text = value
                     }
                 })
         }
