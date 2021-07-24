@@ -9,13 +9,13 @@ import com.example.gokart.database.entity.TimeSheetWithLaps
 interface TimeSheetDAO {
 
     @Insert
-    fun addTimeSheet( vararg timeSheet : TimeSheetEntity )
+    suspend fun addTimeSheet( timeSheet : TimeSheetEntity ) : Long
 
     @Update
-    fun updateTimeSheet( vararg timeSheet : TimeSheetEntity )
+    suspend fun updateTimeSheet( vararg timeSheet : TimeSheetEntity )
 
     @Delete
-    fun deleteTimeSheet( timeSheetEntity: TimeSheetEntity )
+    suspend fun deleteTimeSheet( timeSheetEntity: TimeSheetEntity )
 
     @Transaction
     @Query("SELECT * FROM time_sheet")

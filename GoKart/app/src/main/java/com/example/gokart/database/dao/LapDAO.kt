@@ -7,13 +7,13 @@ import com.example.gokart.database.entity.LapEntity
 @Dao
 interface LapDAO {
     @Insert
-    fun addLap( vararg lap : LapEntity)
+    suspend fun addLap( vararg lap : LapEntity)
 
     @Update
-    fun updateLap( vararg lap : LapEntity)
+    suspend fun updateLap( vararg lap : LapEntity)
 
     @Delete
-    fun deleteLap( lap: LapEntity)
+    suspend fun deleteLap( lap: LapEntity)
 
     @Query("SELECT * FROM lap")
     fun getAll() : LiveData<List<LapEntity>>
