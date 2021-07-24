@@ -76,6 +76,8 @@
                 android:stretchColumns="0,1"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
+                android:background="@drawable/table_fragment_table_shape"
+                android:padding="1dp"
                 >
 
                 <!-- Date Input -->
@@ -196,37 +198,47 @@
                 android:text="@string/add_list_title"
                 android:layout_marginHorizontal="10dp"/>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/add_lap_button"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/table_fragment_table_shape"
-                tools:context=".add_activity.AddActivity"
-                android:layout_marginHorizontal="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-
-                    android:text="@string/add_list_add"
-                    android:textColor="@color/white"
-
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- Add times -->
-            <LinearLayout
-                android:id="@+id/add_laps_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
                 android:orientation="vertical"
-                />
+                android:background="@drawable/table_fragment_table_shape"
+                android:layout_marginHorizontal="10dp"
+                android:padding="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/add_lap_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_fragment_table_shape"
+                    tools:context=".add_activity.AddActivity"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+
+                        android:text="@string/add_list_add"
+                        android:textColor="@color/white"
+
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- Add times -->
+                <LinearLayout
+                    android:id="@+id/add_laps_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
 
         </LinearLayout>
 
