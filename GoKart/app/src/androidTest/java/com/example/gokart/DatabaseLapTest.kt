@@ -9,6 +9,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.gokart.database.AppDatabase
 import com.example.gokart.database.dao.LapDAO
 import com.example.gokart.database.entity.LapEntity
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Before
@@ -18,10 +20,14 @@ import org.junit.runner.RunWith
 import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
+@ExperimentalCoroutinesApi
 class DatabaseLapTest {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    @get:Rule
+    var coroutinesTestRule = CoroutineTestRule()
 
     private lateinit var db : AppDatabase
     private lateinit var lapDAO : LapDAO
@@ -47,14 +53,14 @@ class DatabaseLapTest {
     }
 
     @Test
-    fun writeReadAllLaps(){
+    fun writeReadAllLaps() = runBlocking{
         lapDAO.addLap( testLaps[0] )
         val result = lapDAO.getAll().waitAndGet()[0]
         assertThat( result, equalTo(testLaps[0]) )
     }
 
     @Test
-    fun writeReadOneLap(){
+    fun writeReadOneLap() = runBlocking{
         lapDAO.addLap( testLaps[0] )
         val result1 = lapDAO.getAll().waitAndGet()[0]
         val result2 = lapDAO.getOne( result1.lapId ).waitAndGet()
@@ -62,7 +68,7 @@ class DatabaseLapTest {
     }
 
     @Test
-    fun deleteLap(){
+    fun deleteLap() = runBlocking{
         lapDAO.addLap( testLaps[0] )
         val result1 = lapDAO.getAll().waitAndGet()[0]
         lapDAO.deleteLap( result1 )
@@ -71,7 +77,7 @@ class DatabaseLapTest {
     }
 
     @Test
-    fun updateLap(){
+    fun updateLap() = runBlocking{
         lapDAO.addLap( testLaps[0] )
         val result1 = lapDAO.getAll().waitAndGet()[0]
 

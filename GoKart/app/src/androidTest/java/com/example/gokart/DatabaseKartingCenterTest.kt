@@ -12,6 +12,8 @@ import com.example.gokart.database.dao.KartingCenterDAO
 import com.example.gokart.database.entity.KartEntity
 import com.example.gokart.database.entity.KartingCenterEntity
 import com.example.gokart.database.entity.KartingCenterWithKarts
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Before
@@ -21,10 +23,14 @@ import org.junit.runner.RunWith
 import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
+@ExperimentalCoroutinesApi
 class DatabaseKartingCenterTest {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    @get:Rule
+    var coroutinesTestRule = CoroutineTestRule()
 
     private lateinit var db : AppDatabase
     private lateinit var kartingCenterDAO: KartingCenterDAO
@@ -59,7 +65,7 @@ class DatabaseKartingCenterTest {
 
     //Write Read
     @Test
-    suspend fun readWriteKartingCenter(){
+    fun readWriteKartingCenter() = runBlocking {
         val kartingCenter1 = testKartingCenters[0]
         kartingCenterDAO.addKartingCenter(kartingCenter1)
 
@@ -69,7 +75,7 @@ class DatabaseKartingCenterTest {
 
     //Update
     @Test
-    suspend fun updateKartingCenter(){
+    fun updateKartingCenter() = runBlocking{
         //add karting center
         var kartingCenter1 = testKartingCenters[0]
         kartingCenterDAO.addKartingCenter(kartingCenter1)
@@ -92,7 +98,7 @@ class DatabaseKartingCenterTest {
 
     //Delete Test
     @Test
-    suspend fun deleteKartingCenter(){
+    fun deleteKartingCenter() = runBlocking{
         //add karting center
         var kartingCenter1 = testKartingCenters[0]
         kartingCenterDAO.addKartingCenter(kartingCenter1)
@@ -110,7 +116,7 @@ class DatabaseKartingCenterTest {
 
     //Get One Simple
     @Test
-    suspend fun getOneKartingCenter(){
+     fun getOneKartingCenter() = runBlocking {
         //add karting center
         var kartingCenter1 = testKartingCenters[0]
         kartingCenterDAO.addKartingCenter(kartingCenter1)
@@ -127,7 +133,7 @@ class DatabaseKartingCenterTest {
 
     //Test multiple values
     @Test
-    suspend fun readWriteMultipleKartingCenter(){
+     fun readWriteMultipleKartingCenter() = runBlocking{
         for (kartingCenter in testKartingCenters){
             kartingCenterDAO.addKartingCenter(kartingCenter)
         }
@@ -142,7 +148,7 @@ class DatabaseKartingCenterTest {
 
     //test relation extraction
     @Test
-    suspend fun readwriteComplex(){
+     fun readwriteComplex() = runBlocking {
         kartingCenterDAO.addKartingCenter(testKartingCenters[0])
 
         val result = kartingCenterDAO.getAllSimple().waitAndGet()
@@ -161,7 +167,7 @@ class DatabaseKartingCenterTest {
 
     //test relation extraction
     @Test
-    suspend fun readOneComplex(){
+     fun readOneComplex() = runBlocking {
         //insert
         kartingCenterDAO.addKartingCenter(testKartingCenters[0])
 

@@ -12,6 +12,8 @@ import com.example.gokart.database.dao.TimeSheetDAO
 import com.example.gokart.database.entity.LapEntity
 import com.example.gokart.database.entity.TimeSheetEntity
 import com.example.gokart.database.entity.TimeSheetWithLaps
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Before
@@ -20,11 +22,15 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
+@ExperimentalCoroutinesApi
 class DatabaseTimeSheetTest {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
+    @get:Rule
+    var coroutinesTestRule = CoroutineTestRule()
+    
     private lateinit var db : AppDatabase
     private lateinit var timeSheetDAO : TimeSheetDAO
     private lateinit var lapDAO : LapDAO
@@ -57,7 +63,7 @@ class DatabaseTimeSheetTest {
 
     //Write Read
     @Test
-    fun readWriteTimeSheetTest(){
+    fun readWriteTimeSheetTest() = runBlocking{
         timeSheetDAO.addTimeSheet( testTimeSheets[0] ) //Write
         val result = timeSheetDAO.getAllSimple().waitAndGet()[0]
         assertThat( result, equalTo(testTimeSheets[0]) )
@@ -65,7 +71,7 @@ class DatabaseTimeSheetTest {
 
     //Multi Write Read
     @Test
-    fun readWriteMultiple(){
+    fun readWriteMultiple() = runBlocking{
         for (ts in testTimeSheets){
             timeSheetDAO.addTimeSheet(ts)
         }
@@ -78,7 +84,7 @@ class DatabaseTimeSheetTest {
     }
 
     @Test
-    fun readOneTimeSheet(){
+    fun readOneTimeSheet() = runBlocking{
         timeSheetDAO.addTimeSheet( testTimeSheets[0] ) //Write
         val result1 = timeSheetDAO.getAllSimple().waitAndGet()[0]
         val result2 = timeSheetDAO.getOneSimple( result1.timeSheetId ).waitAndGet()
@@ -87,7 +93,7 @@ class DatabaseTimeSheetTest {
 
     //Test Delete
     @Test
-    fun deleteTimeSheet(){
+    fun deleteTimeSheet() = runBlocking{
         timeSheetDAO.addTimeSheet(testTimeSheets[0])
         val result1 = timeSheetDAO.getAllSimple().waitAndGet()[0]
         timeSheetDAO.deleteTimeSheet(result1)
@@ -96,7 +102,7 @@ class DatabaseTimeSheetTest {
     }
 
     @Test
-    fun updateTimeSheet(){
+    fun updateTimeSheet() = runBlocking{
         timeSheetDAO.addTimeSheet(testTimeSheets[0])
         val result1 = timeSheetDAO.getAllSimple().waitAndGet()[0]
 
@@ -109,7 +115,7 @@ class DatabaseTimeSheetTest {
     }
 
     @Test
-    fun getAllComplexTimeSheet(){
+    fun getAllComplexTimeSheet() = runBlocking{
         timeSheetDAO.addTimeSheet(testTimeSheets[0])
         val result1 = timeSheetDAO.getAllSimple().waitAndGet()[0]
 
@@ -124,7 +130,7 @@ class DatabaseTimeSheetTest {
     }
 
     @Test
-    fun getOneComplexTimeSheet(){
+    fun getOneComplexTimeSheet() = runBlocking{
         timeSheetDAO.addTimeSheet(testTimeSheets[0])
         val result1 = timeSheetDAO.getAllSimple().waitAndGet()[0]
 

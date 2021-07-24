@@ -13,7 +13,8 @@ import org.hamcrest.CoreMatchers.equalTo
 import com.example.gokart.database.entity.KartEntity
 import com.example.gokart.database.entity.KartWithTimeSheets
 import com.example.gokart.database.entity.TimeSheetEntity
-import kotlinx.coroutines.test.TestCoroutineContext
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -22,10 +23,14 @@ import org.junit.runner.RunWith
 import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
+@ExperimentalCoroutinesApi
 class DatabaseKartTest {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    @get:Rule
+    var coroutinesTestRule = CoroutineTestRule()
 
     private lateinit var db : AppDatabase
     private lateinit var kartDAO: KartDAO
@@ -61,7 +66,7 @@ class DatabaseKartTest {
 
     //Insert Read
     @Test
-    suspend fun writeReadKart() {
+    fun writeReadKart() = runBlocking<Unit> {
         kartDAO.addKart(testKarts[0])
 
         val result = kartDAO.getAllSimple().waitAndGet()[0]
@@ -70,7 +75,7 @@ class DatabaseKartTest {
 
     //multi read write
     @Test
-    suspend fun multiWriteReadKart() {
+    fun multiWriteReadKart() = runBlocking {
         for (kart in testKarts )
             kartDAO.addKart(kart)
 
@@ -82,7 +87,7 @@ class DatabaseKartTest {
     }
 
     @Test
-    suspend fun readOneKart(){
+    fun readOneKart() = runBlocking {
         kartDAO.addKart( testKarts[0] ) //write
         val result1 = kartDAO.getAllSimple().waitAndGet()[0] //read all
         val result2 = kartDAO.getOneSimple(result1.kartId).waitAndGet() //read one
@@ -91,7 +96,7 @@ class DatabaseKartTest {
 
     //Delete
     @Test
-    suspend fun deleteKart() {
+    fun deleteKart() = runBlocking {
         kartDAO.addKart(testKarts[0])
         val kart = kartDAO.getAllSimple().waitAndGet()[0]
         kartDAO.deleteKart(kart)
@@ -100,7 +105,7 @@ class DatabaseKartTest {
 
     //Update
     @Test
-    suspend fun updateKart() {
+    fun updateKart() = runBlocking {
         kartDAO.addKart(testKarts[0])
         val kart = kartDAO.getAllSimple().waitAndGet()[0]
         val kartValues = testKarts[3]
@@ -115,7 +120,7 @@ class DatabaseKartTest {
 
     //ComplexTest
     @Test
-    suspend fun readAllComplex(){
+    fun readAllComplex() = runBlocking{
         kartDAO.addKart(testKarts[0])
         val result1 = kartDAO.getAllSimple().waitAndGet()[0]
 
@@ -130,7 +135,7 @@ class DatabaseKartTest {
     }
 
     @Test
-    suspend fun readOneComplex(){
+    fun readOneComplex() = runBlocking{
         kartDAO.addKart(testKarts[0])
         val result1 = kartDAO.getAllSimple().waitAndGet()[0]
 
