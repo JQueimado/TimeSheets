@@ -12,14 +12,15 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.commit
 import com.example.gokart.R
-import com.example.gokart.database.entity.KartEntity
-import com.example.gokart.database.entity.KartingCenterEntity
-import com.example.gokart.database.entity.KartingCenterWithKarts
+import com.example.gokart.data_converters.toIntTimeStamp
+import com.example.gokart.database.dao.LapDAO
+import com.example.gokart.database.entity.*
 import com.google.android.material.textfield.TextInputEditText
 import java.util.*
 import kotlin.collections.ArrayList
@@ -48,9 +49,11 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
     //UI
     private lateinit var choseKartButton: Button
     private lateinit var choseKartingCenterButton: Button
+    private lateinit var doneButton: Button
 
     //Lap values
     private var lapCount : Int = 0
+    private var lapViews : MutableList<AddLapView> = ArrayList()
 
     //Selections
     private var kartingCenter: KartingCenterWithKarts? = null
@@ -226,9 +229,46 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
             lapCount += 1
             findViewById<TextView>(R.id.add_laps_counter).text =
                 resources.getText(R.string.add_list_title).toString() + lapCount.toString()
-            listLayout.addView( AddLapView( applicationContext, layoutInflater, lapCount ) )
+
+            val addLapView = AddLapView( applicationContext, layoutInflater, lapCount )
+            //Add to view
+            listLayout.addView( addLapView )
+            //Add to list
+            lapViews.add( addLapView )
         }
 
+        //Done Button
+        doneButton.findViewById<Button>(R.id.add_conclude_button)
+        doneButton.setOnClickListener{
+
+            //values and variables
+            val lapsRaw = arrayListOf<Int>()
+
+            //Verification and lap conversion
+            try{
+                //karting Center
+                if (kartingCenter == null)
+                    throw Exception( "Invalid Karting Center" )
+
+                //kart
+                if( kart == null )
+                    throw Exception( "Invalid Kart" )
+
+                //laps
+                for ( lap in lapViews ){
+                    lapsRaw.add( lap.text.toIntTimeStamp() )
+                }
+
+            }catch (e: Exception ){
+                Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            //Assemble data structures  //TODO( set as coroutine )
+            val laps = ArrayList<LapEntity>()
+
+
+        }
     }
 
     fun getKartingCenterID() : Long{
@@ -240,47 +280,49 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
 
     //Lap View
     @SuppressLint("ViewConstructor", "SetTextI18n")
-    class AddLapView// Lap Tag
+    class AddLapView (context: Context, inflater: LayoutInflater, count: Int) : ConstraintLayout(context) {// Lap Tag
 
-    //Time input
-    constructor(
-        context: Context,
-        inflater: LayoutInflater,
-        count: Int
-    ) : ConstraintLayout(context) {
+        var text = ""
 
         init {
-            inflater.inflate(R.layout.view_add_lap_row, this, true )
+            inflater.inflate(R.layout.view_add_lap_row, this, true)
             this.findViewById<TextView>(R.id.lap_number).text = "$count-0:00.000"
-            val textView : TextView = findViewById(R.id.lap_number)
-            this.findViewById<TextInputEditText>(R.id.lap_input).addTextChangedListener(
-                object : TextWatcher{
+            val textView: TextView = findViewById(R.id.lap_number)
+            this.findViewById<TextInputEditText>(R.id.lap_input)
+                .addTextChangedListener( object : TextWatcher {
 
-                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    private var value : String = ""
 
+                    override fun beforeTextChanged(
+                        p0: CharSequence?,
+                        p1: Int,
+                        p2: Int,
+                        p3: Int
+                    ) {
+                        //Nothing needed
                     }
 
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                         var text = p0.toString()
 
-                        for (i in text.length..6 )
+                        for (i in text.length..6)
                             text = "0$text"
 
                         Log.d(text, "yez")
 
-                        text = text.substring(0, text.length-5) +
-                                ":" + text.substring(text.length-5, text.length-3) +
-                                "." + text.substring(text.length-3, text.length)
+                        text = text.substring(0, text.length - 5) +
+                                ":" + text.substring(text.length - 5, text.length - 3) +
+                                "." + text.substring(text.length - 3, text.length)
 
+                        value = text
                         text = "$count-$text"
                         textView.text = text
                     }
 
                     override fun afterTextChanged(p0: Editable?) {
-
+                        this@AddLapView.text = text
                     }
                 })
         }
-
     }
 }

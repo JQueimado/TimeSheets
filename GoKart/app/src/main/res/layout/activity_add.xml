@@ -241,13 +241,14 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <!-- Confirm Button -->
-            <TextView
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/add_conclude_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:padding="10dp"
                 android:background="@drawable/nav_buttons_shape"
                 android:text="@string/add_confirm_button"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textAlignment="center"
                 />
