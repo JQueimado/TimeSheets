@@ -237,8 +237,20 @@
                     android:orientation="vertical"
                     />
 
+
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <!-- Confirm Button -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:background="@drawable/nav_buttons_shape"
+                android:text="@string/add_confirm_button"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                />
 
         </LinearLayout>
 

@@ -37,6 +37,7 @@
     <string name="add_list_remove">Remove</string>
     <string name="add_list_add">Add Lap +</string>
     <string name="add_list_title">Laps:</string>
+    <string name="add_confirm_button">Done</string>
     <!-- Add Buttons -->
     <string name="add_chose_fragment_add_kart">Add Kart +</string>
     <string name="add_chose_fragment_add_karting_center">Add Karting Center +</string>
