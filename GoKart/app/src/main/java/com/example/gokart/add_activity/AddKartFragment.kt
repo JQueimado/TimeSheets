@@ -56,7 +56,7 @@ class AddKartFragment(val parent: AddActivity) : Fragment() {
                 parent.getKartingCenterID(),
                 number.toInt(),
                 displacement.toInt(),
-                if( name.isNullOrBlank() )
+                if( name.isBlank() )
                     ""
                 else
                     name

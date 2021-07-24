@@ -59,7 +59,7 @@ class DatabaseKartingCenterTest {
 
     //Write Read
     @Test
-    fun readWriteKartingCenter(){
+    suspend fun readWriteKartingCenter(){
         val kartingCenter1 = testKartingCenters[0]
         kartingCenterDAO.addKartingCenter(kartingCenter1)
 
@@ -69,7 +69,7 @@ class DatabaseKartingCenterTest {
 
     //Update
     @Test
-    fun updateKartingCenter(){
+    suspend fun updateKartingCenter(){
         //add karting center
         var kartingCenter1 = testKartingCenters[0]
         kartingCenterDAO.addKartingCenter(kartingCenter1)
@@ -92,7 +92,7 @@ class DatabaseKartingCenterTest {
 
     //Delete Test
     @Test
-    fun deleteKartingCenter(){
+    suspend fun deleteKartingCenter(){
         //add karting center
         var kartingCenter1 = testKartingCenters[0]
         kartingCenterDAO.addKartingCenter(kartingCenter1)
@@ -110,7 +110,7 @@ class DatabaseKartingCenterTest {
 
     //Get One Simple
     @Test
-    fun getOneKartingCenter(){
+    suspend fun getOneKartingCenter(){
         //add karting center
         var kartingCenter1 = testKartingCenters[0]
         kartingCenterDAO.addKartingCenter(kartingCenter1)
@@ -127,7 +127,7 @@ class DatabaseKartingCenterTest {
 
     //Test multiple values
     @Test
-    fun readWriteMultipleKartingCenter(){
+    suspend fun readWriteMultipleKartingCenter(){
         for (kartingCenter in testKartingCenters){
             kartingCenterDAO.addKartingCenter(kartingCenter)
         }
@@ -142,7 +142,7 @@ class DatabaseKartingCenterTest {
 
     //test relation extraction
     @Test
-    fun readwriteComplex(){
+    suspend fun readwriteComplex(){
         kartingCenterDAO.addKartingCenter(testKartingCenters[0])
 
         val result = kartingCenterDAO.getAllSimple().waitAndGet()
@@ -161,7 +161,7 @@ class DatabaseKartingCenterTest {
 
     //test relation extraction
     @Test
-    fun readOneComplex(){
+    suspend fun readOneComplex(){
         //insert
         kartingCenterDAO.addKartingCenter(testKartingCenters[0])
 
