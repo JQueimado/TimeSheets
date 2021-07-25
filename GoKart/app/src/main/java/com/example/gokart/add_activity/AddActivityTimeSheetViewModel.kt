@@ -46,18 +46,19 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
             var bestDelta: Int
             var lastDelta = 0
 
+            //Find Fastest Lap
+            for( lap in lapsValue )
+                if( bestLap > lap || bestLap == -1 )
+                    bestLap = lap
+
             //Process Laps
             for( i in lapsValue.indices){
                 //Value extraction
                 currentLapValue = lapsValue[i]
                 currentLapText = lapsText[i]
 
-                //BestLap
-                if( bestLap > currentLapValue || bestLap == -1 )
-                    bestLap = currentLapValue
-
                 //Worst Lap
-                if( worstLap < currentLapValue || worstLap == -1 )
+                if( worstLap < currentLapValue )
                     worstLap = currentLapValue
 
                 //Average
