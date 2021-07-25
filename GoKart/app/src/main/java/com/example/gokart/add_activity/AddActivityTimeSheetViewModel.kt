@@ -1,6 +1,8 @@
 package com.example.gokart.add_activity
 
+import android.app.Activity
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gokart.data_converters.toStringDelta
@@ -9,6 +11,7 @@ import com.example.gokart.database.entity.KartEntity
 import com.example.gokart.database.entity.KartingCenterEntity
 import com.example.gokart.database.entity.LapEntity
 import com.example.gokart.database.entity.TimeSheetEntity
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
@@ -24,9 +27,13 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
         kartEntity: KartEntity,
         date: Date,
         lapsText: List<String>,
-        lapsValue: List<Int> //Generated from lapsText in validation
+        lapsValue: List<Int>,
+        activity: Activity//Generated from lapsText in validation
     ){
         viewModelScope.launch { //Start a coroutine
+
+            Toast.makeText(getApplication(), "Adding TimeSheet", Toast.LENGTH_LONG).show()
+
             val laps : MutableList<LapEntity> = ArrayList()
             var bestLap = -1
             var worstLap = 0
@@ -87,7 +94,7 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
                 bestLap,
                 worstLap,
                 averageLap,
-                consistency,
+                0,
                 date.time
             )
 
@@ -98,6 +105,10 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
                 lap.timeSheetId = id
                 lapsDao.addLap(lap)
             }
+
+            //Final Message
+            Toast.makeText(getApplication(), "Added TimeSheet", Toast.LENGTH_LONG).show()
+            activity.finish()
         }
     }
 

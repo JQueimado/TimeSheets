@@ -8,17 +8,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.text.isDigitsOnly
-import androidx.fragment.app.viewModels
 import com.example.gokart.R
 import com.example.gokart.database.entity.KartEntity
-import com.example.gokart.view_models.KartsViewModel
 import com.google.android.material.textfield.TextInputEditText
 import java.lang.Exception
 
 class AddKartFragment(val parent: AddActivity) : Fragment() {
-
-    //Kart view model
-    private val kartsViewModel : KartsViewModel by viewModels()
 
     //Input Values
     private var name = ""

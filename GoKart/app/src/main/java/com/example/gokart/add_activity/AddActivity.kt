@@ -47,9 +47,11 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
     private var day : Int = 0
 
     //UI
+    private lateinit var choseDate : Button
     private lateinit var choseKartButton: Button
     private lateinit var choseKartingCenterButton: Button
     private lateinit var doneButton: Button
+    private lateinit var backButton: Button
 
     //Lap values
     private var lapCount : Int = 0
@@ -60,6 +62,9 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
     private var kart : KartEntity? = null
     private var kartList : MutableList<String>? = null
     private var kartingCenterList : MutableList<String>? = null
+
+    //Interaction
+    private var interaction = true
 
     //On Set Date and Time Click
     fun onDatePick( year: Int, month : Int, day: Int){
@@ -166,6 +171,7 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
         supportFragmentManager.popBackStack()
     }
 
+    ////////// On Create //////////
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -192,12 +198,14 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
         })
 
         //Back button
-        findViewById<Button>(R.id.nav_back_button).setOnClickListener {
+        backButton = findViewById<Button>(R.id.nav_back_button)
+        backButton.setOnClickListener {
             finish()
         }
 
         //Date picker
-        findViewById<Button>(R.id.date_picker_button).setOnClickListener {
+        choseDate = findViewById<Button>(R.id.date_picker_button)
+        choseDate.setOnClickListener {
             datePicker.show(supportFragmentManager, "date_picker")
         }
 
@@ -279,11 +287,17 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
                 kartEntity = kart!!,
                 date = date,
                 lapsValue = lapsValue,
-                lapsText = lapsText
+                lapsText = lapsText,
+                activity = this
             )
 
-            //End activity
-            finish()
+            //Disable interaction
+            doneButton.isEnabled = false
+            backButton.isEnabled = false
+            choseDate.isEnabled = false
+            choseKartingCenterButton.isEnabled = false
+            choseKartButton.isEnabled = false
+            interaction = false
         }
     }
 

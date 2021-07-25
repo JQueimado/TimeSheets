@@ -3,7 +3,7 @@ package com.example.gokart.main_activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import android.util.Log
 import android.widget.Button
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,102 +13,84 @@ import com.example.gokart.R
 import com.example.gokart.database.entity.LapEntity
 import com.example.gokart.database.entity.TimeSheetEntity
 import com.example.gokart.database.entity.TimeSheetWithLaps
-import com.example.gokart.view_models.CompleteTimeSheetViewModel
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlinx.coroutines.delay as delay1
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     // Demo mode 0 -> Ui demo
     // Demo mode 1 -> In memory Database (test)
-    private val DEMO_MODE = 0
+    private val mode = 1
 
-    private val completeTimeSheetViewModel : CompleteTimeSheetViewModel by viewModels()
+    private val mainActivityTimeSheetViewModel : MainActivityTimeSheetViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (savedInstanceState == null) {
+        //Set Variables
+        val contentList : MutableList<TimeSheetWithLaps> = ArrayList()
+        val myRVAdapter = TimeSheetsRVAdapter(this, contentList)
+        val layoutManager = LinearLayoutManager( this )
+        val recyclerView : RecyclerView = findViewById(R.id.main_activity_scroll_content)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = myRVAdapter
 
-            if (DEMO_MODE == 0) {
+        if ( mode == 0) { /* TestMode */
 
-                val contentList : MutableList<TimeSheet> = ArrayList() //Demo1
-
-                //Times Demo
-                for (i in 1..1000) {
-                    val timeSheetWithLaps = TimeSheetWithLaps(
-                        TimeSheetEntity(
+            //Times Demo
+            for (i in 1..1000) {
+                val timeSheetWithLaps = TimeSheetWithLaps(
+                    TimeSheetEntity(
+                        0,
+                        0,
+                        78348,
+                        79659,
+                        79659,
+                        60,
+                        Date().time),
+                    arrayListOf(
+                        LapEntity(
                             0,
                             0,
-                            78348,
-                            79659,
-                            79659,
-                            60,
-                            Date().time),
-                        arrayListOf(
-                            LapEntity(
-                                0,
-                                0,
-                                "1.18.348",
-                                "+1.111",
-                                "-1.111"),
-                            LapEntity(
-                                0,
-                                0,
-                                "1.18.348",
-                                "+1.111",
-                                "-1.111"),
-                            LapEntity(
-                                0,
-                                0,
-                                "1.18.348",
-                                "+1.111",
-                                "-1.111")
-                        )
+                            "1.18.348",
+                            "+1.111",
+                            "-1.111"),
+                        LapEntity(
+                            0,
+                            0,
+                            "1.18.348",
+                            "+1.111",
+                            "-1.111"),
+                        LapEntity(
+                            0,
+                            0,
+                            "1.18.348",
+                            "+1.111",
+                            "-1.111")
                     )
-
-                    val timeSheet = TimeSheet(timeSheetWithLaps)
-                    contentList.add(timeSheet)
-
-                    val myRVAdapter = TimeSheetsRVAdapter(this, contentList)
-                    val recyclerView : RecyclerView = findViewById(R.id.main_activity_scroll_content)
-                    val layoutManager = LinearLayoutManager( this )
-
-                    layoutManager.orientation = LinearLayoutManager.VERTICAL
-                    recyclerView.layoutManager = layoutManager
-                    recyclerView.adapter = myRVAdapter
-
-                }
-            }else if(DEMO_MODE == 1){
-
-                val contentList : MutableList<TimeSheet> = ArrayList() //Demo1
-                val myRVAdapter = TimeSheetsRVAdapter(this, contentList)
-
-                completeTimeSheetViewModel.get().observe( this, {
-                    //Adapt
-                    val temp : MutableList<TimeSheet> = ArrayList()
-                    for( timeSheet in it )
-                        temp.add( TimeSheet(timeSheet) )
-
-                    //Update
-                    myRVAdapter.setTimeSheets( temp )
-                } )
-
-                val recyclerView : RecyclerView = findViewById(R.id.main_activity_scroll_content)
-                val layoutManager = LinearLayoutManager( this )
-
-                layoutManager.orientation = LinearLayoutManager.VERTICAL
-                recyclerView.layoutManager = layoutManager
-                recyclerView.adapter = myRVAdapter
-
+                )
+                contentList.add(timeSheetWithLaps)
             }
 
-            val addButton :Button = findViewById(R.id.nav_add_button)
+            myRVAdapter.setData(contentList)
 
-            addButton.setOnClickListener( View.OnClickListener {
-                val intent = Intent(this, AddActivity::class.java)
-                startActivity(intent)
+        }else if( mode == 1){ /* Application mode */
+            //Data Observer
+            mainActivityTimeSheetViewModel.get().observe( this, {
+                //Update
+                myRVAdapter.setData( it )
+                if (it.isNotEmpty())
+                    Log.d("timeSheetAt0Size", it[0].laps.size.toString())
             } )
+        }
+
+        //Add button action
+        val addButton :Button = findViewById(R.id.nav_add_button)
+
+        addButton.setOnClickListener {
+            val intent = Intent(this, AddActivity::class.java)
+            startActivity(intent)
         }
 
     }

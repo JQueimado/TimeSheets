@@ -5,5 +5,9 @@ import androidx.room.Relation
 
 data class TimeSheetWithLaps(
     @Embedded val timeSheet : TimeSheetEntity,
-    @Relation( parentColumn = "time_sheet_id", entityColumn = "lap_time_sheet" ) val laps : List<LapEntity>
+    @Relation(
+        parentColumn = "time_sheet_id",
+        entityColumn = "lap_time_sheet"
+    )
+    val laps : List<LapEntity>
 )
