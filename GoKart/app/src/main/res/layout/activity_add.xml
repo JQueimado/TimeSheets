@@ -249,7 +249,6 @@
                 android:background="@drawable/nav_buttons_shape"
                 android:text="@string/add_confirm_button"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
                 android:textAlignment="center"
                 />
 

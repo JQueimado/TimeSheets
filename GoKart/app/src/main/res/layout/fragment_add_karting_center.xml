@@ -118,6 +118,7 @@
                         app:layout_constraintTop_toTopOf="parent"
 
                         android:inputType="number"
+                        android:imeOptions="actionDone"
                         />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
