@@ -78,8 +78,7 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
     //PopsUp after date selection
     fun onTimePick( hour : Int, minute : Int ){
         Date( year - 1900, month, day, hour, minute ).also { date = it }
-        val dateText : String = DateFormat.format("dd/MM/yyyy hh:mm", date).toString()
-        findViewById<Button>(R.id.date_picker_button).text = dateText
+        findViewById<Button>(R.id.date_picker_button).text = date.toReqFormat()
     }
 
     //Result for Picking a kart
@@ -204,7 +203,8 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
         }
 
         //Date picker
-        choseDate = findViewById<Button>(R.id.date_picker_button)
+        choseDate = findViewById(R.id.date_picker_button)
+        choseDate.text = date.toReqFormat()
         choseDate.setOnClickListener {
             datePicker.show(supportFragmentManager, "date_picker")
         }
@@ -306,6 +306,11 @@ class AddActivity : AppCompatActivity(R.layout.activity_add){
             kartingCenter!!.kartingCenterEntity.kartingCenterId
         else
             -1
+    }
+
+    //Returns a string that corresponds to the required date format
+    private fun Date.toReqFormat(): String{
+        return DateFormat.format("dd/MM/yyyy hh:mm", this).toString()
     }
 
     //Lap View
