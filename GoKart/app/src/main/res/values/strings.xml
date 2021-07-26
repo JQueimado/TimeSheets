@@ -16,8 +16,10 @@
     <string name="stats_favourite_track">Favourite Track</string>
 
     <!-- Time Sheets -->
-    <string name="times_sheets_date">Date</string>
-    <string name="times_sheets_average_lap">Average lap</string>
+    <string name="time_sheet_date">Date</string>
+    <string name="time_sheet_average_lap">Average lap</string>
+    <string name="time_sheet_best_lap">Best lap</string>
+    <string name="time_sheet_worst_lap">Worst lap</string>
     <string name="time_sheets_lap">Lap</string>
     <string name="time_sheets_time">Time</string>
     <string name="time_sheets_last_delta">Last lap delta</string>

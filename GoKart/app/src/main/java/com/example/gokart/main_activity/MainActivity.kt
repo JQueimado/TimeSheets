@@ -15,7 +15,6 @@ import com.example.gokart.database.entity.TimeSheetEntity
 import com.example.gokart.database.entity.TimeSheetWithLaps
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlinx.coroutines.delay as delay1
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
@@ -23,7 +22,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     // Demo mode 1 -> In memory Database (test)
     private val mode = 1
 
-    private val mainActivityTimeSheetViewModel : MainActivityTimeSheetViewModel by viewModels()
+    private val mainActivityDatabaseViewModel : MainActivityDatabaseViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +76,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         }else if( mode == 1){ /* Application mode */
             //Data Observer
-            mainActivityTimeSheetViewModel.get().observe( this, {
+            mainActivityDatabaseViewModel.getTimeSheets().observe( this, {
                 //Update
                 myRVAdapter.setData( it )
                 if (it.isNotEmpty())
@@ -93,5 +92,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             startActivity(intent)
         }
 
+    }
+
+    fun getViewModel() : MainActivityDatabaseViewModel{
+        return mainActivityDatabaseViewModel
     }
 }

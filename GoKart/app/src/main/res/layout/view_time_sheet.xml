@@ -60,7 +60,6 @@
 
         <!-- Date Lap -->
         <TableRow
-            android:id="@+id/time_sheets_date_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -69,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/table_fragment_table_shape"
 
-                android:text="@string/times_sheets_date"
+                android:text="@string/time_sheet_date"
                 android:textColor="@color/white"
                 android:gravity="center"
                 android:padding="2dp" />
@@ -86,9 +85,37 @@
                 android:padding="2dp" />
         </TableRow>
 
+        <!-- Karting Center -->
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/table_fragment_table_shape"
+
+                android:text="@string/time_sheets_karting_center"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:padding="2dp"
+                />
+
+            <TextView
+                android:id="@+id/time_sheet_karting_center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/table_fragment_table_shape"
+
+                android:text="@string/default_track"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:padding="2dp"/>
+
+        </TableRow>
+
         <!-- Kart -->
         <TableRow
-            android:id="@+id/stats_kart_body"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -104,7 +131,7 @@
                 />
 
             <TextView
-                android:id="@+id/stats_kart"
+                android:id="@+id/time_sheet_kart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/table_fragment_table_shape"
@@ -118,7 +145,6 @@
 
         <!-- Best Lap -->
         <TableRow
-            android:id="@+id/stats_best_lap_body"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -133,7 +159,34 @@
                 android:padding="2dp"/>
 
             <TextView
-                android:id="@+id/stats_best_lap"
+                android:id="@+id/time_sheet_best_lap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/table_fragment_table_shape"
+
+                android:text="@string/default_lap"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:padding="2dp"/>
+        </TableRow>
+
+        <!-- Worst Lap -->
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/table_fragment_table_shape"
+
+                android:text="@string/time_sheet_worst_lap"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:padding="2dp"/>
+
+            <TextView
+                android:id="@+id/time_sheet_worst_lap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/table_fragment_table_shape"
@@ -155,14 +208,14 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/table_fragment_table_shape"
 
-                android:text="@string/times_sheets_average_lap"
+                android:text="@string/time_sheet_average_lap"
                 android:textColor="@color/white"
                 android:gravity="center"
                 android:padding="2dp"
                 />
 
             <TextView
-                android:id="@+id/stats_average_lap"
+                android:id="@+id/time_sheet_average_lap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/table_fragment_table_shape"
@@ -192,7 +245,7 @@
                 />
 
             <TextView
-                android:id="@+id/stats_consistency"
+                android:id="@+id/time_sheet_consistency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/table_fragment_table_shape"
@@ -203,6 +256,7 @@
                 android:padding="2dp"/>
 
         </TableRow>
+
 
     </TableLayout>
 
