@@ -3,4 +3,5 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <corners android:radius="25dp"/>
     <solid android:color="@color/nav_button_color"/>
+    <stroke android:width="3dp"  android:color="@color/stats_outline_color"/>
 </shape>
