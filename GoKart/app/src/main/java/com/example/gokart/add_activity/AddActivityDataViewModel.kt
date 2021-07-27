@@ -3,8 +3,18 @@ package com.example.gokart.add_activity
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import com.example.gokart.database.entity.KartEntity
+import com.example.gokart.database.entity.KartingCenterWithKarts
 
-class AddActivityLapsViewModel(application: Application) : AndroidViewModel(application) {
+class AddActivityDataViewModel(application: Application) : AndroidViewModel(application) {
+
+    //Selections
+    var kartingCenter: KartingCenterWithKarts? = null
+    var kart : KartEntity? = null
+    var kartList : MutableList<String> = ArrayList()
+    var kartingCenterList : MutableList<String> = ArrayList()
+
+    //Laps
     private val lapsToAdd:MutableList<String> = ArrayList()
 
     fun get(i:Int): String{

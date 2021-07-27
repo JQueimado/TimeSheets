@@ -77,7 +77,7 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
                 //Create Entity
                 val lapEntity = LapEntity(
                     0,
-                    i,
+                    i+1,
                     currentLapText,
                     bestDelta.toStringDelta(),
                     lastDelta.toStringDelta()

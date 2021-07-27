@@ -56,205 +56,173 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Body -->
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
+        android:orientation="vertical"
+        android:paddingTop="70dp"
+        android:paddingBottom="70dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nav_bar"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="80dp"
-            >
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/table_fragment_table_shape"
+            android:padding="1dp"
+            android:stretchColumns="0,1">
 
-            <TableLayout
+            <!-- Date Input -->
+            <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:stretchColumns="0,1"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:background="@drawable/table_fragment_table_shape"
-                android:padding="1dp"
-                >
+                android:layout_height="wrap_content">
 
-                <!-- Date Input -->
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/time_sheet_date"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:background="@drawable/table_fragment_table_shape"
-                        />
-
-                    <FrameLayout
-                        android:background="@drawable/table_fragment_table_shape">
-
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/date_picker_button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:minWidth="150dp"
-                            android:padding="10dp"
-                            android:layout_marginVertical="5dp"
-                            android:text="@string/add_pick_time_date"
-                            android:background="@drawable/nav_buttons_shape"
-                            android:textAllCaps="false"
-                            android:layout_gravity="center"
-                            android:textAlignment="center"
-                            />
-
-                    </FrameLayout>
-                </TableRow>
-
-                <!-- Kart center picker -->
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/time_sheets_karting_center"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:background="@drawable/table_fragment_table_shape"
-                        />
-
-                    <FrameLayout
-                        android:background="@drawable/table_fragment_table_shape">
-
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/pick_kart_center_button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:minWidth="150dp"
-                            android:padding="10dp"
-                            android:layout_marginVertical="5dp"
-                            android:text="@string/add_pick_kart_center"
-                            android:background="@drawable/nav_buttons_shape"
-                            android:textAllCaps="false"
-                            android:layout_gravity="center"
-                            android:textAlignment="center"
-                            />
-
-                    </FrameLayout>
-
-                </TableRow>
-
-                <!-- Kart selector -->
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/time_sheets_kart"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:background="@drawable/table_fragment_table_shape"
-                        />
-
-                    <FrameLayout
-                        android:background="@drawable/table_fragment_table_shape">
-
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/pick_kart_button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:minWidth="150dp"
-                            android:padding="10dp"
-                            android:layout_marginVertical="5dp"
-                            android:text="@string/add_pick_kart"
-                            android:background="@drawable/nav_buttons_shape"
-                            android:textAllCaps="false"
-                            android:layout_gravity="center"
-                            android:textAlignment="center"
-                            />
-
-                    </FrameLayout>
-
-                </TableRow>
-
-            </TableLayout>
-
-            <!-- Add Lap -->
-
-            <TextView
-                android:id="@+id/add_laps_counter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/add_list_title"
-                android:layout_marginHorizontal="10dp"/>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/table_fragment_table_shape"
-                android:layout_marginHorizontal="10dp"
-                android:padding="1dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/add_lap_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@drawable/table_fragment_table_shape"
-                    tools:context=".add_activity.AddActivity"
-                    >
+                    android:gravity="center"
+                    android:text="@string/time_sheet_date"
+                    android:textColor="@color/white" />
 
-                    <TextView
+                <FrameLayout android:background="@drawable/table_fragment_table_shape">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/date_picker_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="5dp"
+                        android:background="@drawable/nav_buttons_shape"
+                        android:minWidth="150dp"
                         android:padding="10dp"
+                        android:text="@string/add_pick_time_date"
+                        android:textAlignment="center"
+                        android:textAllCaps="false" />
 
-                        android:text="@string/add_list_add"
-                        android:textColor="@color/white"
+                </FrameLayout>
+            </TableRow>
 
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+            <!-- Kart center picker -->
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/table_fragment_table_shape"
+                    android:gravity="center"
+                    android:text="@string/time_sheets_karting_center"
+                    android:textColor="@color/white" />
 
-                <!-- Add times -->
-                <LinearLayout
-                    android:id="@+id/add_laps_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    />
+                <FrameLayout android:background="@drawable/table_fragment_table_shape">
 
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/pick_kart_center_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="5dp"
+                        android:background="@drawable/nav_buttons_shape"
+                        android:minWidth="150dp"
+                        android:padding="10dp"
+                        android:text="@string/add_pick_kart_center"
+                        android:textAlignment="center"
+                        android:textAllCaps="false" />
 
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                </FrameLayout>
 
-            <!-- Confirm Button -->
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/add_conclude_button"
+            </TableRow>
+
+            <!-- Kart selector -->
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/table_fragment_table_shape"
+                    android:gravity="center"
+                    android:text="@string/time_sheets_kart"
+                    android:textColor="@color/white" />
+
+                <FrameLayout android:background="@drawable/table_fragment_table_shape">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/pick_kart_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="5dp"
+                        android:background="@drawable/nav_buttons_shape"
+                        android:minWidth="150dp"
+                        android:padding="10dp"
+                        android:text="@string/add_pick_kart"
+                        android:textAlignment="center"
+                        android:textAllCaps="false" />
+
+                </FrameLayout>
+
+            </TableRow>
+
+        </TableLayout>
+
+        <!-- Add Lap -->
+
+        <TextView
+            android:id="@+id/add_laps_counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:text="@string/add_list_title" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:orientation="vertical"
+            android:padding="1dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/add_lap_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/nav_buttons_shape"
-                android:text="@string/add_confirm_button"
-                android:textAllCaps="false"
-                android:textAlignment="center"
-                />
+                android:background="@drawable/table_fragment_table_shape"
+                tools:context=".add_activity.AddActivity">
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
 
-    </ScrollView>
+                    android:text="@string/add_list_add"
+                    android:textColor="@color/white"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Add times -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/add_laps_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/picker_fragment"
@@ -265,5 +233,17 @@
         app:layout_constraintRight_toRightOf="parent"
         />
 
+    <!-- Confirm Button -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/add_conclude_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/nav_buttons_shape"
+        android:text="@string/add_confirm_button"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
