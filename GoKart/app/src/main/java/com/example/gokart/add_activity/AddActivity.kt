@@ -2,8 +2,6 @@ package com.example.gokart.add_activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.text.format.DateFormat
 import android.util.Log
 import android.view.View
@@ -20,7 +18,6 @@ import com.example.gokart.R
 import com.example.gokart.data_converters.toIntTimeSheet
 import com.example.gokart.data_converters.toTextTimeStamp
 import com.example.gokart.database.entity.*
-import com.google.android.material.textfield.TextInputEditText
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -74,9 +71,6 @@ class AddActivity : AppCompatActivity(resourceValue){
     private lateinit var doneButton: Button
     private lateinit var backButton: Button
     private lateinit var lapListLayout: LinearLayout
-
-    //Lap values
-    private var lapViews : MutableList<AddLapView> = ArrayList()
 
     //Selections
     private var kartingCenter: KartingCenterWithKarts? = null
@@ -199,13 +193,8 @@ class AddActivity : AppCompatActivity(resourceValue){
     }
     //////////////////////////////////////////////////////////////////////////////////// Lap Action
 
-    private fun addAddLapView(text: String, position: Int): AddLapView{
-        val addLapView = AddLapView( this, position )
-        Log.d("set Value arg", text)
-        addLapView.setValue(text)
-        //Add to view
-        lapListLayout.addView( addLapView )
-        return addLapView
+    private fun addAddLapView(position: Int){
+        AddLapView( this, position, addActivityLapsViewModel.get(position), lapListLayout)
     }
 
     fun removeAddLapView( addLapView: AddLapView ){
@@ -291,8 +280,7 @@ class AddActivity : AppCompatActivity(resourceValue){
         //Add lap list
         lapListLayout = findViewById(addLapsLayoutId)
         for ( i in 0 until addActivityLapsViewModel.size() ){
-            val lapValue = addActivityLapsViewModel.get(i)
-            addAddLapView( lapValue, i )
+            addAddLapView( i )
         }
 
         //Add lap button
@@ -308,7 +296,7 @@ class AddActivity : AppCompatActivity(resourceValue){
             //Lap Views
             val text = ""
             addActivityLapsViewModel.add(text)
-            addAddLapView(text, addActivityLapsViewModel.size()-1)
+            addAddLapView( addActivityLapsViewModel.size()-1)
 
             //LapCounter
             lapCountTextView.text =
@@ -335,20 +323,24 @@ class AddActivity : AppCompatActivity(resourceValue){
                     throw Exception( "Invalid Kart" )
 
                 //laps
-                if( lapViews.size == 0 )
+                val laps = addActivityLapsViewModel.get()
+
+                if( laps.size == 0 )
                     throw Exception("Laps required")
 
-                for ( lap in lapViews ){
+                for ( lapRaw in laps ){
 
-                    if(lap.getValue().isBlank() )
+                    if(lapRaw.isBlank() )
                         throw Exception("Lap with no value")
 
-                    lapsValue.add( lap.getValue().toIntTimeSheet() )
-                    lapsText.add( lap.getValue() )
+                    val lap = lapRaw.toTextTimeStamp()
+                    lapsValue.add( lap.toIntTimeSheet() )
+                    lapsText.add( lap )
                 }
 
             }catch (e: Exception ){
                 Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()
+                Log.e("time Sheet verification", e.stackTraceToString())
                 return@setOnClickListener
             }
 
@@ -383,87 +375,6 @@ class AddActivity : AppCompatActivity(resourceValue){
         choseDateButton.isEnabled = false
         choseKartingCenterButton.isEnabled = false
         choseKartButton.isEnabled = false
-    }
-
-    //////////////////////////////////////////////////////////////////////////// Add Lap View class
-
-    //Lap View
-    @SuppressLint("ViewConstructor", "SetTextI18n")
-    class AddLapView (
-        activity: AddActivity,
-        val position: Int
-        ): ConstraintLayout(activity) {// Lap Tag
-
-        //constants
-        companion object{
-            //View
-            private const val itemViewId = R.layout.view_add_lap_row
-            //Components
-            private const val lapNumberId = R.id.lap_number
-            private const val lapInputEditTextId = R.id.lap_input
-            private const val lapRemoveButtonId = R.id.lap_remove_button
-        }
-
-        private var value = ""
-        private val lapView: TextView
-        private val lapInputEditText: TextInputEditText
-
-        init {
-            //Inflate View
-            val inflater = activity.layoutInflater
-            val view = inflater.inflate(itemViewId, this, true)
-
-            //Initial Lap Value
-            lapView = view.findViewById(lapNumberId)
-            lapView.text = "${position+1}-0:00.000"
-
-            //Text Input
-            lapInputEditText = view.findViewById(lapInputEditTextId)
-            lapInputEditText.addTextChangedListener( object : TextWatcher {
-
-                    override fun beforeTextChanged(
-                        p0: CharSequence?,
-                        p1: Int,
-                        p2: Int,
-                        p3: Int
-                    ) {
-                        //Nothing needed
-                    }
-
-                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                        val textRaw = p0.toString()
-                        val text = textRaw.toTextTimeStamp()
-                        setTextToView( text )
-                        activity.setAddLapValue(position, textRaw)
-                    }
-
-                    override fun afterTextChanged(p0: Editable?) {
-
-                    }
-                })
-
-            //Remove action
-            val removeButton = view.findViewById<Button>(lapRemoveButtonId)
-            removeButton.setOnClickListener{
-                activity.removeAddLapView(this)
-            }
-        }
-
-        fun setValue( text: String ){
-            //setTextToView(text)
-            lapInputEditText.setText(text, TextView.BufferType.EDITABLE) //TODO("BIG FIX REQUIRED")
-        }
-
-        fun getValue(): String{
-            return value
-        }
-
-        //Sets value to the view
-        private fun setTextToView(text: String ){
-            value = text
-            lapView.text = "${position+1}-$text"
-        }
-
     }
 
     //////////////////////////////////////////////////////////////////////////////////////// Extras

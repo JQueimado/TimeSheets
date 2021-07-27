@@ -11,6 +11,10 @@ class AddActivityLapsViewModel(application: Application) : AndroidViewModel(appl
         return lapsToAdd[i]
     }
 
+    fun get(): MutableList<String>{
+        return lapsToAdd
+    }
+
     fun set( i:Int, string: String ){
          lapsToAdd[i] = string
     }
