@@ -1,13 +1,11 @@
 package com.example.gokart.add_activity
 
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.Fragment
@@ -36,7 +34,7 @@ class AddKartingCenterFragment( val addActivity: AddActivity ) : Fragment() {
         layoutInput = view.findViewById(R.id.add_karting_center_layout_input)
 
         //nameInput handler
-        nameInput.setOnEditorActionListener { v, actionId, event ->
+        nameInput.setOnEditorActionListener { _, actionId, _ ->
             return@setOnEditorActionListener when (actionId) {
                 EditorInfo.IME_ACTION_NEXT -> {
                     layoutInput.requestFocus()
@@ -47,7 +45,7 @@ class AddKartingCenterFragment( val addActivity: AddActivity ) : Fragment() {
         }
 
         //layoutInput handler
-        layoutInput.setOnEditorActionListener { v, actionId, event ->
+        layoutInput.setOnEditorActionListener { _, actionId, _ ->
             return@setOnEditorActionListener when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
                     confirm()
@@ -88,7 +86,7 @@ class AddKartingCenterFragment( val addActivity: AddActivity ) : Fragment() {
 
             val layout = layoutRaw.toInt()
             name = "$name-layout:$layout"
-            val kartingCenterEntity = KartingCenterEntity(name,0, layout)
+            val kartingCenterEntity = KartingCenterEntity(name, layout)
 
             addActivity.onAddKartingCenterConclude( kartingCenterEntity )
 
