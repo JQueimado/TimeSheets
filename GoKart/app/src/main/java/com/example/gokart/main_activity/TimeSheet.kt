@@ -154,7 +154,7 @@ class TimeSheet() {
 
             //Consistency
             view.findViewById<TextView>(timeSheetConsistency)
-                .text = "${timeSheetEntity.consistency}/100%"
+                .text = "${timeSheetEntity.consistency}%"
         }
 
         //Injects values into a time sheet item view

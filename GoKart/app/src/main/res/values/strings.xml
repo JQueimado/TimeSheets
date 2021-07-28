@@ -57,7 +57,7 @@
 
     <!-- Defaults -->
     <string name="default_lap">0:00.000</string>
-    <string name="default_consistency">000/100%</string>
+    <string name="default_consistency">100%</string>
     <string name="default_kart"> 000cc-n00 </string>
     <string name="default_track"> Some Karting Center </string>
     <string name="default_date"> TUS-21-Oct-2020 </string>

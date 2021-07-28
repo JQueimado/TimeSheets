@@ -11,7 +11,6 @@ import com.example.gokart.database.entity.KartEntity
 import com.example.gokart.database.entity.KartingCenterEntity
 import com.example.gokart.database.entity.LapEntity
 import com.example.gokart.database.entity.TimeSheetEntity
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
@@ -38,11 +37,13 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
             var bestLap = -1
             var worstLap = 0
             val averageLap: Int
-            val consistency = 0 //TODO
+            val consistency: Int
 
             var currentLapValue : Int
             var currentLapText : String
-            var sum = 0L
+            var sumAvg = 0L
+            var sumCon = 0L
+            var worstDelta = 0
             var bestDelta: Int
             var lastDelta = 0
 
@@ -62,10 +63,7 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
                     worstLap = currentLapValue
 
                 //Average
-                sum += currentLapValue
-
-                //Consistency
-                //TODO
+                sumAvg += currentLapValue
 
                 //best Delta
                 bestDelta = currentLapValue - bestLap
@@ -73,6 +71,12 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
                 //lastDelta
                 if(i != 0) //first lap delta = 0
                     lastDelta = currentLapValue - lapsValue[i-1]
+
+                //Consistency
+                val deltaMod = if( lastDelta < 0 ) lastDelta*-1 else lastDelta
+                sumCon += deltaMod
+                if( worstDelta < deltaMod )
+                    worstDelta = deltaMod
 
                 //Create Entity
                 val lapEntity = LapEntity(
@@ -86,7 +90,8 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
             }
 
             //Final calculations
-            averageLap = (sum/lapsText.size).toInt()
+            averageLap = (sumAvg/lapsText.size).toInt()
+            consistency =  ( ( (sumCon.toFloat()/(lapsText.size-1) )/worstDelta ) * 100 ).toInt()
 
             //Create Time Sheet Entity
             val timeSheetEntity = TimeSheetEntity(
@@ -95,7 +100,7 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
                 bestLap,
                 worstLap,
                 averageLap,
-                0,
+                consistency,
                 date.time
             )
 
