@@ -17,6 +17,7 @@ interface TimeSheetDAO {
     @Delete
     suspend fun deleteTimeSheet( timeSheetEntity: TimeSheetEntity )
 
+    //Async
     @Transaction
     @Query("SELECT * FROM time_sheet")
     fun getAllComplex() : LiveData<List<TimeSheetWithLaps>>
@@ -31,4 +32,8 @@ interface TimeSheetDAO {
     @Query("SELECT * FROM time_sheet WHERE time_sheet_id == (:id)")
     fun getOneSimple( vararg id : Long ) : LiveData<TimeSheetEntity>
 
+    //Blocking
+    @Transaction
+    @Query("SELECT * FROM time_sheet WHERE time_sheet_id == (:id)")
+    suspend fun getOneComplexBlocking( vararg id : Long ) : TimeSheetWithLaps
 }

@@ -19,6 +19,7 @@ class MainActivityDatabaseViewModel(application: Application) : AndroidViewModel
     }
 
     private val database = AppDatabase.getMemoryInstance(application)
+    private val lapsDao = database.lapDao()
     private val timeSheetDao = database.timeSheetDao()
     private val kartDao = database.kartDao()
     private val kartingCenterDao = database.kartingCenterDao()
@@ -43,4 +44,14 @@ class MainActivityDatabaseViewModel(application: Application) : AndroidViewModel
         return statsEntity
     }
 
+    fun deleteTimeSheet( id: Long ){
+        viewModelScope.launch {
+            val timeSheetWithLaps = timeSheetDao.getOneComplexBlocking(id)
+
+            for(lap in timeSheetWithLaps.laps)
+                lapsDao.deleteLap(lap)
+
+            timeSheetDao.deleteTimeSheet(timeSheetWithLaps.timeSheet)
+        }
+    }
 }

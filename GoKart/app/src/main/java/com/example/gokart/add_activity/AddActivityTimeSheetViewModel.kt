@@ -41,7 +41,7 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
             var bestLap = -1
             var worstLap = 0
             val averageLap: Int
-            val consistency: Int
+            var consistency: Int
 
             var currentLapValue : Int
             var currentLapText : String
@@ -52,9 +52,16 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
             var lastDelta = 0
 
             //Find Fastest Lap
-            for( lap in lapsValue )
-                if( bestLap > lap || bestLap == -1 )
+            for( lap in lapsValue ) {
+                //BestLap
+                if (bestLap > lap || bestLap == -1)
                     bestLap = lap
+
+                //Average
+                sumAvg += lap
+            }
+
+            averageLap = (sumAvg/lapsText.size).toInt()
 
             //Process Laps
             for( i in lapsValue.indices){
@@ -66,9 +73,6 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
                 if( worstLap < currentLapValue )
                     worstLap = currentLapValue
 
-                //Average
-                sumAvg += currentLapValue
-
                 //best Delta
                 bestDelta = currentLapValue - bestLap
 
@@ -77,7 +81,8 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
                     lastDelta = currentLapValue - lapsValue[i-1]
 
                 //Consistency
-                val deltaMod = if( lastDelta < 0 ) lastDelta*-1 else lastDelta
+                val averageDelta = averageLap - currentLapValue
+                val deltaMod = if( averageDelta < 0 ) averageDelta*-1 else averageDelta
                 sumCon += deltaMod
                 if( worstDelta < deltaMod )
                     worstDelta = deltaMod
@@ -94,9 +99,8 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
             }
 
             //Final calculations
-            averageLap = (sumAvg/lapsText.size).toInt()
-            consistency =  ( ( (sumCon.toFloat()/(lapsText.size-1) )/worstDelta ) * 100 ).toInt()
-
+            consistency =  ( ( (sumCon.toFloat()/(lapsText.size) )/worstDelta ) * 100 ).toInt()
+            consistency = 100 - consistency
             //Create Time Sheet Entity
             val timeSheetEntity = TimeSheetEntity(
                 kartEntity.kartId,

@@ -42,6 +42,10 @@ class TimeSheet() {
         private const val lapBestDelta = R.id.time_sheet_bestlap_delta
         private const val lapLastDelta = R.id.time_sheet_lastlap_delta
 
+        //Buttons
+        private const val deleteTimeSheetButtonId = R.id.time_sheet_delete_button
+        private const val editTimeSheetButtonId = R.id.time_sheet_edit_button
+
         //Inflate
         fun inflate( parent : ViewGroup, inflater : LayoutInflater, timeSheetWithLaps: TimeSheetWithLaps): View {
             //Values
@@ -49,37 +53,9 @@ class TimeSheet() {
 
             //Inflate main view
             val view = inflater.inflate(timeSheetView, parent, false )
-            val buttonsFrame = view.findViewById<ConstraintLayout>(R.id.time_sheet_button_popup)
-            buttonsFrame.visibility = View.GONE
 
-            //Click Action
-            view.isClickable = true
-            view.setOnClickListener {
-                buttonsFrame.visibility = View.GONE
-            }
-
-            //Hold Action
-            view.setOnLongClickListener {
-                buttonsFrame.visibility = View.VISIBLE
-                return@setOnLongClickListener true
-            }
-
-            //On delete click
-            view.findViewById<Button>(R.id.time_sheet_delete_button).setOnClickListener {
-                //TODO
-
-            }
-
-            //On Edit click
-            view.findViewById<Button>(R.id.time_sheet_edit_button).setOnClickListener {
-                //TODO
-            }
-
-            //set sheet view
+            //inflate sheet view
             val lapsFrame = view.findViewById<TableLayout>(lapsFrameID)
-
-            Log.d("numberOfLaps", laps.size.toString())
-
             for ( e in laps ){
                 val row = inflater.inflate(timeSheetItemView, lapsFrame, false)
                 lapsFrame.addView(row)
@@ -93,7 +69,7 @@ class TimeSheet() {
             itemView: View,
             kart: LiveData<KartEntity>,
             kartingCenter: LiveData<KartingCenterEntity>,
-            activity: AppCompatActivity
+            activity: MainActivity
         ){
             val timeSheet = timeSheetWithLaps.timeSheet
             val laps = timeSheetWithLaps.laps
@@ -105,8 +81,34 @@ class TimeSheet() {
             val lapsFrame = itemView.findViewById<TableLayout>(lapsFrameID)
             val lapsViews = lapsFrame.children.toList()
 
-            for( i in 1 until lapsViews.size){
-                setLapValues( lapsViews[i], laps[i-1] )
+            if( lapsViews.size > 1 )
+                for( i in 1 until lapsViews.size){
+                    setLapValues( lapsViews[i], laps[i-1] )
+                }
+
+            val buttonsFrame = itemView.findViewById<ConstraintLayout>(R.id.time_sheet_button_popup)
+            buttonsFrame.visibility = View.GONE
+
+            //Click Action
+            itemView.isClickable = true
+            itemView.setOnClickListener {
+                buttonsFrame.visibility = View.GONE
+            }
+
+            //Hold Action
+            itemView.setOnLongClickListener {
+                buttonsFrame.visibility = View.VISIBLE
+                return@setOnLongClickListener true
+            }
+
+            //On delete click
+            itemView.findViewById<Button>(deleteTimeSheetButtonId).setOnClickListener {
+                activity.getViewModel().deleteTimeSheet(timeSheet.timeSheetId)
+            }
+
+            //On Edit click
+            itemView.findViewById<Button>(editTimeSheetButtonId).setOnClickListener {
+                //TODO
             }
         }
 
