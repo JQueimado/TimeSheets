@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gokart.R
+import com.example.gokart.database.entity.StatsEntity
 import com.example.gokart.database.entity.TimeSheetWithLaps
 
 class TimeSheetsRVAdapter(
@@ -20,8 +21,10 @@ class TimeSheetsRVAdapter(
     private val statsPosition :Int = 0
 
     //values
+    private val viewModel = activity.getViewModel()
     private val inflater = LayoutInflater.from(activity)
     private var itemList = items
+    private var stats: StatsEntity? = null
 
     //Creates views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimeSheetsVHolder {
@@ -33,11 +36,17 @@ class TimeSheetsRVAdapter(
 
     //Sets values
     override fun onBindViewHolder(holder: TimeSheetsVHolder, position: Int) {
-        if ( position == statsPosition ) {
-            Stats.setValues()
+        if ( position == statsPosition  ) {
+            if (stats != null)
+                Stats.setValues(
+                    view = holder.itemView,
+                    stats = stats!!,
+                    favouriteKart = viewModel.getKart(stats!!.id),
+                    favouriteKartingCenter = viewModel.getKartingCenter(stats!!.id),
+                    activity = activity
+                )
         }else{
             val timeSheet = itemList[position-1].timeSheet
-            val viewModel = activity.getViewModel()
             TimeSheet.setValues(
                 timeSheetWithLaps = itemList[position - 1],
                 itemView = holder.itemView,
@@ -60,6 +69,11 @@ class TimeSheetsRVAdapter(
     //Data Set
     fun setData(timeSheets: List<TimeSheetWithLaps> ){
         itemList = timeSheets
+        notifyDataSetChanged()
+    }
+
+    fun setStats( stats: StatsEntity ){
+        this.stats = stats
         notifyDataSetChanged()
     }
 

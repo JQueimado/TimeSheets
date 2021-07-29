@@ -7,19 +7,23 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gokart.data_converters.toStringDelta
 import com.example.gokart.database.AppDatabase
-import com.example.gokart.database.entity.KartEntity
-import com.example.gokart.database.entity.KartingCenterEntity
-import com.example.gokart.database.entity.LapEntity
-import com.example.gokart.database.entity.TimeSheetEntity
+import com.example.gokart.database.entity.*
+import com.example.gokart.waitAndGet
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
 class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel(application) {
 
+    companion object{
+        private const val statsId = 0L
+    }
+
     private val database = AppDatabase.getMemoryInstance(application)
     private val timeSheetDao = database.timeSheetDao()
     private val lapsDao = database.lapDao()
+    private val statsDao = database.statsDao()
+    private val kartDao = database.kartDao()
 
     fun insert(
         kartingCenterEntity: KartingCenterEntity,
@@ -114,7 +118,61 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
 
             //Final Message
             Toast.makeText(getApplication(), "Added TimeSheet", Toast.LENGTH_LONG).show()
+
+            setStats(bestLap, averageLap, consistency )
+
             activity.finish()
+        }
+    }
+
+    fun setStats (
+        bestLap:Int,
+        averageLap: Int,
+        consistency: Int
+    ){
+        viewModelScope.launch {
+            var kartId = 0L
+            var kartingCenterId = 0L
+
+            try {
+                val statsList = statsDao.getStatsBlocking()
+
+                if (statsList.isEmpty())
+                    throw Exception("No stats object")
+
+                val stats = statsList[0]
+
+                if(stats.bestLap > bestLap)
+                    stats.bestLap = bestLap
+
+                stats.averageLapSum += averageLap
+                stats.averageLapNum += 1
+
+                stats.consistencySum += consistency
+                stats.consistencyNum += 1
+
+                //val kartsWithTimeSheets = kartDao.getAllComplex().waitAndGet()
+
+                stats.favouriteKart = kartId
+                stats.favouriteKartingCenter = kartingCenterId
+
+                statsDao.update(stats)
+
+            } catch (e: Exception) {
+                val stats = StatsEntity(
+                    statsId,
+                    bestLap,
+                    averageLap.toLong(),
+                    1,
+                    consistency.toLong(),
+                    1,
+                    kartId,
+                    kartingCenterId
+                )
+
+                statsDao.insert(stats)
+            }
+
         }
     }
 

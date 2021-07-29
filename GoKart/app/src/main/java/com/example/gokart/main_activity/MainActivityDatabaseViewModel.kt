@@ -3,19 +3,29 @@ package com.example.gokart.main_activity
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.example.gokart.database.AppDatabase
 import com.example.gokart.database.entity.KartEntity
 import com.example.gokart.database.entity.KartingCenterEntity
+import com.example.gokart.database.entity.StatsEntity
 import com.example.gokart.database.entity.TimeSheetWithLaps
+import com.example.gokart.waitAndGet
+import kotlinx.coroutines.launch
 
 class MainActivityDatabaseViewModel(application: Application) : AndroidViewModel(application) {
+
+    companion object{
+        private const val statsId = 0L
+    }
 
     private val database = AppDatabase.getMemoryInstance(application)
     private val timeSheetDao = database.timeSheetDao()
     private val kartDao = database.kartDao()
     private val kartingCenterDao = database.kartingCenterDao()
+    private val statsDao = database.statsDao()
 
     private val completeTimeSheets = timeSheetDao.getAllComplex()
+    private val statsEntity = statsDao.getStats()
 
     fun getTimeSheets() : LiveData<List<TimeSheetWithLaps>> {
         return completeTimeSheets
@@ -27,6 +37,10 @@ class MainActivityDatabaseViewModel(application: Application) : AndroidViewModel
 
     fun getKartingCenter( id: Long ): LiveData<KartingCenterEntity>{
         return kartingCenterDao.getOneSimple( id )
+    }
+
+    fun getStats(): LiveData<List<StatsEntity>>{
+        return statsEntity
     }
 
 }

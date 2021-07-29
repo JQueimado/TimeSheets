@@ -37,9 +37,9 @@ class DatabaseKartingCenterTest {
     private lateinit var kartDAO: KartDAO
 
     private val testKartingCenters = arrayListOf(
-        KartingCenterEntity("1234",  0, 0),
-        KartingCenterEntity("4321", 0, 1),
-        KartingCenterEntity("5432",  0,4)
+        KartingCenterEntity("1234", 0),
+        KartingCenterEntity("4321", 1),
+        KartingCenterEntity("5432", 4)
     )
 
     private val testKarts = arrayListOf(

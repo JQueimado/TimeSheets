@@ -79,9 +79,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             mainActivityDatabaseViewModel.getTimeSheets().observe( this, {
                 //Update
                 myRVAdapter.setData( it )
-                if (it.isNotEmpty())
-                    Log.d("timeSheetAt0Size", it[0].laps.size.toString())
             } )
+
+            mainActivityDatabaseViewModel.getStats().observe(this, {
+                if (it.isNotEmpty())
+                    myRVAdapter.setStats(it[0])
+            })
         }
 
         //Add button action

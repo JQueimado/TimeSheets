@@ -20,4 +20,7 @@ interface LapDAO {
 
     @Query("SELECT * FROM lap WHERE lap_id == (:id)")
     fun getOne( vararg id : Long ) : LiveData<LapEntity>
+
+    @Query("SELECT * FROM lap WHERE lap_time_sheet=:id")
+    fun allFromTimeSheet( id: Long ): LiveData<List<LapEntity>>
 }
