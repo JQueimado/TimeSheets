@@ -15,6 +15,7 @@ import com.example.gokart.database.entity.TimeSheetEntity
 import com.example.gokart.database.entity.TimeSheetWithLaps
 import java.util.*
 import kotlin.collections.ArrayList
+import com.example.gokart.main_activity.TimeSheetsRVAdapter.TimeSheetActionFunction as TimeSheetActionFunction
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
@@ -26,10 +27,18 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val timeSheetActions = object : TimeSheetActionFunction {
+            override fun onDeleteAction(timeSheet: TimeSheetEntity) {
+                mainActivityDatabaseViewModel.deleteTimeSheet(timeSheet.timeSheetId)
+            }
 
-        //Set Variables
+            override fun onEditAction(timeSheet: TimeSheetEntity) {
+                TODO("Not yet implemented")
+            }
+        }
+
         val contentList : MutableList<TimeSheetWithLaps> = ArrayList()
-        val myRVAdapter = TimeSheetsRVAdapter(this, contentList)
+        val myRVAdapter = TimeSheetsRVAdapter(this, timeSheetActions)
         val layoutManager = LinearLayoutManager( this )
         val recyclerView : RecyclerView = findViewById(R.id.main_activity_scroll_content)
         recyclerView.layoutManager = layoutManager
