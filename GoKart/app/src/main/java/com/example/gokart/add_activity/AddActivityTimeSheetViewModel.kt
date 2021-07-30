@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.gokart.data_converters.toStringDelta
 import com.example.gokart.database.AppDatabase
 import com.example.gokart.database.entity.*
-import com.example.gokart.waitAndGet
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList

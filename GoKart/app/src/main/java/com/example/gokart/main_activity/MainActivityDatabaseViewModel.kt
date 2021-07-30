@@ -9,14 +9,9 @@ import com.example.gokart.database.entity.KartEntity
 import com.example.gokart.database.entity.KartingCenterEntity
 import com.example.gokart.database.entity.StatsEntity
 import com.example.gokart.database.entity.TimeSheetWithLaps
-import com.example.gokart.waitAndGet
 import kotlinx.coroutines.launch
 
 class MainActivityDatabaseViewModel(application: Application) : AndroidViewModel(application) {
-
-    companion object{
-        private const val statsId = 0L
-    }
 
     private val database = AppDatabase.getMemoryInstance(application)
     private val lapsDao = database.lapDao()
@@ -44,14 +39,16 @@ class MainActivityDatabaseViewModel(application: Application) : AndroidViewModel
         return statsEntity
     }
 
-    fun deleteTimeSheet(id: Long){
+    fun deleteTimeSheet(id: Long, callBack:()->Unit){
         viewModelScope.launch {
             val timeSheetWithLaps = timeSheetDao.getOneComplexBlocking(id)
+
+            timeSheetDao.deleteTimeSheet(timeSheetWithLaps.timeSheet)
 
             for(lap in timeSheetWithLaps.laps)
                 lapsDao.deleteLap(lap)
 
-            timeSheetDao.deleteTimeSheet(timeSheetWithLaps.timeSheet)
+            callBack()
         }
     }
 }

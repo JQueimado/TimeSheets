@@ -2,6 +2,7 @@ package com.example.gokart.main_activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -18,16 +19,16 @@ import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
-    // Demo mode 0 -> Ui demo
-    // Demo mode 1 -> In memory Database (test)
-    private val mode = 1
-
     private val mainActivityDatabaseViewModel : MainActivityDatabaseViewModel by viewModels()
 
     //Interactions
     private val timeSheetActions = object : TimeSheetActionFunction {
         override fun onDeleteAction(timeSheet: TimeSheetEntity) {
-            mainActivityDatabaseViewModel.deleteTimeSheet(timeSheet.timeSheetId)
+            mainActivityDatabaseViewModel.getTimeSheets().removeObservers(this@MainActivity)
+            mainActivityDatabaseViewModel.deleteTimeSheet(timeSheet.timeSheetId) {
+                mainActivityDatabaseViewModel.getTimeSheets()
+                    .observe(this@MainActivity, timeSheetObserver)
+            }
         }
 
         override fun onEditAction(timeSheet: TimeSheetEntity) {
@@ -45,72 +46,33 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
     }
 
+    //RV Adapter
     private val myRVAdapter = TimeSheetsRVAdapter(this, timeSheetActions, viewModelAccess)
 
     //Observers
     private val timeSheetObserver: Observer<List<TimeSheetWithLaps>> = Observer {
         myRVAdapter.setData( it )
+        Log.d("database observer", "Updating TimeSheets 4 ${it.size}")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //Values
-        val contentList : MutableList<TimeSheetWithLaps> = ArrayList()
         val layoutManager = LinearLayoutManager( this )
         val recyclerView : RecyclerView = findViewById(R.id.main_activity_scroll_content)
 
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = myRVAdapter
 
-        if ( mode == 0) { /* TestMode */
+        //Data Observer
+        mainActivityDatabaseViewModel.getTimeSheets().observe( this, timeSheetObserver )
 
-            //Times Demo
-            for (i in 1..1000) {
-                val timeSheetWithLaps = TimeSheetWithLaps(
-                    TimeSheetEntity(
-                        0,
-                        0,
-                        78348,
-                        79659,
-                        79659,
-                        60,
-                        Date().time),
-                    arrayListOf(
-                        LapEntity(
-                            0,
-                            0,
-                            "1.18.348",
-                            "+1.111",
-                            "-1.111"),
-                        LapEntity(
-                            0,
-                            0,
-                            "1.18.348",
-                            "+1.111",
-                            "-1.111"),
-                        LapEntity(
-                            0,
-                            0,
-                            "1.18.348",
-                            "+1.111",
-                            "-1.111")
-                    )
-                )
-                contentList.add(timeSheetWithLaps)
+        mainActivityDatabaseViewModel.getStats().observe(this, {
+            if (it.isNotEmpty()) {
+                myRVAdapter.setStats(it[0])
             }
-
-            myRVAdapter.setData(contentList)
-
-        }else if( mode == 1){ /* Application mode */
-            //Data Observer
-            mainActivityDatabaseViewModel.getTimeSheets().observe( this, timeSheetObserver )
-
-            mainActivityDatabaseViewModel.getStats().observe(this, {
-                if (it.isNotEmpty())
-                    myRVAdapter.setStats(it[0])
-            })
-        }
+        })
 
         //Add button action
         val addButton :Button = findViewById(R.id.nav_add_button)
@@ -120,9 +82,5 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             startActivity(intent)
         }
 
-    }
-
-    fun getViewModel() : MainActivityDatabaseViewModel{
-        return mainActivityDatabaseViewModel
     }
 }
