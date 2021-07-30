@@ -15,7 +15,7 @@ interface TimeSheetDAO {
     suspend fun updateTimeSheet( vararg timeSheet : TimeSheetEntity )
 
     @Delete
-    suspend fun deleteTimeSheet( timeSheetEntity: TimeSheetEntity )
+    suspend fun deleteTimeSheet( timeSheetEntity: TimeSheetEntity)
 
     //Async
     @Transaction

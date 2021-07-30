@@ -8,19 +8,20 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gokart.R
 import com.example.gokart.data_converters.toTextTimeStamp
-import com.example.gokart.database.entity.StatsEntity
-import com.example.gokart.database.entity.TimeSheetEntity
-import com.example.gokart.database.entity.TimeSheetWithLaps
+import com.example.gokart.database.entity.*
 import java.util.*
 import kotlin.collections.ArrayList
 
 class TimeSheetsRVAdapter(
-    val activity: MainActivity,
-    private val timeSheetActionFunction : TimeSheetActionFunction
+    val activity: AppCompatActivity,
+    private val timeSheetActionFunction : TimeSheetActionFunction,
+    private val viewModelAccess: ViewModelAccess
     ): RecyclerView.Adapter<TimeSheetsRVAdapter.ItemVHolder>() {
 
     //Constants
@@ -64,13 +65,12 @@ class TimeSheetsRVAdapter(
     }
 
     //values
-    private val viewModel = activity.getViewModel()
-    private val inflater = LayoutInflater.from(activity)
     private var stats: StatsEntity? = null
     private var items:List<TimeSheetWithLaps> = ArrayList()
 
     //Creates views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemVHolder {
+        val inflater = LayoutInflater.from(activity)
         val view: View
         val holder: ItemVHolder
         if (viewType == statsPosition ) {
@@ -123,7 +123,7 @@ class TimeSheetsRVAdapter(
                 viewHolder.consistencyView.text = "$consistency%"
 
                 //Kart
-                activity.getViewModel().getKart(stats!!.favouriteKart).observe(activity, {
+                viewModelAccess.getKartById(stats!!.favouriteKart).observe(activity, {
 
                     /////// TEMP
                     if (it == null)
@@ -138,7 +138,7 @@ class TimeSheetsRVAdapter(
                 })
 
                 //Karting Center
-                activity.getViewModel().getKartingCenter(stats!!.favouriteKartingCenter).observe(activity, {
+                viewModelAccess.getKartingCenterById(stats!!.favouriteKartingCenter).observe(activity, {
 
                     ///// TEMP
                     if (it == null)
@@ -163,7 +163,7 @@ class TimeSheetsRVAdapter(
             viewHolder.dateView.text = dateText
 
             //Kart
-            activity.getViewModel().getKart(timeSheet.kartId).observe( activity, {
+            viewModelAccess.getKartById(timeSheet.kartId).observe( activity, {
                 //DefineName
                 val name = if( it.name.isBlank() )
                     "${it.number}-${it.displacement}cc"
@@ -174,7 +174,7 @@ class TimeSheetsRVAdapter(
             } )
 
             //KartingCenter
-            activity.getViewModel().getKartingCenter(timeSheet.kartingCenterId).observe( activity, {
+            viewModelAccess.getKartingCenterById(timeSheet.kartingCenterId).observe( activity, {
                 viewHolder.kartingCenterView.text = it.name
             } )
 
@@ -192,18 +192,19 @@ class TimeSheetsRVAdapter(
 
             /* Laps Values */
             //lap values
-            for (i in laps.indices) {
-                val lapView = viewHolder.lapsViews[i]
-                val lapValues = laps[i]
-                //Lap Number
-                lapView.lapNumberView.text = lapValues.number.toString()
-                //Lap time
-                lapView.lapValueView.text = lapValues.time
-                //Lap best delta
-                lapView.lapBestDeltaView.text = lapValues.bestDelta
-                //Lap last delta
-                lapView.lapLastDeltaView.text = lapValues.lastDelta
-            }
+            if( laps.size == viewHolder.lapsViews.size )
+                for (i in laps.indices) {
+                    val lapView = viewHolder.lapsViews[i]
+                    val lapValues = laps[i]
+                    //Lap Number
+                    lapView.lapNumberView.text = lapValues.number.toString()
+                    //Lap time
+                    lapView.lapValueView.text = lapValues.time
+                    //Lap best delta
+                    lapView.lapBestDeltaView.text = lapValues.bestDelta
+                    //Lap last delta
+                    lapView.lapLastDeltaView.text = lapValues.lastDelta
+                }
 
             viewHolder.buttonsFrameView.visibility = View.GONE
 
@@ -294,5 +295,10 @@ class TimeSheetsRVAdapter(
     interface TimeSheetActionFunction{
         fun onDeleteAction( timeSheet: TimeSheetEntity )
         fun onEditAction( timeSheet: TimeSheetEntity )
+    }
+
+    interface ViewModelAccess{
+        fun getKartById( id: Long ): LiveData<KartEntity>
+        fun getKartingCenterById( id: Long ): LiveData<KartingCenterEntity>
     }
 }

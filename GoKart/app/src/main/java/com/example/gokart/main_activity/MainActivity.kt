@@ -1,21 +1,20 @@
 package com.example.gokart.main_activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gokart.add_activity.AddActivity
 import com.example.gokart.R
-import com.example.gokart.database.entity.LapEntity
-import com.example.gokart.database.entity.TimeSheetEntity
-import com.example.gokart.database.entity.TimeSheetWithLaps
+import com.example.gokart.add_activity.AddActivity
+import com.example.gokart.database.entity.*
+import com.example.gokart.main_activity.TimeSheetsRVAdapter.TimeSheetActionFunction
 import java.util.*
 import kotlin.collections.ArrayList
-import com.example.gokart.main_activity.TimeSheetsRVAdapter.TimeSheetActionFunction as TimeSheetActionFunction
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
@@ -25,22 +24,42 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val mainActivityDatabaseViewModel : MainActivityDatabaseViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val timeSheetActions = object : TimeSheetActionFunction {
-            override fun onDeleteAction(timeSheet: TimeSheetEntity) {
-                mainActivityDatabaseViewModel.deleteTimeSheet(timeSheet.timeSheetId)
-            }
-
-            override fun onEditAction(timeSheet: TimeSheetEntity) {
-                TODO("Not yet implemented")
-            }
+    //Interactions
+    private val timeSheetActions = object : TimeSheetActionFunction {
+        override fun onDeleteAction(timeSheet: TimeSheetEntity) {
+            mainActivityDatabaseViewModel.deleteTimeSheet(timeSheet.timeSheetId)
         }
 
+        override fun onEditAction(timeSheet: TimeSheetEntity) {
+            TODO("Not yet implemented")
+        }
+    }
+
+    private val viewModelAccess = object: TimeSheetsRVAdapter.ViewModelAccess{
+        override fun getKartById(id: Long): LiveData<KartEntity> {
+            return mainActivityDatabaseViewModel.getKart(id)
+        }
+
+        override fun getKartingCenterById(id: Long): LiveData<KartingCenterEntity> {
+            return mainActivityDatabaseViewModel.getKartingCenter(id)
+        }
+    }
+
+    private val myRVAdapter = TimeSheetsRVAdapter(this, timeSheetActions, viewModelAccess)
+
+    //Observers
+    private val timeSheetObserver: Observer<List<TimeSheetWithLaps>> = Observer {
+        myRVAdapter.setData( it )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        //Values
         val contentList : MutableList<TimeSheetWithLaps> = ArrayList()
-        val myRVAdapter = TimeSheetsRVAdapter(this, timeSheetActions)
         val layoutManager = LinearLayoutManager( this )
         val recyclerView : RecyclerView = findViewById(R.id.main_activity_scroll_content)
+
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = myRVAdapter
 
@@ -85,10 +104,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         }else if( mode == 1){ /* Application mode */
             //Data Observer
-            mainActivityDatabaseViewModel.getTimeSheets().observe( this, {
-                //Update
-                myRVAdapter.setData( it )
-            } )
+            mainActivityDatabaseViewModel.getTimeSheets().observe( this, timeSheetObserver )
 
             mainActivityDatabaseViewModel.getStats().observe(this, {
                 if (it.isNotEmpty())

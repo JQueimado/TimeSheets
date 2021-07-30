@@ -44,7 +44,7 @@ class MainActivityDatabaseViewModel(application: Application) : AndroidViewModel
         return statsEntity
     }
 
-    fun deleteTimeSheet( id: Long ){
+    fun deleteTimeSheet(id: Long){
         viewModelScope.launch {
             val timeSheetWithLaps = timeSheetDao.getOneComplexBlocking(id)
 
