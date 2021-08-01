@@ -51,30 +51,22 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Content -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/main_activity_scroll_content"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/items_linear_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nav_bar"
+        app:layout_constraintTop_toBottomOf="@+id/nav_bar"
+        android:orientation="vertical">
 
-        android:layout_marginHorizontal="80dp"
-        android:paddingBottom="70dp"
-        />
+        <!-- Content -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/main_activity_scroll_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingBottom="70dp" />
 
-    <!-- calendar -->
-
-    <CalendarView
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/table_fragment_table_shape"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.LinearLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
@@ -60,6 +61,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = myRVAdapter
+
+        val statsView = StatsView(this)
+        findViewById<LinearLayout>(R.id.items_linear_layout).addView(statsView, 0)
 
         //Data Observer
         mainActivityDatabaseViewModel.getTimeSheets().observe( this, timeSheetObserver )
