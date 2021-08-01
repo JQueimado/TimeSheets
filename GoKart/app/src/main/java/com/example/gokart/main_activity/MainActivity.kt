@@ -21,6 +21,7 @@ import kotlin.collections.ArrayList
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val mainActivityDatabaseViewModel : MainActivityDatabaseViewModel by viewModels()
+    private val statsViewModel: StatsViewModel by viewModels()
 
     //Interactions
     private val timeSheetActions = object : TimeSheetActionFunction {
@@ -70,12 +71,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         mainActivityDatabaseViewModel.getStats().observe(this, {
             if (it.isNotEmpty()) {
-                myRVAdapter.setStats(it[0])
+                statsViewModel.setStatsToView( it[0], statsView )
             }
         })
 
         //Add button action
-        val addButton :Button = findViewById(R.id.nav_add_button)
+        val addButton: Button = findViewById(R.id.nav_add_button)
 
         addButton.setOnClickListener {
             val intent = Intent(this, AddActivity::class.java)

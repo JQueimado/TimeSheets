@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TableLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -69,9 +68,6 @@ class TimeSheetsRVAdapter(
         private const val editTimeSheetButtonId = R.id.time_sheet_edit_button
     }
 
-    //values
-    private var stats: StatsEntity? = null
-
     //Creates views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimeSheetVHolder {
         val inflater = LayoutInflater.from(activity)
@@ -83,13 +79,12 @@ class TimeSheetsRVAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: TimeSheetVHolder, position: Int) {
         val item = getItem(position)
-        val viewHolder = holder as TimeSheetVHolder
 
         /* Stat values */
         //Date
         val date = Date(item.date)
         val dateText : String = DateFormat.format("dd/MM/yyyy hh:mm", date).toString()
-        viewHolder.dateView.text = dateText
+        holder.dateView.text = dateText
 
         //Kart
         viewModelAccess.getKartById(item.kartId).observe( activity, {
@@ -99,55 +94,50 @@ class TimeSheetsRVAdapter(
             else
                 it.name
             //Set name
-            viewHolder.kartView.text = name
+            holder.kartView.text = name
         } )
 
         //KartingCenter
         viewModelAccess.getKartingCenterById(item.kartingCenterId).observe( activity ) {
-            viewHolder.kartingCenterView.text = it.name
+            holder.kartingCenterView.text = it.name
         }
 
         //Best lap
-        viewHolder.bestLapView.text = item.bestLap.toTextTimeStamp()
+        holder.bestLapView.text = item.bestLap.toTextTimeStamp()
 
         //Worst lap
-        viewHolder.worstLapView.text = item.worstLap.toTextTimeStamp()
+        holder.worstLapView.text = item.worstLap.toTextTimeStamp()
 
         //Average lap
-        viewHolder.averageLapView.text = item.averageLap.toTextTimeStamp()
+        holder.averageLapView.text = item.averageLap.toTextTimeStamp()
 
         //Consistency
-        viewHolder.consistencyLapView.text = "${item.consistency}%"
+        holder.consistencyLapView.text = "${item.consistency}%"
 
         /* Laps Values */
-        viewHolder.buttonsFrameView.visibility = View.GONE
+        holder.buttonsFrameView.visibility = View.GONE
 
         //Click Action
-        viewHolder.itemView.isClickable = true
-        viewHolder.itemView.setOnClickListener {
-            viewHolder.buttonsFrameView.visibility = View.GONE
+        holder.itemView.isClickable = true
+        holder.itemView.setOnClickListener {
+            holder.buttonsFrameView.visibility = View.GONE
         }
 
         //Hold Action
-        viewHolder.itemView.setOnLongClickListener {
-            viewHolder.buttonsFrameView.visibility = View.VISIBLE
+        holder.itemView.setOnLongClickListener {
+            holder.buttonsFrameView.visibility = View.VISIBLE
             return@setOnLongClickListener true
         }
 
         //On delete click
-        viewHolder.itemView.findViewById<Button>(deleteTimeSheetButtonId).setOnClickListener {
+        holder.itemView.findViewById<Button>(deleteTimeSheetButtonId).setOnClickListener {
             timeSheetActionFunction.onDeleteAction(item)
         }
 
         //On Edit click
-        viewHolder.itemView.findViewById<Button>(editTimeSheetButtonId).setOnClickListener {
+        holder.itemView.findViewById<Button>(editTimeSheetButtonId).setOnClickListener {
             timeSheetActionFunction.onEditAction(item)
         }
-    }
-
-    fun setStats( stats: StatsEntity ){
-        this.stats = stats
-        notifyItemChanged(0)
     }
 
     class TimeSheetVHolder(itemView: View): RecyclerView.ViewHolder(itemView){

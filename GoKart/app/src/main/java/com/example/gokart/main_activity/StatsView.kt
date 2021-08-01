@@ -1,19 +1,15 @@
 package com.example.gokart.main_activity
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.os.Parcel
-import android.os.Parcelable
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.TableLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import com.example.gokart.R
 import com.example.gokart.data_converters.toTextTimeStamp
 import com.example.gokart.database.entity.StatsEntity
 
+@SuppressLint("ViewConstructor")
 class StatsView(activity: AppCompatActivity) : TableLayout(activity) {
 
     companion object{
@@ -50,22 +46,20 @@ class StatsView(activity: AppCompatActivity) : TableLayout(activity) {
         bestLapView.text = bestLap.toTextTimeStamp()
     }
 
-    fun averageLap( averageLap: Int ){
+    fun setAverageLap( averageLap: Int ){
         averageLapView.text = averageLap.toTextTimeStamp()
     }
 
     @SuppressLint("SetTextI18n")
     fun setConsistency(consistency: Int ){
-        bestLapView.text = "${consistency}%"
+        consistencyView.text = "${consistency}%"
     }
 
     fun setKart( kartName: String ){
-        bestLapView.text = kartName
+        kartView.text = kartName
     }
 
     fun setKartingCenter( kartingCenterName: String ){
-        bestLapView.text = kartingCenterName
+        kartingCenterView.text = kartingCenterName
     }
-
-
 }

@@ -40,4 +40,8 @@ interface KartingCenterDAO {
     @Transaction
     @Query(value = "SELECT * FROM karting_center WHERE karting_center_name = (:name)")
     fun getOneComplexByName( vararg name: String ) : LiveData<KartingCenterWithKarts>
+
+    //Blocking
+    @Query("SELECT karting_center_name FROM karting_center WHERE karting_center_id = (:kartingCenterId)")
+    suspend fun getNameBlocking( kartingCenterId: Long ): String
 }

@@ -17,6 +17,7 @@ interface KartDAO {
     @Delete
     suspend fun deleteKart( vararg kartEntity: KartEntity )
 
+    //NonBlocking
     @Query("SELECT * FROM kart")
     fun getAllSimple() : LiveData<List<KartEntity>>
 
@@ -30,5 +31,9 @@ interface KartDAO {
     @Transaction
     @Query("SELECT * FROM kart WHERE kart_id = (:kartId)")
     fun getOneComplex( kartId : Long ) : LiveData<KartWithTimeSheets>
+
+    //Blocking
+    @Query("SELECT * FROM kart WHERE kart_id = (:kartId)")
+    suspend fun getNameBlocking( kartId: Long ): KartEntity
 
 }
