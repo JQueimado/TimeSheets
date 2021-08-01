@@ -11,27 +11,48 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LiveData
+import androidx.recyclerview.widget.DiffUtil.ItemCallback
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gokart.R
 import com.example.gokart.data_converters.toTextTimeStamp
 import com.example.gokart.database.entity.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class TimeSheetsRVAdapter(
-    val activity: AppCompatActivity,
+    private val activity: AppCompatActivity,
     private val timeSheetActionFunction : TimeSheetActionFunction,
     private val viewModelAccess: ViewModelAccess
-    ): RecyclerView.Adapter<TimeSheetsRVAdapter.ItemVHolder>() {
+): ListAdapter<TimeSheetEntity, TimeSheetsRVAdapter.ItemVHolder>(diffCalBack) {
 
     //Constants
     companion object {
-        private const val statsPosition: Int = 0
+
+        private val diffCalBack = object : ItemCallback<TimeSheetEntity>() {
+            override fun areItemsTheSame(
+                oldItem: TimeSheetEntity,
+                newItem: TimeSheetEntity
+            ): Boolean {
+                return oldItem.timeSheetId == newItem.timeSheetId
+            }
+
+            override fun areContentsTheSame(
+                oldItem: TimeSheetEntity,
+                newItem: TimeSheetEntity
+            ): Boolean {
+                return oldItem.date == newItem.date &&
+                    oldItem.kartId == newItem.kartId &&
+                    oldItem.bestLap == newItem.bestLap &&
+                    oldItem.averageLap == newItem.averageLap &&
+                    oldItem.consistency == newItem.consistency &&
+                    oldItem.kartId == newItem.kartId &&
+                    oldItem.kartingCenterId == newItem.kartingCenterId
+            }
+        }
 
         /* TimeSheets */
         //Resources
         private const val timeSheetViewId = R.layout.view_time_sheet
-        private const val timeSheetItemViewId = R.layout.view_time_sheet_row
 
         //Time Sheet Components
         private const val timeSheetDateId = R.id.time_sheets_date
@@ -41,13 +62,6 @@ class TimeSheetsRVAdapter(
         private const val timeSheetWorstLapId = R.id.time_sheet_worst_lap
         private const val timeSheetAverageLapId = R.id.time_sheet_average_lap
         private const val timeSheetConsistencyId = R.id.time_sheet_consistency
-
-        //Laps Components
-        private const val lapsFrameID = R.id.times_sheet
-        private const val lapNumberId = R.id.time_sheet_lap_number
-        private const val lapValueId = R.id.time_sheet_lap
-        private const val lapBestDeltaId = R.id.time_sheet_bestlap_delta
-        private const val lapLastDeltaId = R.id.time_sheet_lastlap_delta
 
         //Buttons
         private const val timeSheetButtonsFrame = R.id.time_sheet_button_popup
@@ -62,44 +76,32 @@ class TimeSheetsRVAdapter(
         private const val statsFavouriteKartId = R.id.stats_favourite_kart
         private const val statsFavouriteKartingCenterId = R.id.stats_favourite_karting_center
 
+        private const val statsPosition: Int = 0
+        private const val statsViewType = 0
+        private const val timeSheetViewType = 1
+
     }
 
     //values
     private var stats: StatsEntity? = null
-    private var items:List<TimeSheetWithLaps> = ArrayList()
 
     //Creates views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemVHolder {
         val inflater = LayoutInflater.from(activity)
         val view: View
-        val holder: ItemVHolder
-        if (viewType == statsPosition ) {
+        return if (viewType == statsViewType ) {
             view = inflater.inflate(R.layout.view_statistics, parent, false)
-            holder = StatsVHolder(view)
-        }
-        else{
-            //Inflate main view
+            StatsVHolder(view)
+        } else{
             view = inflater.inflate(timeSheetViewId, parent, false )
-
-            //inflate sheet view
-            val lapsFrame = view.findViewById<TableLayout>(lapsFrameID)
-            val lapsViews = ArrayList<View>()
-            val laps = items[viewType-1].laps
-            for ( e in laps ){
-                val lapView = inflater.inflate(timeSheetItemViewId, lapsFrame, false)
-                lapsFrame.addView(lapView)
-                lapsViews.add(lapView)
-            }
-            holder = TimeSheetVHolder(view, lapsViews)
+            TimeSheetVHolder(view)
         }
-
-        return holder
     }
 
     //Sets values
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ItemVHolder, position: Int) {
-        if ( position == statsPosition  ) {
+        if ( holder is StatsVHolder ) {
             if (stats != null) {
                 val viewHolder = holder as StatsVHolder
 
@@ -150,20 +152,17 @@ class TimeSheetsRVAdapter(
                 })
             }
         }else{
-            val item = items[position-1]
-            val timeSheet = item.timeSheet
-            val laps = item.laps
+            val item = getItem(position-1)
             val viewHolder = holder as TimeSheetVHolder
 
             /* Stat values */
-
             //Date
-            val date = Date(timeSheet.date)
+            val date = Date(item.date)
             val dateText : String = DateFormat.format("dd/MM/yyyy hh:mm", date).toString()
             viewHolder.dateView.text = dateText
 
             //Kart
-            viewModelAccess.getKartById(timeSheet.kartId).observe( activity, {
+            viewModelAccess.getKartById(item.kartId).observe( activity, {
                 //DefineName
                 val name = if( it.name.isBlank() )
                     "${it.number}-${it.displacement}cc"
@@ -174,38 +173,23 @@ class TimeSheetsRVAdapter(
             } )
 
             //KartingCenter
-            viewModelAccess.getKartingCenterById(timeSheet.kartingCenterId).observe( activity, {
+            viewModelAccess.getKartingCenterById(item.kartingCenterId).observe( activity ) {
                 viewHolder.kartingCenterView.text = it.name
-            } )
+            }
 
             //Best lap
-            viewHolder.bestLapView.text = timeSheet.bestLap.toTextTimeStamp()
+            viewHolder.bestLapView.text = item.bestLap.toTextTimeStamp()
 
             //Worst lap
-            viewHolder.worstLapView.text = timeSheet.worstLap.toTextTimeStamp()
+            viewHolder.worstLapView.text = item.worstLap.toTextTimeStamp()
 
             //Average lap
-            viewHolder.averageLapView.text = timeSheet.averageLap.toTextTimeStamp()
+            viewHolder.averageLapView.text = item.averageLap.toTextTimeStamp()
 
             //Consistency
-            viewHolder.consistencyLapView.text = "${timeSheet.consistency}%"
+            viewHolder.consistencyLapView.text = "${item.consistency}%"
 
             /* Laps Values */
-            //lap values
-            if( laps.size == viewHolder.lapsViews.size )
-                for (i in laps.indices) {
-                    val lapView = viewHolder.lapsViews[i]
-                    val lapValues = laps[i]
-                    //Lap Number
-                    lapView.lapNumberView.text = lapValues.number.toString()
-                    //Lap time
-                    lapView.lapValueView.text = lapValues.time
-                    //Lap best delta
-                    lapView.lapBestDeltaView.text = lapValues.bestDelta
-                    //Lap last delta
-                    lapView.lapLastDeltaView.text = lapValues.lastDelta
-                }
-
             viewHolder.buttonsFrameView.visibility = View.GONE
 
             //Click Action
@@ -222,34 +206,23 @@ class TimeSheetsRVAdapter(
 
             //On delete click
             viewHolder.itemView.findViewById<Button>(deleteTimeSheetButtonId).setOnClickListener {
-                timeSheetActionFunction.onDeleteAction(timeSheet)
+                timeSheetActionFunction.onDeleteAction(item)
             }
 
             //On Edit click
             viewHolder.itemView.findViewById<Button>(editTimeSheetButtonId).setOnClickListener {
-                timeSheetActionFunction.onEditAction(timeSheet)
+                timeSheetActionFunction.onEditAction(item)
             }
         }
     }
 
-    //Extras
     override fun getItemViewType(position: Int): Int {
-        return position
-    }
-
-    override fun getItemCount(): Int {
-        return items.size+1
-    }
-
-    //Data Set
-    fun setData(timeSheets: List<TimeSheetWithLaps> ){
-        items = timeSheets
-        notifyDataSetChanged()
+        return if( position == statsPosition ) statsViewType else timeSheetViewType
     }
 
     fun setStats( stats: StatsEntity ){
         this.stats = stats
-        notifyDataSetChanged()
+        notifyItemChanged(0)
     }
 
     //ViewHolder
@@ -264,7 +237,7 @@ class TimeSheetsRVAdapter(
             itemView.findViewById(statsFavouriteKartingCenterId)
     }
 
-    class TimeSheetVHolder(itemView: View, laps:List<View>): ItemVHolder(itemView){
+    class TimeSheetVHolder(itemView: View): ItemVHolder(itemView){
         val dateView: TextView = itemView.findViewById(timeSheetDateId)
         val kartingCenterView: TextView = itemView.findViewById(timeSheetKartingCenterId)
         val kartView: TextView = itemView.findViewById(timeSheetKartId)
@@ -272,23 +245,11 @@ class TimeSheetsRVAdapter(
         val worstLapView: TextView = itemView.findViewById(timeSheetWorstLapId)
         val averageLapView: TextView = itemView.findViewById(timeSheetAverageLapId)
         val consistencyLapView: TextView = itemView.findViewById(timeSheetConsistencyId)
-
         val buttonsFrameView: ConstraintLayout = itemView.findViewById(timeSheetButtonsFrame)
+    }
 
-        val lapsViews: MutableList<LapsViews>
-
-        init {
-            lapsViews = ArrayList()
-            for (lap in laps)
-                lapsViews.add( LapsViews(lap) )
-        }
-
-        class LapsViews( lapView:View ){
-            val lapNumberView: TextView = lapView.findViewById(lapNumberId)
-            val lapValueView: TextView = lapView.findViewById(lapValueId)
-            val lapBestDeltaView: TextView = lapView.findViewById(lapBestDeltaId)
-            val lapLastDeltaView: TextView = lapView.findViewById(lapLastDeltaId)
-        }
+    override fun getItemCount(): Int {
+        return super.getItemCount()+1
     }
 
     //Edit Listener

@@ -260,4 +260,62 @@
 
     </TableLayout>
 
+
+    <!-- Times -->
+    <TableLayout
+        android:id="@+id/times_sheet"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:background="@drawable/table_fragment_table_shape"
+        android:stretchColumns="0,1,2,3">
+
+        <TableRow
+            android:id="@+id/times_sheet_header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/table_fragment_table_shape"
+
+                android:text="@string/time_sheets_lap"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:padding="2dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/table_fragment_table_shape"
+
+                android:text="@string/time_sheets_time"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:padding="2dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/table_fragment_table_shape"
+
+                android:text="@string/time_sheets_best_delta"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:padding="2dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/table_fragment_table_shape"
+
+                android:text="@string/time_sheets_last_delta"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:padding="2dp"/>
+
+        </TableRow>
+
+    </TableLayout>
+
 </LinearLayout>

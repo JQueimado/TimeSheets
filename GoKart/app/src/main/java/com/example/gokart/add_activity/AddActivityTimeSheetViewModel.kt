@@ -123,12 +123,10 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
             Toast.makeText(getApplication(), "Added TimeSheet", Toast.LENGTH_LONG).show()
 
             setStats(bestLap, averageLap, consistency )
-
-            activity.finish()
         }
     }
 
-    fun setStats (
+    private fun setStats (
         bestLap:Int,
         averageLap: Int,
         consistency: Int

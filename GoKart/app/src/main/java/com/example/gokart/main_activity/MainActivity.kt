@@ -24,11 +24,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     //Interactions
     private val timeSheetActions = object : TimeSheetActionFunction {
         override fun onDeleteAction(timeSheet: TimeSheetEntity) {
-            mainActivityDatabaseViewModel.getTimeSheets().removeObservers(this@MainActivity)
-            mainActivityDatabaseViewModel.deleteTimeSheet(timeSheet.timeSheetId) {
-                mainActivityDatabaseViewModel.getTimeSheets()
-                    .observe(this@MainActivity, timeSheetObserver)
-            }
+            mainActivityDatabaseViewModel.deleteTimeSheet(timeSheet.timeSheetId)
         }
 
         override fun onEditAction(timeSheet: TimeSheetEntity) {
@@ -50,8 +46,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val myRVAdapter = TimeSheetsRVAdapter(this, timeSheetActions, viewModelAccess)
 
     //Observers
-    private val timeSheetObserver: Observer<List<TimeSheetWithLaps>> = Observer {
-        myRVAdapter.setData( it )
+    private val timeSheetObserver: Observer<List<TimeSheetEntity>> = Observer {
+        myRVAdapter.submitList(it)
         Log.d("database observer", "Updating TimeSheets 4 ${it.size}")
     }
 

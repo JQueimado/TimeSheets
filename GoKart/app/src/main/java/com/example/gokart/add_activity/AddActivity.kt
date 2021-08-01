@@ -73,9 +73,6 @@ class AddActivity : AppCompatActivity(resourceValue){
     private lateinit var backButton: Button
     private lateinit var lapListLayout: RecyclerView
 
-    //Interaction
-    private var interaction = true
-
     //Recycler view
     private lateinit var recyclerViewAdapter: LapRVAdapter
     private lateinit var layoutManager: LinearLayoutManager
@@ -189,11 +186,6 @@ class AddActivity : AppCompatActivity(resourceValue){
     //End fragment without result
     fun onCloseAddKartingCenter(){
         supportFragmentManager.popBackStack()
-    }
-    //////////////////////////////////////////////////////////////////////////////////// Lap Action
-
-    fun removeLap( i: Int ){
-        dataVM.remove(i)
     }
 
     //////////////////////////////////////////////////////////////////////////// Activity Functions
@@ -345,8 +337,7 @@ class AddActivity : AppCompatActivity(resourceValue){
                 activity = this
             )
 
-            //Disable interaction
-            disableInteraction()
+            finish()
         }
     }
 
@@ -356,16 +347,6 @@ class AddActivity : AppCompatActivity(resourceValue){
             dataVM.kartingCenter!!.kartingCenterEntity.kartingCenterId
         else
             -1
-    }
-
-    //Disables User Interaction
-    private fun disableInteraction(){
-        interaction = false
-        doneButton.isEnabled = false
-        backButton.isEnabled = false
-        choseDateButton.isEnabled = false
-        choseKartingCenterButton.isEnabled = false
-        choseKartButton.isEnabled = false
     }
 
     //////////////////////////////////////////////////////////////////////////////////////// Extras

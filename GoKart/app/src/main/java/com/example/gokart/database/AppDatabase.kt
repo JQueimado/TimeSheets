@@ -24,9 +24,10 @@ abstract class AppDatabase : RoomDatabase() {
         fun getMemoryInstance( application : Application) : AppDatabase{
             synchronized(sLock){
                 if( instance == null )
-                    instance = Room.inMemoryDatabaseBuilder(
+                    instance = Room.databaseBuilder(
                         application.applicationContext,
-                        AppDatabase::class.java
+                        AppDatabase::class.java,
+                        "kartingDB"
                     ).build()
             }
             return instance!!

@@ -5,10 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.gokart.database.AppDatabase
-import com.example.gokart.database.entity.KartEntity
-import com.example.gokart.database.entity.KartingCenterEntity
-import com.example.gokart.database.entity.StatsEntity
-import com.example.gokart.database.entity.TimeSheetWithLaps
+import com.example.gokart.database.entity.*
 import kotlinx.coroutines.launch
 
 class MainActivityDatabaseViewModel(application: Application) : AndroidViewModel(application) {
@@ -20,10 +17,10 @@ class MainActivityDatabaseViewModel(application: Application) : AndroidViewModel
     private val kartingCenterDao = database.kartingCenterDao()
     private val statsDao = database.statsDao()
 
-    private val completeTimeSheets = timeSheetDao.getAllComplex()
+    private val completeTimeSheets = timeSheetDao.getAllSimple()
     private val statsEntity = statsDao.getStats()
 
-    fun getTimeSheets() : LiveData<List<TimeSheetWithLaps>> {
+    fun getTimeSheets() : LiveData<List<TimeSheetEntity>> {
         return completeTimeSheets
     }
 
@@ -39,7 +36,7 @@ class MainActivityDatabaseViewModel(application: Application) : AndroidViewModel
         return statsEntity
     }
 
-    fun deleteTimeSheet(id: Long, callBack:()->Unit){
+    fun deleteTimeSheet(id: Long ){
         viewModelScope.launch {
             val timeSheetWithLaps = timeSheetDao.getOneComplexBlocking(id)
 
@@ -48,7 +45,6 @@ class MainActivityDatabaseViewModel(application: Application) : AndroidViewModel
             for(lap in timeSheetWithLaps.laps)
                 lapsDao.deleteLap(lap)
 
-            callBack()
         }
     }
 }
