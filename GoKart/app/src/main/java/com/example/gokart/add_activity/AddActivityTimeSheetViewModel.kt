@@ -147,10 +147,8 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
                     stats.bestLap = bestLap
 
                 stats.averageLapSum += averageLap
-                stats.averageLapNum += 1
-
                 stats.consistencySum += consistency
-                stats.consistencyNum += 1
+                stats.entryNumber += 1
 
                 //val kartsWithTimeSheets = kartDao.getAllComplex().waitAndGet()
 
@@ -164,7 +162,6 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
                     statsId,
                     bestLap,
                     averageLap.toLong(),
-                    1,
                     consistency.toLong(),
                     1,
                     kartId,

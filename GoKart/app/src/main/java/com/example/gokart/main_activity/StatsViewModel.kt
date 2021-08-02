@@ -18,13 +18,18 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
             //BestLap
             statsView.setBestLap( statsEntity.bestLap )
 
-            //AverageLap
-            val averageLap = (statsEntity.averageLapSum/statsEntity.averageLapNum).toInt()
-            statsView.setAverageLap(averageLap)
+            if (statsEntity.entryNumber == 0){
+                statsView.setAverageLap( 0 )
+                statsView.setConsistency( 100 )
+            }else{
+                //AverageLap
+                val averageLap = (statsEntity.averageLapSum.toDouble()/statsEntity.entryNumber).toInt()
+                statsView.setAverageLap(averageLap)
 
-            //Consistency
-            val consistency = (statsEntity.averageLapSum/statsEntity.averageLapNum).toInt()
-            statsView.setConsistency(consistency)
+                //Consistency
+                val consistency = (statsEntity.consistencySum/statsEntity.entryNumber).toInt()
+                statsView.setConsistency(consistency)
+            }
 
             //Favourite Kart
             val kart = kartDao.getNameBlocking(statsEntity.favouriteKart)

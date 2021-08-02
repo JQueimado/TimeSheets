@@ -39,12 +39,35 @@ class MainActivityDatabaseViewModel(application: Application) : AndroidViewModel
     fun deleteTimeSheet(id: Long ){
         viewModelScope.launch {
             val timeSheetWithLaps = timeSheetDao.getOneComplexBlocking(id)
+            val timeSheet = timeSheetWithLaps.timeSheet
 
-            timeSheetDao.deleteTimeSheet(timeSheetWithLaps.timeSheet)
+            //TimeSheet delete
+            timeSheetDao.deleteTimeSheet(timeSheet)
 
+            //Lap Delete
             for(lap in timeSheetWithLaps.laps)
                 lapsDao.deleteLap(lap)
 
+            //Update stats
+            val stats = statsDao.getStatsBlocking()[0]
+
+            stats.averageLapSum -= timeSheet.averageLap
+            stats.consistencySum -= timeSheet.consistency
+            stats.entryNumber -= 1
+
+            if( stats.bestLap == timeSheet.bestLap ){
+                //TODO( Find 2nd best lap )
+            }
+
+            if (stats.favouriteKartingCenter == timeSheet.kartingCenterId) {
+                //TODO( calculate favourite karting center )
+            }
+
+            if ( stats.favouriteKart == timeSheet.kartId ) {
+                //TODO( calculate favourite kart )
+            }
+
+            statsDao.update( stats )
         }
     }
 }

@@ -31,6 +31,12 @@ class StatsView(activity: AppCompatActivity) : TableLayout(activity) {
     private val kartView: TextView
     private val kartingCenterView: TextView
 
+    private var storedBestLap = -1
+    private var storedAverage = -1
+    private var storedConsistency = -1
+    private var storedKart = ""
+    private var storedKartingCenter = ""
+
     init {
         val inflater = LayoutInflater.from(activity)
         inflater.inflate( statsViewId, this, true)
@@ -43,23 +49,38 @@ class StatsView(activity: AppCompatActivity) : TableLayout(activity) {
     }
 
     fun setBestLap( bestLap: Int ){
-        bestLapView.text = bestLap.toTextTimeStamp()
+        if (storedBestLap != bestLap) {
+            bestLapView.text = bestLap.toTextTimeStamp()
+            storedBestLap = bestLap
+        }
     }
 
     fun setAverageLap( averageLap: Int ){
-        averageLapView.text = averageLap.toTextTimeStamp()
+        if(storedAverage != averageLap) {
+            averageLapView.text = averageLap.toTextTimeStamp()
+            storedAverage = averageLap
+        }
     }
 
     @SuppressLint("SetTextI18n")
     fun setConsistency(consistency: Int ){
-        consistencyView.text = "${consistency}%"
+        if (storedConsistency != consistency) {
+            consistencyView.text = "${consistency}%"
+            storedConsistency = consistency
+        }
     }
 
     fun setKart( kartName: String ){
-        kartView.text = kartName
+        if (kartName.compareTo(storedKart) != 0) {
+            kartView.text = kartName
+            storedKart = kartName
+        }
     }
 
     fun setKartingCenter( kartingCenterName: String ){
-        kartingCenterView.text = kartingCenterName
+        if( kartingCenterName.compareTo(storedKartingCenter) != 0 ) {
+            kartingCenterView.text = kartingCenterName
+            storedKartingCenter = kartingCenterName
+        }
     }
 }
