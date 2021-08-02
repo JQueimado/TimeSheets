@@ -86,8 +86,8 @@ class AddKartingCenterFragment( val addActivity: AddActivity ) : Fragment() {
 
             val layout = layoutRaw.toInt()
             name = "$name-layout:$layout"
-            val kartingCenterEntity = KartingCenterEntity(name, layout)
 
+            val kartingCenterEntity = KartingCenterEntity(name, layout)
             addActivity.onAddKartingCenterConclude( kartingCenterEntity )
 
         }catch (e: Exception){

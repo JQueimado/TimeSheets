@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.example.gokart.data_converters.getFavouriteKart
+import com.example.gokart.data_converters.getFavouriteKartingCenter
 import com.example.gokart.database.AppDatabase
 import com.example.gokart.database.entity.*
 import kotlinx.coroutines.launch
@@ -60,11 +62,11 @@ class MainActivityDatabaseViewModel(application: Application) : AndroidViewModel
             }
 
             if (stats.favouriteKartingCenter == timeSheet.kartingCenterId) {
-                //TODO( calculate favourite karting center )
+                stats.favouriteKartingCenter = getFavouriteKartingCenter(database)
             }
 
             if ( stats.favouriteKart == timeSheet.kartId ) {
-                //TODO( calculate favourite kart )
+                stats.favouriteKart = getFavouriteKart(database)
             }
 
             statsDao.update( stats )

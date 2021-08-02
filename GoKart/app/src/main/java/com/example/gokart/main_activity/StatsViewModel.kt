@@ -3,6 +3,7 @@ package com.example.gokart.main_activity
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.gokart.R
 import com.example.gokart.database.AppDatabase
 import com.example.gokart.database.entity.StatsEntity
 import kotlinx.coroutines.launch
@@ -38,13 +39,18 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
                     if (kart.name.isBlank()) "${kart.number}-${kart.displacement}cc"
                     else kart.name
                 )
+            }else{
+                statsView.setKart(R.string.default_kart.toString())
             }
 
             //Favourite KartingCenter
             val kartingCenter = kartingCenterDAO
                 .getNameBlocking(statsEntity.favouriteKartingCenter)
-            if( kartingCenter != null )
+            if( kartingCenter != null ) {
                 statsView.setKartingCenter(kartingCenter)
+            }else{
+                statsView.setKart(R.string.default_track.toString())
+            }
         }
     }
 }

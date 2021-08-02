@@ -105,10 +105,10 @@ class AddKartFragment(val parent: AddActivity) : Fragment() {
             ) throw Exception("Invalid Displacement")
 
             val kartEntity = KartEntity(
-                parent.getKartingCenterID(),
-                number.toInt(),
-                displacement.toInt(),
-                if( name.isBlank() )
+                kartingCenter = parent.getKartingCenterID(),
+                number= number.toInt(),
+                displacement = displacement.toInt(),
+                name =  if( name.isBlank() )
                     ""
                 else
                     name
