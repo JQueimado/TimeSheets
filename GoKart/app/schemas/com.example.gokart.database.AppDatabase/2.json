@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "b4d3aba92e35b0abcffc3004d0a86697",
+    "identityHash": "f7c5e193dd9a3063d991f342c124fc0c",
     "entities": [
       {
         "tableName": "stats_sheet",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`stats_id` INTEGER NOT NULL, `stats_sheet_best_lap` INTEGER NOT NULL, `stats_sheet_average_lap_sum` INTEGER NOT NULL, `stats_sheet_average_lap_num` INTEGER NOT NULL, `stats_sheet_consistency_sum` INTEGER NOT NULL, `stats_sheet_consistency_num` INTEGER NOT NULL, `stats_sheet_favourite_kart` INTEGER NOT NULL, `stats_sheet_favourite_karting_center` INTEGER NOT NULL, PRIMARY KEY(`stats_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`stats_id` INTEGER NOT NULL, `stats_sheet_best_lap` INTEGER NOT NULL, `stats_sheet_average_lap_sum` INTEGER NOT NULL, `stats_sheet_consistency_sum` INTEGER NOT NULL, `stats_sheet_entries` INTEGER NOT NULL, `stats_sheet_favourite_kart` INTEGER NOT NULL, `stats_sheet_favourite_karting_center` INTEGER NOT NULL, PRIMARY KEY(`stats_id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -27,20 +27,14 @@
             "notNull": true
           },
           {
-            "fieldPath": "averageLapNum",
-            "columnName": "stats_sheet_average_lap_num",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
             "fieldPath": "consistencySum",
             "columnName": "stats_sheet_consistency_sum",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "consistencyNum",
-            "columnName": "stats_sheet_consistency_num",
+            "fieldPath": "entryNumber",
+            "columnName": "stats_sheet_entries",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -258,7 +252,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b4d3aba92e35b0abcffc3004d0a86697')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f7c5e193dd9a3063d991f342c124fc0c')"
     ]
   }
 }
