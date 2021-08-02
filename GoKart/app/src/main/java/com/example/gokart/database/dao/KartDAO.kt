@@ -36,4 +36,9 @@ interface KartDAO {
     @Query("SELECT * FROM kart WHERE kart_id = (:kartId)")
     suspend fun getNameBlocking( kartId: Long ): KartEntity
 
+    @Query( "SELECT kart_id FROM kart" )
+    suspend fun getIds(): List<Long>
+
+    @Query( "SELECT kart_id FROM kart WHERE kart_karting_center = :kartingCenterId" )
+    suspend fun getIdsFromKartingCenter( kartingCenterId: Long ): List<Long>
 }

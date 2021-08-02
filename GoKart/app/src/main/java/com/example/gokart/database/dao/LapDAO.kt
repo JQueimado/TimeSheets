@@ -23,4 +23,8 @@ interface LapDAO {
 
     @Query("SELECT * FROM lap WHERE lap_time_sheet=:id")
     fun allFromTimeSheet( id: Long ): LiveData<List<LapEntity>>
+
+    //Blocking
+    @Query( "SELECT COUNT( lap_id ) FROM lap WHERE lap_time_sheet = :timeSheetId" )
+    suspend fun getCountForTimeSheet( timeSheetId: Long ): Long
 }

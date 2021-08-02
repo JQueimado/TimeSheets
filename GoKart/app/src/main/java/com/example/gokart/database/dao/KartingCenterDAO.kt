@@ -44,4 +44,7 @@ interface KartingCenterDAO {
     //Blocking
     @Query("SELECT karting_center_name FROM karting_center WHERE karting_center_id = (:kartingCenterId)")
     suspend fun getNameBlocking( kartingCenterId: Long ): String
+
+    @Query("SELECT karting_center_id FROM karting_center")
+    suspend fun getAllIdsBlocking(): List<Long>
 }
