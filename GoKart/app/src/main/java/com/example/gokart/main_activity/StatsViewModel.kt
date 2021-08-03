@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gokart.R
+import com.example.gokart.data_converters.toTextTimeStamp
 import com.example.gokart.database.AppDatabase
 import com.example.gokart.database.entity.StatsEntity
 import kotlinx.coroutines.launch
@@ -17,7 +18,10 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
     fun setStatsToView( statsEntity: StatsEntity, statsView: StatsView ){
         viewModelScope.launch {
             //BestLap
-            statsView.setBestLap( statsEntity.bestLap )
+            if( statsEntity.bestLap == -1 )
+                statsView.setBestLap( getApplication<Application>().resources.getString( R.string.default_lap) )
+            else
+                statsView.setBestLap( statsEntity.bestLap.toTextTimeStamp() )
 
             if (statsEntity.entryNumber == 0){
                 statsView.setAverageLap( 0 )
@@ -40,7 +44,9 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
                     else kart.name
                 )
             }else{
-                statsView.setKart(R.string.default_kart.toString())
+                statsView.setKart(
+                    getApplication<Application>().resources.getString( R.string.default_kart )
+                )
             }
 
             //Favourite KartingCenter
@@ -49,7 +55,9 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
             if( kartingCenter != null ) {
                 statsView.setKartingCenter(kartingCenter)
             }else{
-                statsView.setKart(R.string.default_track.toString())
+                statsView.setKartingCenter(
+                    getApplication<Application>().resources.getString( R.string.default_track )
+                )
             }
         }
     }

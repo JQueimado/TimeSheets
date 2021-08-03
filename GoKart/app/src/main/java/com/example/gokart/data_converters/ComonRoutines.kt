@@ -32,7 +32,8 @@ suspend fun getFavouriteKart( databaseInstance: AppDatabase ): Long{
             kartId = currentKartId
         }
     }
-    return kartId
+
+    return if(kartLaps == 0L) -1L else kartId
 }
 
 //Calculates the kartingCenter with most laps from a given database
@@ -72,5 +73,24 @@ suspend fun getFavouriteKartingCenter( databaseInstance: AppDatabase ): Long{
         }
     }
 
-    return kartingCenterId
+    return if( kartingCenterLap == 0L ) -1L else kartingCenterId
+}
+
+//Calculate Fastest Lap
+suspend fun getFastestLap( databaseInstance: AppDatabase ): Int{
+
+    val timeSheetDao = databaseInstance.timeSheetDao()
+
+    val timeSheets = timeSheetDao.getAllSimpleBlocking()
+    if (timeSheets.isEmpty())
+        return -1
+
+    var lap = -1
+
+    for ( currentTimeSheet in timeSheets){
+        if( lap == -1 || lap > currentTimeSheet.bestLap )
+            lap = currentTimeSheet.bestLap
+    }
+
+    return lap
 }

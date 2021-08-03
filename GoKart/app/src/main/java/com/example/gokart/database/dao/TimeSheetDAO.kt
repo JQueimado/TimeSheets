@@ -37,6 +37,9 @@ interface TimeSheetDAO {
     @Query("SELECT * FROM time_sheet WHERE time_sheet_id == (:id)")
     suspend fun getOneComplexBlocking( vararg id : Long ) : TimeSheetWithLaps
 
+    @Query("SELECT * FROM time_sheet")
+    suspend fun getAllSimpleBlocking() : List<TimeSheetEntity>
+
     @Query( "SELECT time_sheet_id FROM time_sheet WHERE time_sheet_kart = :kartId" )
     suspend fun getAllIdsFromKart( kartId: Long ): List<Long>
 }

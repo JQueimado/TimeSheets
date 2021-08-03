@@ -31,7 +31,7 @@ class StatsView(activity: AppCompatActivity) : TableLayout(activity) {
     private val kartView: TextView
     private val kartingCenterView: TextView
 
-    private var storedBestLap = -1
+    private var storedBestLap = ""
     private var storedAverage = -1
     private var storedConsistency = -1
     private var storedKart = ""
@@ -48,9 +48,9 @@ class StatsView(activity: AppCompatActivity) : TableLayout(activity) {
         kartingCenterView = this.findViewById(statsFavouriteKartingCenterId)
     }
 
-    fun setBestLap( bestLap: Int ){
-        if (storedBestLap != bestLap) {
-            bestLapView.text = bestLap.toTextTimeStamp()
+    fun setBestLap( bestLap: String ){
+        if (storedBestLap.compareTo( bestLap ) != 0 ) {
+            bestLapView.text = bestLap
             storedBestLap = bestLap
         }
     }

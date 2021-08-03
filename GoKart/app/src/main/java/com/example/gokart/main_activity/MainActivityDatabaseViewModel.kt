@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.example.gokart.data_converters.getFastestLap
 import com.example.gokart.data_converters.getFavouriteKart
 import com.example.gokart.data_converters.getFavouriteKartingCenter
 import com.example.gokart.database.AppDatabase
@@ -58,7 +59,7 @@ class MainActivityDatabaseViewModel(application: Application) : AndroidViewModel
             stats.entryNumber -= 1
 
             if( stats.bestLap == timeSheet.bestLap ){
-                //TODO( Find 2nd best lap )
+                stats.bestLap = getFastestLap(database)
             }
 
             if (stats.favouriteKartingCenter == timeSheet.kartingCenterId) {
