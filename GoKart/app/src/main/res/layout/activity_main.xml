@@ -51,6 +51,8 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!-- Body -->
+
     <LinearLayout
         android:id="@+id/items_linear_layout"
         android:layout_width="match_parent"

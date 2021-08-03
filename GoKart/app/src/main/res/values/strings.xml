@@ -65,8 +65,8 @@
     <string name="default_delta">+0.000</string>
     <string name="title_activity_add">AddActivity</string>
 
-    <!-- Strings used for fragments for navigation -->
-
-    <!-- SetUp Activity -->
+    <!--TimeSheet Activity-->
+    <string name="time_sheet_activity_back">Back</string>
+    <string name="time_sheet_activity_action">Action</string>
 
 </resources>
