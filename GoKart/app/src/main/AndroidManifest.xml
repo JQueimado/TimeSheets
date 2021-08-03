@@ -11,13 +11,17 @@
         android:theme="@style/Theme.GoKart">
         <activity
             android:name=".time_sheet_activity.TimeSheetActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".add_activity.AddActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_add"
             android:theme="@style/Theme.GoKart.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".main_activity.MainActivity">
+        <activity
+            android:name=".main_activity.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
