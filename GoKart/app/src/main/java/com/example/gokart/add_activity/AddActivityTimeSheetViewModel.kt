@@ -148,10 +148,10 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
                 stats.entryNumber += 1
 
                 //Favourite Kart
-                if( stats.favouriteKart != timeSheet.kartId )
+                if( stats.favouriteKart != timeSheet.kartId || stats.favouriteKart == -1L )
                     stats.favouriteKart =  getFavouriteKart(database)
 
-                if( stats.favouriteKartingCenter != timeSheet.kartingCenterId )
+                if( stats.favouriteKartingCenter != timeSheet.kartingCenterId || stats.favouriteKartingCenter == -1L )
                     stats.favouriteKartingCenter = getFavouriteKartingCenter(database)
 
                 statsDao.update(stats)
