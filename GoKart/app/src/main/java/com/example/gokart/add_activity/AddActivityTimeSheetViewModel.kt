@@ -140,7 +140,7 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
 
                 val stats = statsList[0]
 
-                if(stats.bestLap > timeSheet.bestLap)
+                if(stats.bestLap > timeSheet.bestLap || stats.bestLap == -1)
                     stats.bestLap = timeSheet.bestLap
 
                 stats.averageLapSum += timeSheet.averageLap
