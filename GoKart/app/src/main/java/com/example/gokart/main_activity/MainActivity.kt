@@ -15,6 +15,7 @@ import com.example.gokart.R
 import com.example.gokart.add_activity.AddActivity
 import com.example.gokart.database.entity.*
 import com.example.gokart.main_activity.TimeSheetsRVAdapter.TimeSheetActionFunction
+import com.example.gokart.time_sheet_activity.TimeSheetActivity
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -30,7 +31,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
 
         override fun onEditAction(timeSheet: TimeSheetEntity) {
-            TODO("Not yet implemented")
+            val intent = Intent(this@MainActivity, TimeSheetActivity::class.java)
+            startActivity( intent )
         }
     }
 
