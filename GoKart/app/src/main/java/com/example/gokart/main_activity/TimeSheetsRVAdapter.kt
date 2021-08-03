@@ -120,7 +120,10 @@ class TimeSheetsRVAdapter(
         //Click Action
         holder.itemView.isClickable = true
         holder.itemView.setOnClickListener {
-            holder.buttonsFrameView.visibility = View.GONE
+            if (holder.buttonsFrameView.visibility == View.GONE)
+                timeSheetActionFunction.onViewTimeSheet(item)
+            else
+                holder.buttonsFrameView.visibility = View.GONE
         }
 
         //Hold Action
@@ -155,6 +158,7 @@ class TimeSheetsRVAdapter(
     interface TimeSheetActionFunction{
         fun onDeleteAction( timeSheet: TimeSheetEntity )
         fun onEditAction( timeSheet: TimeSheetEntity )
+        fun onViewTimeSheet( timeSheet: TimeSheetEntity )
     }
 
     interface ViewModelAccess{

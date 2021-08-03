@@ -31,9 +31,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
 
         override fun onEditAction(timeSheet: TimeSheetEntity) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onViewTimeSheet(timeSheet: TimeSheetEntity) {
             val intent = Intent(this@MainActivity, TimeSheetActivity::class.java)
             startActivity( intent )
         }
+
     }
 
     private val viewModelAccess = object: TimeSheetsRVAdapter.ViewModelAccess{
