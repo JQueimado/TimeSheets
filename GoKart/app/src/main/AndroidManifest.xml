@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GoKart">
         <activity
+            android:name=".time_sheet_activity.TimeSheetActivity"
+            android:exported="true" />
+        <activity
             android:name=".add_activity.AddActivity"
             android:label="@string/title_activity_add"
             android:theme="@style/Theme.GoKart.NoActionBar"
