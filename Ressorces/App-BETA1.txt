@@ -3,3 +3,8 @@ Go Kart BETA1 Test Results:
 Problems:
     Add Activity:
     -lap number doesnt decrease
+    -lap add moves focus to the first text input
+    -Choose poor speled 
+
+    Main Activity
+    -dates are in pm/am mode
