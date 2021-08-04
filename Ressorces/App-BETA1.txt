@@ -1,0 +1,5 @@
+Go Kart BETA1 Test Results:
+
+Problems:
+    Add Activity:
+    -lap number doesnt decrease
