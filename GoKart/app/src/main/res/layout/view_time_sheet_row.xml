@@ -5,7 +5,7 @@
     >
 
     <TextView
-        android:id="@+id/time_sheet_lap_number"
+        android:id="@+id/lap_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/table_fragment_table_shape"
@@ -14,7 +14,7 @@
         android:text="@string/default_lap_number"/>
 
     <TextView
-        android:id="@+id/time_sheet_lap"
+        android:id="@+id/lap_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/table_fragment_table_shape"
@@ -23,7 +23,7 @@
         android:text="@string/default_lap"/>
 
     <TextView
-        android:id="@+id/time_sheet_bestlap_delta"
+        android:id="@+id/lap_best_delta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/table_fragment_table_shape"
@@ -32,7 +32,7 @@
         android:text="@string/default_delta"/>
 
     <TextView
-        android:id="@+id/time_sheet_lastlap_delta"
+        android:id="@+id/lap_last_delta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/table_fragment_table_shape"
