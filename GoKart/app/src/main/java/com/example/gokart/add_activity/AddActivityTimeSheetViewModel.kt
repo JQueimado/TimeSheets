@@ -20,7 +20,7 @@ class AddActivityTimeSheetViewModel(application: Application) : AndroidViewModel
         private const val statsId = 0L
     }
 
-    private val database = AppDatabase.getMemoryInstance(application)
+    private val database = AppDatabase.getInstance(application)
     private val timeSheetDao = database.timeSheetDao()
     private val lapsDao = database.lapDao()
     private val statsDao = database.statsDao()

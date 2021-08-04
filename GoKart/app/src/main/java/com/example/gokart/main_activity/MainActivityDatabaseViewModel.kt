@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class MainActivityDatabaseViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val database = AppDatabase.getMemoryInstance(application)
+    private val database = AppDatabase.getInstance(application)
     private val lapsDao = database.lapDao()
     private val timeSheetDao = database.timeSheetDao()
     private val kartDao = database.kartDao()

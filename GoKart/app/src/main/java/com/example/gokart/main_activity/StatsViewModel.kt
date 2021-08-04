@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class StatsViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val database = AppDatabase.getMemoryInstance(application)
+    private val database = AppDatabase.getInstance(application)
     private val kartDao = database.kartDao()
     private val kartingCenterDAO = database.kartingCenterDao()
 

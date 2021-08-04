@@ -21,7 +21,7 @@ abstract class AppDatabase : RoomDatabase() {
         private var instance : AppDatabase? = null //instance
         private val sLock = Object() //Sync lock
 
-        fun getMemoryInstance( application : Application) : AppDatabase{
+        fun getInstance(application : Application) : AppDatabase{
             synchronized(sLock){
                 if( instance == null )
                     instance = Room.databaseBuilder(

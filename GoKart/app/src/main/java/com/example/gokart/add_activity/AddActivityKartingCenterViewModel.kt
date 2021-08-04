@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class AddActivityKartingCenterViewModel(application: Application ) : AndroidViewModel(application) {
 
-    private val kartingCenterDAO = AppDatabase.getMemoryInstance(application).kartingCenterDao()
+    private val kartingCenterDAO = AppDatabase.getInstance(application).kartingCenterDao()
     private val allSimpleKC = kartingCenterDAO.getAllNames()
 
     fun insert(kartingCenterEntity: KartingCenterEntity ){

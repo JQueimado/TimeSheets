@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class AddActivityKartViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val kartDao = AppDatabase.getMemoryInstance(application).kartDao()
+    private val kartDao = AppDatabase.getInstance(application).kartDao()
 
     fun insert( kartEntity: KartEntity ){
         viewModelScope.launch {
