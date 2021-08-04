@@ -114,7 +114,6 @@ class TimeSheetsRVAdapter(
         //Consistency
         holder.consistencyLapView.text = "${item.consistency}%"
 
-        /* Laps Values */
         holder.buttonsFrameView.visibility = View.GONE
 
         //Click Action

@@ -16,6 +16,7 @@ import com.example.gokart.add_activity.AddActivity
 import com.example.gokart.database.entity.*
 import com.example.gokart.main_activity.TimeSheetsRVAdapter.TimeSheetActionFunction
 import com.example.gokart.time_sheet_activity.TimeSheetActivity
+import com.example.gokart.time_sheet_activity.TimeSheetView
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         override fun onViewTimeSheet(timeSheet: TimeSheetEntity) {
             val intent = Intent(this@MainActivity, TimeSheetActivity::class.java)
+            intent.putExtra( TimeSheetActivity.TIME_SHEET_ID, timeSheet.timeSheetId )
             startActivity( intent )
         }
 
