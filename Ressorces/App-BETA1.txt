@@ -4,7 +4,10 @@ Problems:
     Add Activity:
     -lap number doesnt decrease
     -lap add moves focus to the first text input
-    -Choose poor speled 
+    -Choose poor speled
+
+    TimeSheets:
+    -Edit crash 
 
     Main Activity
     -dates are in pm/am mode
